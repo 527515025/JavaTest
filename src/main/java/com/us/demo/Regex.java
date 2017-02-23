@@ -12,7 +12,7 @@ public class Regex {
     public static void main(String[] args) throws ParseException {
 
 //        pattern2();
-//        compress();
+        compress();
     }
 
     private static void pattern1() {
