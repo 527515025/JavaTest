@@ -47,6 +47,7 @@ public class ArrayBlockingQueueTest {
                     println(x + "-------放入队列");
                     //存数据到队列当队列满了就阻塞,当数据被取走后,继续往队列中方数据
                     queue.put(x);
+                    //queue.offer(x); 当队列满了以后,存不进去的元素就丢失了
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
