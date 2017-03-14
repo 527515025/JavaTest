@@ -12,7 +12,8 @@ public class Regex {
     public static void main(String[] args) throws ParseException {
 
 //        pattern2();
-        compress();
+        pattern3();
+//        compress();
     }
 
     private static void pattern1() {
@@ -82,6 +83,23 @@ public class Regex {
         }
     }
 
+    private static void pattern3() {
+        String body = "cmbms.log";
+
+        String bodyRegex;
+        String pattern = "cmbms.log.*";
+        Pattern r = Pattern.compile(pattern);
+        Matcher m = r.matcher(body);
+
+
+
+
+        if (m.find()) {
+            bodyRegex = m.group();
+            System.out.println(bodyRegex);
+        }
+    }
+
     private static void compress() {
         String bodyRegex;
         String str = "2017-02-16T18:46:00: Debug: D-JPR-000-000: Parsing events: Omegamon_Base;cms_hostname='itmserver';cms_port='3661';integration_type='U';master_reset_flag='';appl_label='';situation_name='opt_check';situation_type='S';situation_origin='itmserver:LZ';situation_time='02/16/2017 18:46:00.000';situation_status='Y';situation_thrunode='TEMS_TEST';situation_fullname='data_check_waring';situation_displayitem='';source='ITM';sub_source='itmserver:LZ';hostname='itmserver';origin='192.168.100.50';adapter_host='itmserver';date='02/16/2017';severity='WARNING';msg='data directory >60';situation_eventdata='~';END";
@@ -95,19 +113,19 @@ public class Regex {
             try {
                 String[] args = bodyRegex.split(";");
                 Arrays.stream(args).forEach(x -> {
-                    if(x.contains("=")){
-                    String[] keyAndValue = x.split("=");
-                    map.put(keyAndValue[0], keyAndValue[1].replace("'",""));
+                    if (x.contains("=")) {
+                        String[] keyAndValue = x.split("=");
+                        map.put(keyAndValue[0], keyAndValue[1].replace("'", ""));
                     }
                 });
             } catch (Exception ex) {
-               System.out.println("111");
+                System.out.println("111");
             }
             System.out.println("通过Map.keySet遍历key和value：");
             for (String key : map.keySet()) {
-                System.out.println( key + " ----------" + map.get(key));
+                System.out.println(key + " ----------" + map.get(key));
             }
-            System.out.println(map.get("abel")+"-------------------");
+            System.out.println(map.get("abel") + "-------------------");
         }
     }
 }
