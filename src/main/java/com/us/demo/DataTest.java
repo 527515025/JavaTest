@@ -1,6 +1,5 @@
 package com.us.demo;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -15,8 +14,8 @@ public class DataTest {
         Date date = new Date();
         Integer minute = 30;
 //        System.out.println(CalculationData(date, minute));
+        CalculationSecond(date,30);
         maptest();
-//        CalculationData1();
     }
 
 
@@ -32,29 +31,15 @@ public class DataTest {
         return false;
     }
 
-
-    public static void CalculationData1() {
-        String str = "2013-07-18 ";
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        try {
-//            Date myDate = formatter.parse(str);
-            Date myDate = new Date();
-            Date nowDate = new Date();
-            Calendar c = Calendar.getInstance();
-            c.setTime(myDate);
-            c.add(Calendar.MINUTE, 10);
-            myDate = c.getTime();
-            System.out.println(myDate + "aaaaa");
-            System.out.println(myDate.getTime() + "-----" + nowDate.getTime());
-            if (nowDate.getTime() < myDate.getTime()) {
-                System.out.println("true");
-            }
-//            System.out.println(formatter.format(myDate));
-        } catch (Exception e1) {
-            e1.printStackTrace();
-        }
+    public static boolean CalculationSecond(Date oldDate, Integer second) {
+        Date nowDate = new Date();
+        Calendar c = Calendar.getInstance();
+        c.setTime(oldDate);
+        c.add(Calendar.SECOND, second);
+        oldDate = c.getTime();
+        System.out.println(oldDate.getTime()-nowDate.getTime());
+        return false;
     }
-
 
     public static String formatDate(Date dateTime) {
         String result;
@@ -62,6 +47,7 @@ public class DataTest {
         result = simpleDateFormat.format(dateTime);
         return result;
     }
+
 
     public static void maptest(){
         Map<String ,Object> map = new HashMap<>();
