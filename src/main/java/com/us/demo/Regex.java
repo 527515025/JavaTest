@@ -12,8 +12,9 @@ public class Regex {
     public static void main(String[] args) throws ParseException {
 
 //        pattern2();
-        pattern3();
+//        pattern3();
 //        compress();
+        zybCompress();
     }
 
     private static void pattern1() {
@@ -127,6 +128,21 @@ public class Regex {
             }
             System.out.println(map.get("abel") + "-------------------");
         }
+    }
+
+    public static void zybCompress(){
+        List<String> list=new ArrayList<>();
+        String str="\"\":\"1qwsdf\"##\"\":2##\"\":\"3qwsdf\"##\"\":\"4qwsdf\"##\"\":\"5qwsdf\"##\"\":\"6qwsdf\"##\"\":\"7qwsdf\"##\"\":\"8qwsdf\"##\"\":9##\"\":\"10qwsdf\"##\"\":\"11qwsdf\"##\"\":\"12qwsdf\"##\"\":\"13qwsdf\"##\"\":\"14qwsdf\"##\"\":15##\"\":16##\"\":17##\"\":18##\"\":\"19qwsdf\"";
+        String[] s= str.split("##");
+        System.out.println("length: "+s.length);
+        Arrays.stream(s).forEach(x->{
+            if (x.contains(":")) {
+                x=x.substring(x.indexOf(":")+1).replace("\"","");
+                System.out.println(x);
+                list.add(x);
+            }
+        });
+        System.out.println(list.get(18));
     }
 }
 

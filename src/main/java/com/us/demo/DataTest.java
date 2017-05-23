@@ -1,10 +1,9 @@
 package com.us.demo;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by yangyibo on 17/3/16.
@@ -14,8 +13,10 @@ public class DataTest {
         Date date = new Date();
         Integer minute = 30;
 //        System.out.println(CalculationData(date, minute));
-        CalculationSecond(date,30);
+        CalculationSecond(date, 30);
         maptest();
+        stringToDate("03/22/2017 10:17:39 PM");
+
     }
 
 
@@ -37,7 +38,7 @@ public class DataTest {
         c.setTime(oldDate);
         c.add(Calendar.SECOND, second);
         oldDate = c.getTime();
-        System.out.println(oldDate.getTime()-nowDate.getTime());
+        System.out.println(oldDate.getTime() - nowDate.getTime());
         return false;
     }
 
@@ -48,10 +49,26 @@ public class DataTest {
         return result;
     }
 
+    public static Date stringToDate(String dateString) {
+        DateFormat fmt = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss");
+        Date date;
+        try {
+            date = fmt.parse(dateString);
+            if(dateString.toUpperCase().contains("PM")){
+                Calendar c = Calendar.getInstance();
+                c.setTime(date);
+                c.add(Calendar.HOUR, 12);
+                date = c.getTime();
+            }
+            return date;
+        } catch (ParseException ex) {
+        }
+        return null;
+    }
 
-    public static void maptest(){
-        Map<String ,Object> map = new HashMap<>();
-        if(map.get("refresh")!=null){
+    public static void maptest() {
+        Map<String, Object> map = new HashMap<>();
+        if (map.get("refresh") != null) {
             //检查超时
             System.out.println("true");
         }
