@@ -15,7 +15,7 @@ public class DataTest {
 //        System.out.println(CalculationData(date, minute));
         CalculationSecond(date, 30);
         maptest();
-        stringToDate("03/22/2017 10:17:39 PM");
+        System.out.println(stringToDate("05/25/2017 10:17:39 PM"));
 
     }
 
@@ -54,12 +54,16 @@ public class DataTest {
         Date date;
         try {
             date = fmt.parse(dateString);
-            if(dateString.toUpperCase().contains("PM")){
-                Calendar c = Calendar.getInstance();
-                c.setTime(date);
-                c.add(Calendar.HOUR, 12);
-                date = c.getTime();
+            Calendar c = Calendar.getInstance();
+            c.setTime(date);
+            if(dateString.toUpperCase().contains("PM")) {
+              if(c.get(Calendar.HOUR_OF_DAY) != 12) {
+                  c.add(Calendar.HOUR, 12);
+              }
+            }else if(c.get(Calendar.HOUR_OF_DAY) == 12) {
+                c.add(Calendar.HOUR, -12);
             }
+            date = c.getTime();
             return date;
         } catch (ParseException ex) {
         }
