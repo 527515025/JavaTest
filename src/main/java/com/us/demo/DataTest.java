@@ -10,12 +10,13 @@ import java.util.*;
  */
 public class DataTest {
     public static void main(String[] args) {
-        Date date = new Date();
-        Integer minute = 30;
+//        Date date = new Date();
+//        Integer minute = 30;
 //        System.out.println(CalculationData(date, minute));
-        CalculationSecond(date, 30);
-        maptest();
-        System.out.println(stringToDate("05/25/2017 10:17:39 PM"));
+//        CalculationSecond(date, 30);
+//        maptest();
+//        System.out.println(stringToDate("05/25/2017 10:17:39 PM"));
+        System.out.println(sendEmailJudgementTime("16:32:39","16:56:39"));
 
     }
 
@@ -68,6 +69,23 @@ public class DataTest {
         } catch (ParseException ex) {
         }
         return null;
+    }
+
+
+
+    public static Boolean sendEmailJudgementTime(String startTime,String endTime) {
+        boolean flag=false;
+        DateFormat fmt = new SimpleDateFormat("HH:mm:ss");
+        Date startDate,endDate, nowDate=new Date();
+        try {
+            nowDate=fmt.parse(fmt.format(nowDate));
+            startDate = fmt.parse(startTime);
+            endDate=fmt.parse(endTime);
+            if (startDate.getTime()<nowDate.getTime() && nowDate.getTime()<endDate.getTime())
+            {flag=true;}
+        } catch (ParseException ex) {
+        }
+        return flag;
     }
 
     public static void maptest() {
