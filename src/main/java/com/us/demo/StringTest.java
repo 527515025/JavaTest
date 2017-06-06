@@ -14,8 +14,8 @@ public class StringTest {
 //        stringIntern();
 //        isNumeric("-1");
 //        System.out.println(stampToDate("1494376080000"));
-        valueOf();
-
+//        valueOf();
+        trim();
     }
 
 
@@ -65,6 +65,18 @@ public class StringTest {
 
         }
         System.out.println("no");
+    }
+
+    private static void trim() {
+        String str1 = " aa  ",str2 = "  bb",str3="cc  ",str4="  d d  ";
+        str1=str1.trim();
+        str2=str2.trim();
+        str3=str3.trim();
+        str4=str4.trim();
+        System.out.println(str1+" length: "+str1.length());
+        System.out.println(str2+" length: "+str2.length());
+        System.out.println(str3+" length: "+str3.length());
+        System.out.println(str4+" length: "+str4.length());
     }
 
 }

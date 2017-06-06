@@ -14,7 +14,8 @@ public class Regex {
 //        pattern2();
 //        pattern3();
 //        compress();
-        zybCompress();
+//        zybCompress();
+        zabbixSplit();
     }
 
     private static void pattern1() {
@@ -93,8 +94,6 @@ public class Regex {
         Matcher m = r.matcher(body);
 
 
-
-
         if (m.find()) {
             bodyRegex = m.group();
             System.out.println(bodyRegex);
@@ -126,23 +125,38 @@ public class Regex {
             for (String key : map.keySet()) {
                 System.out.println(key + " ----------" + map.get(key));
             }
-            System.out.println(map.get("abel") + "-------------------");
         }
     }
 
-    public static void zybCompress(){
-        List<String> list=new ArrayList<>();
-        String str="\"\":\"1qwsdf\"##\"\":2##\"\":\"3qwsdf\"##\"\":\"4qwsdf\"##\"\":\"5qwsdf\"##\"\":\"6qwsdf\"##\"\":\"7qwsdf\"##\"\":\"8qwsdf\"##\"\":9##\"\":\"10qwsdf\"##\"\":\"11qwsdf\"##\"\":\"12qwsdf\"##\"\":\"13qwsdf\"##\"\":\"14qwsdf\"##\"\":15##\"\":16##\"\":17##\"\":18##\"\":\"19qwsdf\"";
-        String[] s= str.split("##");
-        System.out.println("length: "+s.length);
-        Arrays.stream(s).forEach(x->{
+    public static void zybCompress() {
+        List<String> list = new ArrayList<>();
+        String str = "\"\":\"1qwsdf\"##\"\":2##\"\":\"3qwsdf\"##\"\":\"4qwsdf\"##\"\":\"5qwsdf\"##\"\":\"6qwsdf\"##\"\":\"7qwsdf\"##\"\":\"8qwsdf\"##\"\":9##\"\":\"10qwsdf\"##\"\":\"11qwsdf\"##\"\":\"12qwsdf\"##\"\":\"13qwsdf\"##\"\":\"14qwsdf\"##\"\":15##\"\":16##\"\":17##\"\":18##\"\":\"19qwsdf\"";
+        String[] s = str.split("##");
+        System.out.println("length: " + s.length);
+        Arrays.stream(s).forEach(x -> {
             if (x.contains(":")) {
-                x=x.substring(x.indexOf(":")+1).replace("\"","");
+                x = x.substring(x.indexOf(":") + 1).replace("\"", "");
                 System.out.println(x);
                 list.add(x);
             }
         });
         System.out.println(list.get(18));
+    }
+
+    public static void zabbixSplit() {
+        String raw_event;
+        String content = "ZABBIX##Trigger_name:#abelProcessor load is too high on 35##Trigger_status:# PROBLEM##Trigger_severity:# High##Trigger_URL:# 192.168.100.35##Host_name :# 35##Host_ip:# 192.168.100.35##Events_time :#10:09:23##Item_name :#Processor load (1 min average per core)##Item_values:#1. Processor load (1 min average per core) (35:system.cpu.load[percpu,avg1]): 0.086426\n";
+        Map<String, String> map = new HashMap<>();
+                String[] args = content.split("##");
+                Arrays.stream(args).forEach(x -> {
+                    if (x.contains(":#")) {
+                        String[] keyAndValue = x.split(":#");
+                        map.put(keyAndValue[0].trim(), keyAndValue[1].trim());
+                    }
+                });
+        for (String key : map.keySet()) {
+            System.out.println(key + " ----------" + map.get(key));
+        }
     }
 }
 
