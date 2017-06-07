@@ -16,7 +16,8 @@ public class DataTest {
 //        CalculationSecond(date, 30);
 //        maptest();
 //        System.out.println(stringToDate("05/25/2017 10:17:39 PM"));
-        System.out.println(sendEmailJudgementTime("16:32:39","16:56:39"));
+//        System.out.println(sendEmailJudgementTime("16:32:39","16:56:39"));
+        zabbixTime();
 
     }
 
@@ -45,7 +46,7 @@ public class DataTest {
 
     public static String formatDate(Date dateTime) {
         String result;
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         result = simpleDateFormat.format(dateTime);
         return result;
     }
@@ -95,6 +96,15 @@ public class DataTest {
             System.out.println("true");
         }
         System.out.println("flase");
+    }
+
+    private static void  zabbixTime() {
+        String time="10:15:23";
+        Date nowDate=new Date();
+        String nowDateStr = formatDate(nowDate);
+        time=nowDateStr+" "+time;
+//        time = nowDateStr.substring(0,nowDateStr.indexOf(" ")+1)+time;
+        System.out.println(time);
     }
 
 }
