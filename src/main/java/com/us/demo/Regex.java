@@ -15,7 +15,8 @@ public class Regex {
 //        pattern3();
 //        compress();
 //        zybCompress();
-        zabbixSplit();
+//        zabbixSplit();
+        zabbixSplit2();
     }
 
     private static void pattern1() {
@@ -157,6 +158,13 @@ public class Regex {
         for (String key : map.keySet()) {
             System.out.println(key + " ----------" + map.get(key));
         }
+    }
+
+    public static void zabbixSplit2() {
+        String raw_event;
+        String content = "sdfsdfsdsdf2342423f##key##ZABBIX##Trigger_name:#abelProcessor load is too high on 35##Trigger_status:# PROBLEM##Trigger_severity:# High##Trigger_URL:# 192.168.100.35##Host_name :# 35##Host_ip:# 192.168.100.35##Events_time :#10:09:23##Item_name :#Processor load (1 min average per core)##Item_values:#1. Processor load (1 min average per core) (35:system.cpu.load[percpu,avg1]): 0.086426\n";
+        String[] args=content.split("##key##");
+        Arrays.stream(args).forEach(x-> System.out.println(x));
     }
 }
 

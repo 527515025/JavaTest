@@ -25,6 +25,7 @@ public class OkHttpClientTest {
         RequestBody body = RequestBody.create(MediaType.parse("application/json"), JSONArray.toJSON(contents).toString());
         Request request = new Request.Builder()
                 .url(url)
+                .addHeader("key","23423kjh4jk23xc98")
                 .post(body)
                 .build();
         Response response = null;
