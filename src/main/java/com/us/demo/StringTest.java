@@ -1,5 +1,6 @@
 package com.us.demo;
 
+import com.us.Person;
 import org.apache.commons.lang3.StringUtils;
 
 import java.text.SimpleDateFormat;
@@ -15,7 +16,8 @@ public class StringTest {
 //        isNumeric("-1");
 //        System.out.println(stampToDate("1494376080000"));
 //        valueOf();
-        trim();
+//        trim();
+        instanceofTest(2);
     }
 
 
@@ -68,15 +70,33 @@ public class StringTest {
     }
 
     private static void trim() {
-        String str1 = " aa  ",str2 = "  bb",str3="cc  ",str4="  d d  ";
-        str1=str1.trim();
-        str2=str2.trim();
-        str3=str3.trim();
-        str4=str4.trim();
-        System.out.println(str1+" length: "+str1.length());
-        System.out.println(str2+" length: "+str2.length());
-        System.out.println(str3+" length: "+str3.length());
-        System.out.println(str4+" length: "+str4.length());
+        String str1 = " aa  ", str2 = "  bb", str3 = "cc  ", str4 = "  d d  ";
+        str1 = str1.trim();
+        str2 = str2.trim();
+        str3 = str3.trim();
+        str4 = str4.trim();
+        System.out.println(str1 + " length: " + str1.length());
+        System.out.println(str2 + " length: " + str2.length());
+        System.out.println(str3 + " length: " + str3.length());
+        System.out.println(str4 + " length: " + str4.length());
+    }
+
+    private static void instanceofTest(int flag) {
+        Object object = null;
+        if (flag == 1) {
+            object = "sdfsdfsdfsdf";
+        } else {
+            Person person = new Person();
+            person.setName("abel");
+            object = person;
+        }
+        if (object instanceof String) {
+            System.out.println(object);
+        }
+        if (object instanceof Person) {
+            Person person2 = (Person) object;
+            System.out.println("Person:" + person2.getName());
+        }
     }
 
 }

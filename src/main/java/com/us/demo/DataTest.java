@@ -17,7 +17,8 @@ public class DataTest {
 //        maptest();
 //        System.out.println(stringToDate("05/25/2017 10:17:39 PM"));
 //        System.out.println(sendEmailJudgementTime("16:32:39","16:56:39"));
-        zabbixTime();
+        System.out.println(timeStampToData("1497117051"));
+//        zabbixTime();
 
     }
 
@@ -58,11 +59,11 @@ public class DataTest {
             date = fmt.parse(dateString);
             Calendar c = Calendar.getInstance();
             c.setTime(date);
-            if(dateString.toUpperCase().contains("PM")) {
-              if(c.get(Calendar.HOUR_OF_DAY) != 12) {
-                  c.add(Calendar.HOUR, 12);
-              }
-            }else if(c.get(Calendar.HOUR_OF_DAY) == 12) {
+            if (dateString.toUpperCase().contains("PM")) {
+                if (c.get(Calendar.HOUR_OF_DAY) != 12) {
+                    c.add(Calendar.HOUR, 12);
+                }
+            } else if (c.get(Calendar.HOUR_OF_DAY) == 12) {
                 c.add(Calendar.HOUR, -12);
             }
             date = c.getTime();
@@ -73,17 +74,17 @@ public class DataTest {
     }
 
 
-
-    public static Boolean sendEmailJudgementTime(String startTime,String endTime) {
-        boolean flag=false;
+    public static Boolean sendEmailJudgementTime(String startTime, String endTime) {
+        boolean flag = false;
         DateFormat fmt = new SimpleDateFormat("HH:mm:ss");
-        Date startDate,endDate, nowDate=new Date();
+        Date startDate, endDate, nowDate = new Date();
         try {
-            nowDate=fmt.parse(fmt.format(nowDate));
+            nowDate = fmt.parse(fmt.format(nowDate));
             startDate = fmt.parse(startTime);
-            endDate=fmt.parse(endTime);
-            if (startDate.getTime()<nowDate.getTime() && nowDate.getTime()<endDate.getTime())
-            {flag=true;}
+            endDate = fmt.parse(endTime);
+            if (startDate.getTime() < nowDate.getTime() && nowDate.getTime() < endDate.getTime()) {
+                flag = true;
+            }
         } catch (ParseException ex) {
         }
         return flag;
@@ -98,13 +99,26 @@ public class DataTest {
         System.out.println("flase");
     }
 
-    private static void  zabbixTime() {
-        String time="10:15:23";
-        Date nowDate=new Date();
+    private static void zabbixTime() {
+        String time = "10:15:23";
+        Date nowDate = new Date();
         String nowDateStr = formatDate(nowDate);
-        time=nowDateStr+" "+time;
+        time = nowDateStr + " " + time;
 //        time = nowDateStr.substring(0,nowDateStr.indexOf(" ")+1)+time;
         System.out.println(time);
+    }
+
+    private static Date timeStampToData(String time) {
+        try {
+            Long times = Long.valueOf(time);
+            times = times*1000;
+            Date date = new Date();
+            date.setTime(times);
+            return date;
+        } catch (NumberFormatException e) {
+            e.getMessage();
+        }
+        return null;
     }
 
 }
