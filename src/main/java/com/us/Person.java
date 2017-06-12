@@ -1,5 +1,7 @@
 package com.us;
 
+import com.us.demo.Reflect;
+
 /**
  * Created by yangyibo on 16/12/26.
  */
@@ -34,8 +36,13 @@ public class Person {
         this.age = age;
     }
 
+//    @Override
+//    public String toString() {
+//        return  "name: "+this.getName()+"  --AGE: "+this.getAge() +"  --SEX: "+this.getSex();
+//    }
+
     @Override
-    public String toString() {
-        return  "name: "+this.getName()+"  --AGE: "+this.getAge() +"  --SEX: "+this.getSex();
+    public String toString(){
+        return Reflect.getString(this,this.getClass( ));
     }
 }
