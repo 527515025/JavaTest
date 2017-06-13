@@ -42,7 +42,7 @@ public class Reflect {
     }
 
 
-    public static String getStringAbel(List<?> o, Class<?> c, String field) {
+    public static String getClassAttribute(List<?> o, Class<?> c, String field) {
         StringBuffer result = new StringBuffer();
         if (StringUtils.isNoneBlank(field)) {
             Field[] fields = c.getDeclaredFields();
@@ -77,6 +77,6 @@ public class Reflect {
         personList.add(person);
         personList.add(person2);
 
-        System.out.println(getStringAbel(personList, Person.class, "name"));
+        System.out.println(getClassAttribute(personList, Person.class, "name"));
     }
 }
