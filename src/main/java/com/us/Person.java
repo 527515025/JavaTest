@@ -2,6 +2,8 @@ package com.us;
 
 import com.us.demo.Reflect;
 
+import java.util.List;
+
 /**
  * Created by yangyibo on 16/12/26.
  */
@@ -10,6 +12,15 @@ public class Person {
     int age;
     String name;
     int sex;
+    List<String>  friend;
+
+    public List<String> getFriend() {
+        return friend;
+    }
+
+    public void setFriend(List<String> friend) {
+        this.friend = friend;
+    }
 
 
     public int getSex() {
@@ -36,13 +47,13 @@ public class Person {
         this.age = age;
     }
 
-//    @Override
-//    public String toString() {
-//        return  "name: "+this.getName()+"  --AGE: "+this.getAge() +"  --SEX: "+this.getSex();
-//    }
-
     @Override
-    public String toString(){
-        return Reflect.getString(this,this.getClass( ));
+    public String toString() {
+        return "Person{" +
+                "age=" + age +
+                ", name='" + name + '\'' +
+                ", sex=" + sex +
+                ", friend=" + friend +
+                '}';
     }
 }
