@@ -4,6 +4,7 @@ import com.us.Person;
 import org.apache.commons.lang3.StringUtils;
 
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 
 /**
@@ -17,7 +18,9 @@ public class StringTest {
 //        System.out.println(stampToDate("1494376080000"));
 //        valueOf();
 //        trim();
-        instanceofTest(2);
+//        instanceofTest(2);
+//        getUchat();
+        splitTest();
     }
 
 
@@ -99,4 +102,19 @@ public class StringTest {
         }
     }
 
+    /**
+     * 驼峰转化为下划线
+     */
+    private static void getUchat() {
+        String str = "isResponsedTimeout";
+        String pattern = "[A-Z]";
+        str = str.replaceAll(pattern, "_$0").toLowerCase();
+        System.out.println(str);
+    }
+
+    private  static  void splitTest() {
+        String s = "ownedByUser_cnname";
+        String [] strings = s.split("_");
+        Arrays.stream(strings).forEach(x -> System.out.println(x+"\n"));
+    }
 }

@@ -30,5 +30,12 @@
             <artifactId>fastjson</artifactId>
             <version>1.2.5</version>
         </dependency>
+
+        <!--python-->
+        <dependency>
+            <groupId>org.python</groupId>
+            <artifactId>jython-standalone</artifactId>
+            <version>2.7.0</version>
+        </dependency>
     </dependencies>
 </project>
