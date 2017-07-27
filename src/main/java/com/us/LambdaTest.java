@@ -14,11 +14,11 @@ public class LambdaTest {
 //        forEachT();
 //        threadT();
 //        sortT();
-//        streamsFilterT();
+        streamsFilterT();
 //        streamsCountT();
 //        personTComparator();
 //        boysAndGirls();
-        stringToIntT();
+//        stringToIntT();
 
     }
 
@@ -98,7 +98,7 @@ public class LambdaTest {
         System.out.println("--------------分割线------------输出包涵 a 字母--------");
 
         //输出包涵 a 字母
-        List<String> str2 = (List<String>) str3.stream().filter(x -> x.contains("a"));
+        List<String> str2 = str3.stream().filter(x -> x.contains("a")).collect(Collectors.toList());
         str2.forEach(e -> System.out.println(e));
 
         System.out.println("--------------分割线------------按首字母排序，输出前三个--------");
