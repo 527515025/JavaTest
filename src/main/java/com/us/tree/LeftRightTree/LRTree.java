@@ -3,6 +3,11 @@ package com.us.tree.LeftRightTree;
 /**
  * Created by yangyibo on 17/7/18.
  * http://www.cnblogs.com/licheng/archive/2010/04/06/1705547.html
+ *
+ * 树是一种比较重要的数据结构，尤其是二叉树。二叉树是一种特殊的树，在二叉树中每个节点最多有两个子节点，
+ * 一般称为左子节点和右子节点（或左孩子和右孩子），并且二叉树的子树有左右之分，其次序不能任意颠倒。二叉树是递归定义的，
+ *
+ * 因此，与二叉树有关的题目基本都可以用递归思想解决，
  */
 public class LRTree {
 
@@ -20,8 +25,15 @@ public class LRTree {
             rightChild = null;
         }
     }
-
     public Node root;
+
+    public Node getRoot() {
+        return root;
+    }
+
+    public void setRoot(Node root) {
+        this.root = root;
+    }
 
     public LRTree() {
         root = null;
@@ -197,4 +209,16 @@ public class LRTree {
         }
         return successor;
     }
+
+    //递归得到节点的个数
+    public Integer GetNodeNum(Node node){
+        if (node == null){
+            //递归出口
+            return  0;
+        }
+        return GetNodeNum(node.leftChild) + GetNodeNum(node.rightChild) + 1;
+
+    }
+
+
 }

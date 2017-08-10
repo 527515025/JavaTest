@@ -31,6 +31,9 @@ public class LRTreeApp {
         tree.traverse(3);
         System.out.println();
 
+        System.out.print("getNodeNum: ");
+        System.out.println(tree.GetNodeNum(tree.getRoot()));
+
         System.out.println(tree.delete(7));
 
         System.out.print("PreOrder : ");
@@ -45,5 +48,7 @@ public class LRTreeApp {
         tree.traverse(3);
         System.out.println();
 
+        System.out.print("getNodeNum: ");
+        System.out.println(tree.GetNodeNum(tree.getRoot()));
     }
 }
