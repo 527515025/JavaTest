@@ -3,10 +3,10 @@ package com.us.tree.LeftRightTree;
 /**
  * Created by yangyibo on 17/7/18.
  * http://www.cnblogs.com/licheng/archive/2010/04/06/1705547.html
- *
+ * <p>
  * 树是一种比较重要的数据结构，尤其是二叉树。二叉树是一种特殊的树，在二叉树中每个节点最多有两个子节点，
  * 一般称为左子节点和右子节点（或左孩子和右孩子），并且二叉树的子树有左右之分，其次序不能任意颠倒。二叉树是递归定义的，
- *
+ * <p>
  * 因此，与二叉树有关的题目基本都可以用递归思想解决，
  */
 public class LRTree {
@@ -25,6 +25,7 @@ public class LRTree {
             rightChild = null;
         }
     }
+
     public Node root;
 
     public Node getRoot() {
@@ -69,50 +70,10 @@ public class LRTree {
         }
     }
 
-    // 先续遍历树中的所有节点
-    public void preOrder(Node currentRoot) {
-        if (currentRoot != null) {
-            System.out.print(currentRoot.value + " ");
-            preOrder(currentRoot.leftChild);
-            preOrder(currentRoot.rightChild);
-        }
-    }
 
-    // 中续遍历树中的所有节点
-    public void inOrder(Node currentNode) {
-        if (currentNode != null) {
-            inOrder(currentNode.leftChild);
-            System.out.print(currentNode.value + " ");
-            inOrder(currentNode.rightChild);
-        }
-    }
-
-    // 后续遍历树中的所有节点
-    public void postOrder(Node currentNode) {
-        if (currentNode != null) {
-            postOrder(currentNode.leftChild);
-            postOrder(currentNode.rightChild);
-            System.out.print(currentNode.value + " ");
-        }
-    }
-
-    public void traverse(int traverseType) {
-        switch (traverseType) {
-            case 1:
-                preOrder(root);
-                break;
-            case 2:
-                inOrder(root);
-                break;
-            case 3:
-                postOrder(root);
-                break;
-            default:
-                break;
-        }
-    }
-
-    // 依据树节点的值删除树中的一个节点
+    /**
+     * 依据树节点的值删除树中的一个节点
+     */
     public boolean delete(int value) {
         // 遍历树过程中的当前节点
         Node current = root;
@@ -210,15 +171,109 @@ public class LRTree {
         return successor;
     }
 
-    //递归得到节点的个数
-    public Integer GetNodeNum(Node node){
-        if (node == null){
-            //递归出口
-            return  0;
-        }
-        return GetNodeNum(node.leftChild) + GetNodeNum(node.rightChild) + 1;
 
+    /**
+     * 调度方法
+     *
+     * @param traverseType
+     */
+    public void traverse(int traverseType) {
+        switch (traverseType) {
+            case 1:
+                preOrder(root);
+                break;
+            case 2:
+                inOrder(root);
+                break;
+            case 3:
+                postOrder(root);
+                break;
+            default:
+                break;
+        }
+    }
+
+    /**
+     * 先续遍历树中的所有节点
+     */
+    public void preOrder(Node currentRoot) {
+        if (currentRoot != null) {
+            System.out.print(currentRoot.value + " ");
+            preOrder(currentRoot.leftChild);
+            preOrder(currentRoot.rightChild);
+        }
+    }
+
+    /**
+     * 中续遍历树中的所有节点
+     *
+     * @param currentNode
+     */
+    public void inOrder(Node currentNode) {
+        if (currentNode != null) {
+            inOrder(currentNode.leftChild);
+            System.out.print(currentNode.value + " ");
+            inOrder(currentNode.rightChild);
+        }
+    }
+
+    /**
+     * 后续遍历树中的所有节点
+     *
+     * @param currentNode
+     */
+    public void postOrder(Node currentNode) {
+        if (currentNode != null) {
+            postOrder(currentNode.leftChild);
+            postOrder(currentNode.rightChild);
+            System.out.print(currentNode.value + " ");
+        }
+    }
+
+    /**
+     * 得到二叉树的节点个数
+     *
+     * @param root
+     * @return
+     */
+    public Integer GetNodeNum(Node root) {
+        if (root == null) {
+            //递归出口
+            return 0;
+        }
+        return GetNodeNum(root.leftChild) + GetNodeNum(root.rightChild) + 1;
     }
 
 
+    /**
+     * 求二叉树的深度
+     * 思考：如果二叉树为空，二叉树的深度为0
+     * 如果二叉树不为空，二叉树的深度 = max(左子树深度， 右子树深度) + 1
+     */
+    public Integer GetDepth(Node root) {
+        if (root == null) {
+            //递归出口
+            return 0;
+        }
+        Integer depthLeft = GetDepth(root.leftChild);
+        Integer depthRight = GetDepth(root.rightChild);
+        return depthLeft > depthRight ? (depthLeft + 1) : (depthRight + 1);
+    }
+
+    /**
+     * 求二叉树第K层的节点个数
+     * 思考：如果二叉树为空或者k<1返回0
+     *      如果二叉树不为空并且k==1，返回1
+     *      如果二叉树不为空且k>1，返回左子树中k-1层的节点个数与右子树k-1层节点个数之和
+     */
+    public Integer GetNodeNumKthLevel(Node root, Integer k)
+    {
+        if(root == null || k < 1)
+            return 0;
+        if(k == 1)
+            return 1;
+        int numLeft = GetNodeNumKthLevel(root.leftChild, k-1); // 左子树中k-1层的节点个数
+        int numRight = GetNodeNumKthLevel(root.rightChild, k-1); // 右子树中k-1层的节点个数
+        return (numLeft + numRight);
+    }
 }
