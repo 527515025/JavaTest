@@ -1,4 +1,4 @@
-package com.us;
+package com.us.java8;
 
 import java.util.function.Supplier;
 

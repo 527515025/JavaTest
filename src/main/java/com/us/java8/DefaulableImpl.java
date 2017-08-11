@@ -1,4 +1,6 @@
-package com.us;
+package com.us.java8;
+
+import com.us.Person;
 
 import java.util.Optional;
 

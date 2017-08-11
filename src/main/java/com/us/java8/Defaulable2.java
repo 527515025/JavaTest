@@ -1,4 +1,4 @@
-package com.us;
+package com.us.java8;
 
 /**
  * Created by yangyibo on 16/12/27.
