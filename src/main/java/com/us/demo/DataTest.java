@@ -90,14 +90,6 @@ public class DataTest {
         return flag;
     }
 
-    public static void maptest() {
-        Map<String, Object> map = new HashMap<>();
-        if (map.get("refresh") != null) {
-            //检查超时
-            System.out.println("true");
-        }
-        System.out.println("flase");
-    }
 
     private static void zabbixTime() {
         String time = "10:15:23";

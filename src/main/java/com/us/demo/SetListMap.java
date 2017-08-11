@@ -1,9 +1,6 @@
 package com.us.demo;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by yangyibo on 17/6/13.
@@ -45,5 +42,49 @@ public class SetListMap {
         lst2.forEach(x -> System.out.println(x));
 
 
+    }
+
+    public static void maptest() {
+        Map<String, Object> map = new HashMap<>();
+        if (map.get("refresh") != null) {
+            //检查超时
+            System.out.println("true");
+        }
+        System.out.println("flase");
+    }
+
+    /**
+     * 遍历map
+     * @param map
+     */
+    public static void getMap(Map<String, Object> map){
+        map.put("1", "value1");
+        map.put("2", "value2");
+        map.put("3", "value3");
+
+        //第一种：普遍使用，二次取值
+        System.out.println("通过Map.keySet遍历key和value：");
+        for (String key : map.keySet()) {
+            System.out.println("key= "+ key + " and value= " + map.get(key));
+        }
+
+        //第二种
+        System.out.println("通过Map.entrySet使用iterator遍历key和value：");
+        Iterator<Map.Entry<String, Object>> it = map.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry<String, Object> entry = it.next();
+            System.out.println("key= " + entry.getKey() + " and value= " + entry.getValue());
+        }
+
+        //第三种：推荐，尤其是容量大时
+        System.out.println("通过Map.entrySet遍历key和value");
+        for (Map.Entry<String, Object> entry : map.entrySet()) {
+            System.out.println("key= " + entry.getKey() + " and value= " + entry.getValue());
+        }
+        //第四种
+        System.out.println("通过Map.values()遍历所有的value，但不能遍历key");
+        for (Object v : map.values()) {
+            System.out.println("value= " + v);
+        }
     }
 }
