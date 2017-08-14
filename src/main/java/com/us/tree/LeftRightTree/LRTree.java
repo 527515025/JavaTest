@@ -1,5 +1,7 @@
 package com.us.tree.LeftRightTree;
 
+import jnr.ffi.annotations.In;
+
 /**
  * Created by yangyibo on 17/7/18.
  * http://www.cnblogs.com/licheng/archive/2010/04/06/1705547.html
@@ -198,6 +200,7 @@ public class LRTree {
      */
     public void preOrder(Node currentRoot) {
         if (currentRoot != null) {
+            //先输出当前节点
             System.out.print(currentRoot.value + " ");
             preOrder(currentRoot.leftChild);
             preOrder(currentRoot.rightChild);
@@ -212,9 +215,17 @@ public class LRTree {
     public void inOrder(Node currentNode) {
         if (currentNode != null) {
             inOrder(currentNode.leftChild);
+            //左节点输出完 输出当前节点
             System.out.print(currentNode.value + " ");
             inOrder(currentNode.rightChild);
         }
+    }
+
+    /**
+     * 分层遍历二叉树
+     */
+    public void LevelTraverse(Node currentNode) {
+
     }
 
     /**
@@ -226,6 +237,7 @@ public class LRTree {
         if (currentNode != null) {
             postOrder(currentNode.leftChild);
             postOrder(currentNode.rightChild);
+            //最后输出当前节点
             System.out.print(currentNode.value + " ");
         }
     }
@@ -252,7 +264,6 @@ public class LRTree {
      */
     public Integer GetDepth(Node root) {
         if (root == null) {
-            //递归出口
             return 0;
         }
         Integer depthLeft = GetDepth(root.leftChild);
@@ -263,17 +274,33 @@ public class LRTree {
     /**
      * 求二叉树第K层的节点个数
      * 思考：如果二叉树为空或者k<1返回0
-     *      如果二叉树不为空并且k==1，返回1
-     *      如果二叉树不为空且k>1，返回左子树中k-1层的节点个数与右子树k-1层节点个数之和
+     * 如果二叉树不为空并且k==1，返回1
+     * 如果二叉树不为空且k>1，返回左子树中k-1层的节点个数与右子树k-1层节点个数之和
      */
-    public Integer GetNodeNumKthLevel(Node root, Integer k)
-    {
-        if(root == null || k < 1)
+    public Integer GetNodeNumKthLevel(Node root, Integer k) {
+        if (root == null || k < 1)
             return 0;
-        if(k == 1)
+        if (k == 1)
             return 1;
-        int numLeft = GetNodeNumKthLevel(root.leftChild, k-1); // 左子树中k-1层的节点个数
-        int numRight = GetNodeNumKthLevel(root.rightChild, k-1); // 右子树中k-1层的节点个数
+        int numLeft = GetNodeNumKthLevel(root.leftChild, k - 1); // 左子树中k-1层的节点个数 递归左节点，k 为递归层数
+        int numRight = GetNodeNumKthLevel(root.rightChild, k - 1); // 右子树中k-1层的节点个数 递归右节点，k 为递归层数
         return (numLeft + numRight);
     }
+
+    /**
+     * 求叶子节点个数
+     * 思考：叶子节点，左右节点都是null，为叶子节点
+     */
+    public Integer GetLeafNodeNum(Node root) {
+        if (root == null)
+            return 0;
+        if (root.leftChild == null && root.rightChild == null)
+            return 1;
+        int numLeft = GetLeafNodeNum(root.leftChild);
+        int numRight = GetLeafNodeNum(root.rightChild);
+        return (numLeft + numRight);
+    }
+
+
+
 }

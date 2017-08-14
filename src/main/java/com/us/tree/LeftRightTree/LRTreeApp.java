@@ -6,7 +6,8 @@ package com.us.tree.LeftRightTree;
 public class LRTreeApp {
     public static void main(String[] args) {
         LRTree tree = init();
-        System.out.println(tree.GetNodeNumKthLevel(tree.getRoot(),7));
+//        System.out.println(tree.GetNodeNumKthLevel(tree.getRoot(),7));
+        System.out.println(tree.GetDepth(tree.getRoot()));
     }
 
     private static LRTree init() {
