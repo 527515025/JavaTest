@@ -1,7 +1,5 @@
 package com.us.tree.LeftRightTree;
 
-import jnr.ffi.annotations.In;
-
 /**
  * Created by yangyibo on 17/7/18.
  * http://www.cnblogs.com/licheng/archive/2010/04/06/1705547.html

@@ -30,6 +30,7 @@ public class SetListMap {
         lst2.add("1");
         lst2.add("2");
         lst2.add("4");
+        unionList(lst1,lst2);
 //        //lst1去除掉 lst2 不包含的元素 "3" 取交集
 //        lst1.retainAll(lst2);
 //        lst1.forEach(x -> System.out.println(x));
@@ -40,8 +41,25 @@ public class SetListMap {
         System.out.println("－－－－－－－－－－－－－－－－－－－－－");
         lst2.removeAll(lst1);
         lst2.forEach(x -> System.out.println(x));
+    }
 
-
+    public static <E> List<E> unionList(List<E> list1,List<E> list2){
+        List<E> resultList = new ArrayList<E>();
+        List<E> tmpList1 ;
+        List<E> tmpList2 ;
+        if(null != list1 ){
+            tmpList1 = new ArrayList<E>(list1);
+            if( null != list2){
+                tmpList2 = new ArrayList<E>(list2);
+                tmpList2.removeAll(tmpList1);
+                resultList.addAll(tmpList2);
+            }
+            resultList.addAll(tmpList1);
+        }else if (null != list2) {
+            tmpList2 = new ArrayList<E>(list2);
+            resultList.addAll(tmpList2);
+        }
+        return resultList;
     }
 
     public static void maptest() {
