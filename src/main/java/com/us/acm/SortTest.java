@@ -29,9 +29,9 @@ public class SortTest {
     }
 
     private static int[] init() {
-        int[] arraytoSort = {2, 68, 34, 98, 7, 37, 5, 8, 3, 10, 1, 33, 76, 23, 94, 31, 67, 97, 35};
-//        int[] arraytoSort = {2, 68, 34, 98, 7, 37, 5, 8, 3, 10};
-        return arraytoSort;
+        int[] arrayToSort = {2, 68, 34, 98, 7, 37, 5, 8, 3, 10, 1, 33, 76, 23, 94, 31, 67, 97, 35, 38};
+//        int[] arrayToSort = {2, 68, 34, 98, 7, 37, 5, 8, 3, 10};
+        return arrayToSort;
     }
 
     /**
@@ -56,22 +56,24 @@ public class SortTest {
      * 最坏：即刚好与所要的顺序相反，时间复杂度为O(n^2)
      * 平均：时间复杂度也是O(n^2)
      *
-     * @param arraytoSort
+     * 稳定，不会改变相等数原有的顺序
+     *
+     * @param arrayToSort
      * @return
      */
-    private static int[] insertionSort(int[] arraytoSort) {
-        int length = arraytoSort.length;
+    private static int[] insertionSort(int[] arrayToSort) {
+        int length = arrayToSort.length;
         int insertNum; //要插入的数
         for (int i = 1; i < length; i++) { // 排序多少次，第一个数不用排序
-            insertNum = arraytoSort[i];
+            insertNum = arrayToSort[i];
             int j = i - 1; //已经排序好的序列元素个数
-            while (j >= 0 && arraytoSort[j] > insertNum) {
-                arraytoSort[j + 1] = arraytoSort[j]; //j 位元素大于insertNum, j 以后元素都往后移动一格
+            while (j >= 0 && arrayToSort[j] > insertNum) {
+                arrayToSort[j + 1] = arrayToSort[j]; //j 位元素大于insertNum, j 以后元素都往后移动一格
                 j--;
             }
-            arraytoSort[j + 1] = insertNum;//比较到第j 位时 小于 insertNum ，所以insertNum 应该放在 j+1 位
+            arrayToSort[j + 1] = insertNum;//比较到第j 位时 小于 insertNum ，所以insertNum 应该放在 j+1 位
         }
-        return arraytoSort;
+        return arrayToSort;
     }
 
     /**
@@ -91,31 +93,35 @@ public class SortTest {
      * 最坏：即刚好与所要的顺序相反，时间复杂度为O(n^2)
      * 分组的依据（n/2）对复杂度的影响比较大。
      */
-    private static int[] shellSort(int[] arraytoSort) {
-        int length = arraytoSort.length;
+    private static int[] shellSort(int[] arrayToSort) {
+        int length = arrayToSort.length;
         while (length != 0) {
             length = length / 2;
             for (int j = 0; j < length; j++) { //分的组数 ，length 为组的步长
-                for (int i = j + length; i < arraytoSort.length; i += length) {  //遍历每组中的元素，从第二个数开始 第一个元素是 j
+                for (int i = j + length; i < arrayToSort.length; i += length) {  //遍历每组中的元素，从第二个数开始 第一个元素是 j
                     //里面实际上是嵌套了一个 插入排序
 
                     int x = i - length;//j为当前组有序序列最后一位的位数
-                    int temp = arraytoSort[i];//当前要插入的元素
-                    while (x >= 0 && arraytoSort[x] > temp) { //从后往前遍历。
-                        arraytoSort[x + length] = arraytoSort[x];//向后移动length位
+                    int temp = arrayToSort[i];//当前要插入的元素
+                    while (x >= 0 && arrayToSort[x] > temp) { //从后往前遍历。
+                        arrayToSort[x + length] = arrayToSort[x];//向后移动length位
                         x -= length;
                     }
-                    arraytoSort[x + length] = temp;
+                    arrayToSort[x + length] = temp;
 
                 }
             }
         }
-        return arraytoSort;
+        return arrayToSort;
     }
 
 
     /**
      * 简单选择排序
+     *
+     * 选择排序类似于插入排序，只是是有选择的插入
+     *
+     *
      * <p>
      * 思想：
      * 在要排序的一组数中，选出最小（或者最大）的一个数与第1个位置的数交换；
@@ -126,27 +132,33 @@ public class SortTest {
      * 按照数组顺序，记录当前数的位置 和大小，
      * 找寻数组中当前数以后的（也就是未排序的） 最小的数和 位置，
      * 将最小数的位置 和数值与当前数 交换
-     *
+     * <p>
      * 时间复杂度：n(n − 1) / 2 ∈ Θ(n2)
-     * @param arraytoSort
+     *
+     * @param arrayToSort
      * @return
      */
-        private static int[] simpleSelectSort(int[] arraytoSort) {
-        int length = arraytoSort.length;
+    private static int[] simpleSelectSort(int[] arrayToSort) {
+        int length = arrayToSort.length;
         for (int i = 0; i < length; i++) {
-            int key = arraytoSort[i];
+            int key = arrayToSort[i];
             int position = i; // 最小数据的位置
             for (int j = i + 1; j < length; j++) { //遍历后面的数据比较最小
-                if (arraytoSort[j] < key){ //如果当前数据不是最小的，则交换
+                if (arrayToSort[j] < key) { //如果当前数据不是最小的，则交换
                     //记录最小的
-                    key = arraytoSort[j];
+                    key = arrayToSort[j];
                     position = j;
                 }
             }
             //交换
-            arraytoSort[position] = arraytoSort[i]; //将 最小的 位置放如 i 的值
-            arraytoSort[i] = key; //将最小的值放入 i
+            arrayToSort[position] = arrayToSort[i]; //将 最小的 位置放如 i 的值
+            arrayToSort[i] = key; //将最小的值放入 i
         }
-        return arraytoSort;
+        return arrayToSort;
     }
+
+
+    /**
+     * 堆排序是选择排序种类的一部分 不是稳定的排序。
+     */
 }
