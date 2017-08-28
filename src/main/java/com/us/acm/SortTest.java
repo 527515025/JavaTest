@@ -123,11 +123,15 @@ public class SortTest {
      * 依次类推，直到第n-1个元素（倒数第二个数）和第n个元素（最后一个数）比较为止。
      * <p>
      * 做法：
+     * 按照数组顺序，记录当前数的位置 和大小，
+     * 找寻数组中当前数以后的（也就是未排序的） 最小的数和 位置，
+     * 将最小数的位置 和数值与当前数 交换
      *
+     * 时间复杂度：n(n − 1) / 2 ∈ Θ(n2)
      * @param arraytoSort
      * @return
      */
-    private static int[] simpleSelectSort(int[] arraytoSort) {
+        private static int[] simpleSelectSort(int[] arraytoSort) {
         int length = arraytoSort.length;
         for (int i = 0; i < length; i++) {
             int key = arraytoSort[i];
@@ -140,8 +144,8 @@ public class SortTest {
                 }
             }
             //交换
-            arraytoSort[position] = arraytoSort[i];
-            arraytoSort[i] = key;
+            arraytoSort[position] = arraytoSort[i]; //将 最小的 位置放如 i 的值
+            arraytoSort[i] = key; //将最小的值放入 i
         }
         return arraytoSort;
     }
