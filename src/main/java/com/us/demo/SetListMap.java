@@ -7,8 +7,9 @@ import java.util.*;
  */
 public class SetListMap {
     public static void main(String[] args) {
+        init();
 //        setTest();
-        intersect();
+//        intersect();
 
     }
 
@@ -19,6 +20,13 @@ public class SetListMap {
         set.add("asdf");
         set.stream().forEach(x -> System.out.println(x));
 
+    }
+
+    private static void init(){
+        List<String> strings = new ArrayList<>();
+        for(String str: strings) {
+            System.out.println("---"+str);
+        }
     }
 
     private static void intersect() {
@@ -43,6 +51,13 @@ public class SetListMap {
         lst2.forEach(x -> System.out.println(x));
     }
 
+    /**
+     * 去除重复两个集合中重复的数据
+     * @param list1
+     * @param list2
+     * @param <E>
+     * @return
+     */
     public static <E> List<E> unionList(List<E> list1,List<E> list2){
         List<E> resultList = new ArrayList<E>();
         List<E> tmpList1 ;
