@@ -1,5 +1,6 @@
 package com.us.acm;
 
+
 /**
  * 排序算法
  * Created by yangyibo on 8/22/17.
@@ -55,7 +56,7 @@ public class SortTest {
      * 最好：已经排好顺序的集合，这样只需要线性时间即遍历一次集合，每次只需要比较当前元素与前一个元素的大小问题，时间复杂度O(n)
      * 最坏：即刚好与所要的顺序相反，时间复杂度为O(n^2)
      * 平均：时间复杂度也是O(n^2)
-     *
+     * <p>
      * 稳定，不会改变相等数原有的顺序
      *
      * @param arrayToSort
@@ -118,10 +119,10 @@ public class SortTest {
 
     /**
      * 简单选择排序
-     *
+     * <p>
      * 选择排序类似于插入排序，只是是有选择的插入
-     *
-     *
+     * <p>
+     * <p>
      * <p>
      * 思想：
      * 在要排序的一组数中，选出最小（或者最大）的一个数与第1个位置的数交换；
@@ -159,6 +160,43 @@ public class SortTest {
 
 
     /**
+     * 堆排序
      * 堆排序是选择排序种类的一部分 不是稳定的排序。
+     * 优点就是最坏情况下时间复杂度是O(nlogn)
+     * <p>
+     * 将序列构建成大顶堆。建堆方法 buildMaxHeap
+     * 将根节点与最后一个节点交换，然后断开最后一个节点。  交换方法 swap
+     * 重复第一、二步，直到所有节点断开。
+     *
+     * @param arrayToSort
+     * @return
      */
+    private static int[] heapSort(int[] arrayToSort) {
+        int arrayLength = arrayToSort.length;
+        //循环建堆
+        for (int i = 0; i < arrayLength - 1; i++) {
+            //建大顶堆
+            buildMaxHeap(arrayToSort, arrayLength - 1 - i);
+            //交换堆顶和最后一个元素
+            swap(arrayToSort, 0, arrayLength - 1 - i);
+        }
+
+        return arrayToSort;
+    }
+
+    private static void swap(int[] data, int i, int j) {
+        int tmp = data[i];
+        data[i] = data[j];
+        data[j] = tmp;
+    }
+
+    /**
+     * 对data数组从0到lastIndex建大顶堆
+     * @param data
+     * @param lastIndex
+     */
+    private static void buildMaxHeap(int[] data, int lastIndex) {
+
+    }
+
 }
