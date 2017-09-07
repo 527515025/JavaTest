@@ -323,6 +323,7 @@ public class SortTest {
                     j--;
                 }
             } while (i <= j);// i <= j 说明第一趟还没有比较完。
+           // 由于第一趟的两个 while  i++和 j-- 操作，i 和j之间的元素都是排序好的，但是i和j 之间相差的元素个数不确定。
             if (start < j) {
                 quickSort(arrayToSort, start, j); //递归比较第一趟的左边部分,第一趟循环完毕，下标 j 是小于 base 的 所以 j 之前的就是 左边部分
             }
