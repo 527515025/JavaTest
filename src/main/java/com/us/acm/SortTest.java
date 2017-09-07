@@ -35,7 +35,7 @@ public class SortTest {
 
     private static int[] init() {
 //        int[] arrayToSort = {2, 68, 34, 98, 7, 37, 5, 8, 3, 10, 1, 33, 76, 23, 94, 31, 67, 97, 35, 38};
-        int[] arrayToSort = {35, 68, 34, 98, 7, 37, 5};
+        int[] arrayToSort = {35, 68, 34, 98, 7, 37, 5,100};
         return arrayToSort;
     }
 
@@ -322,14 +322,12 @@ public class SortTest {
                     i++;
                     j--;
                 }
-                System.out.println();
-                print(arrayToSort);
             } while (i <= j);// i <= j 说明第一趟还没有比较完。
             if (start < j) {
-                quickSort(arrayToSort, start, j); //递归比较第一趟的左边部分
+                quickSort(arrayToSort, start, j); //递归比较第一趟的左边部分,第一趟循环完毕，下标 j 是小于 base 的 所以 j 之前的就是 左边部分
             }
             if (end > i) {
-                quickSort(arrayToSort, i, end);//递归比较第一趟的右边边部分
+                quickSort(arrayToSort, i, end);//递归比较第一趟的右边边部分，下标 i 是大于 base 的 所以 j 之前的就是 右边部分
             }
         }
         return arrayToSort;
