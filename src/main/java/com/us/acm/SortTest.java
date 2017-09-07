@@ -1,8 +1,6 @@
 package com.us.acm;
 
 
-import java.util.Arrays;
-
 /**
  * 排序算法
  * Created by yangyibo on 8/22/17.
@@ -23,7 +21,9 @@ public class SortTest {
 //        print(insertionSort(init()));
 //        print(shellSort(init()));
 //        print(simpleSelectSort(init()));
-        print(heapSort(init()));
+
+//        print(heapSort(init()));
+        print(bubbleSort2(init()));
     }
 
     private static void print(int[] arrays) {
@@ -229,6 +229,72 @@ public class SortTest {
                 }
             }
         }
+    }
+
+    /**
+     * 交换排序： 冒泡排序
+     * 思想：
+     * 将序列中所有元素两两比较，将最大的放在最后面。让较大的数往下沉，较小的往上冒
+     * 将剩余序列中所有元素两两比较，将最大的放在最后面。
+     *
+     * @param arrayToSort
+     * @return
+     */
+    private static int[] bubbleSort(int[] arrayToSort) {
+        int arrayLength = arrayToSort.length;
+        for (int i = 0; i < arrayLength; i++) {//i为拍好序的元素个数
+            for (int j = 0; j < arrayLength - i - 1; j++) { //j 为未排序的元素个数
+                if (arrayToSort[j + 1] < arrayToSort[j]) {
+                    int tmp = arrayToSort[j + 1];
+                    arrayToSort[j + 1] = arrayToSort[j];
+                    arrayToSort[j] = tmp;
+                }
+            }
+            System.out.println();
+            print(arrayToSort);
+        }
+        return arrayToSort;
+    }
+
+
+    /**
+     * 冒泡排序优化：
+     * 设置一标志性变量pos,用于记录每趟排序中最后一次进行交换的位置。由于pos位置之后的记录均已交换到位,
+     * 故在进行下一趟排序时只要扫描到pos位置即可。
+     *
+     * @param arrayToSort
+     * @return
+     */
+    private static int[] bubbleSort2(int[] arrayToSort) {
+        int arrayLength = arrayToSort.length;
+
+        for (int i = 0; i < arrayLength; i++) {//i为拍好序的元素个数
+            int pos = 0;
+            for (int j = 0; j < arrayLength - i - 1; j++) { //j 为未排序的元素个数
+                if (arrayToSort[j + 1] < arrayToSort[j]) {
+                    int tmp = arrayToSort[j + 1];
+                    arrayToSort[j + 1] = arrayToSort[j];
+                    arrayToSort[j] = tmp;
+                    pos = 1;
+                }
+            }
+            if (pos == 0) {// pos 等于 0 时，说明已经排序好了，就不需要再做比较了
+                break;
+            }
+        }
+        return arrayToSort;
+    }
+
+
+    /**
+     * 交换排序： 快速排序
+     * 要求时间最快时。
+     *
+     * @param arrayToSort
+     * @return
+     */
+    private static int[] quickSort(int[] arrayToSort) {
+        return arrayToSort;
     }
 
 }
