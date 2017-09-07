@@ -21,9 +21,10 @@ public class SortTest {
 //        print(insertionSort(init()));
 //        print(shellSort(init()));
 //        print(simpleSelectSort(init()));
-
 //        print(heapSort(init()));
-        print(bubbleSort2(init()));
+//        print(bubbleSort(init()));
+//        print(bubbleSort2(init()));
+        print(quickSort(init(), 0, init().length - 1));
     }
 
     private static void print(int[] arrays) {
@@ -182,7 +183,6 @@ public class SortTest {
             buildMaxHeap(arrayToSort, arrayLength - 1 - i);
             //交换堆顶和最后一个元素
             swap(arrayToSort, 0, arrayLength - 1 - i);
-//            System.out.println(Arrays.toString(arrayToSort));
         }
 
         return arrayToSort;
@@ -236,6 +236,8 @@ public class SortTest {
      * 思想：
      * 将序列中所有元素两两比较，将最大的放在最后面。让较大的数往下沉，较小的往上冒
      * 将剩余序列中所有元素两两比较，将最大的放在最后面。
+     * <p>
+     * 冒泡排序效率非常低，效率还不如插入排序。
      *
      * @param arrayToSort
      * @return
@@ -289,11 +291,47 @@ public class SortTest {
     /**
      * 交换排序： 快速排序
      * 要求时间最快时。
+     * <p>
+     * 思想：
+     * 1）选择一个基准元素,通常选择第一个元素或者最后一个元素,
+     * 2）通过一趟排序讲待排序的记录分割成独立的两部分，其中一部分记录的元素值均比基准元素值小。另一部分记录的 元素值比基准值大。
+     * 3）此时基准元素在其排好序后的正确位置
+     * 4）然后分别对这两部分记录用同样的方法继续进行排序，直到整个序列有序。
+     * <p>
+     * 解决：递归
      *
      * @param arrayToSort
+     * @param start
+     * @param end
      * @return
      */
-    private static int[] quickSort(int[] arrayToSort) {
+    private static int[] quickSort(int[] arrayToSort, int start, int end) {
+        if (start < end) {
+            int base = arrayToSort[start]; // 选定的基准值（第一个数值作为基准值）
+            int temp; // 记录临时中间值
+            int i = start, j = end;
+            do {
+                while (arrayToSort[i] < base && i < end)// 左边 i < end 数组不能越界
+                    i++;
+                while (arrayToSort[j] > base && j > start)// 右边 j > start 数组不能越界
+                    j--;
+                if (i <= j) {//得到上边两个while的不满足条件，比如 下标 i 的值大于 base 和 下标 j 的值小于 base 交换位置
+                    temp = arrayToSort[i];
+                    arrayToSort[i] = arrayToSort[j];
+                    arrayToSort[j] = temp;
+                    i++;
+                    j--;
+                }
+                System.out.println();
+                print(arrayToSort);
+            } while (i <= j);
+            if (start < j) {
+                quickSort(arrayToSort, start, j);
+            }
+            if (end > i) {
+                quickSort(arrayToSort, i, end);
+            }
+        }
         return arrayToSort;
     }
 
