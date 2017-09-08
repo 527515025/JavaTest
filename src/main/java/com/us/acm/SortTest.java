@@ -24,7 +24,8 @@ public class SortTest {
 //        print(heapSort(init()));
 //        print(bubbleSort(init()));
 //        print(bubbleSort2(init()));
-        print(quickSort(init(), 0, init().length - 1));
+//        print(quickSort(init(), 0, init().length - 1));
+        print(mergeSort(init(),0,init().length - 1));
     }
 
     private static void print(int[] arrays) {
@@ -291,6 +292,7 @@ public class SortTest {
     /**
      * 交换排序： 快速排序
      * 要求时间最快时。
+     * 快速排序是一个不稳定的排序方法。
      * <p>
      * 思想：
      * 1）选择一个基准元素,通常选择第一个元素或者最后一个元素,
@@ -301,8 +303,8 @@ public class SortTest {
      * 解决：递归
      *
      * @param arrayToSort
-     * @param start
-     * @param end
+     * @param start 0
+     * @param end 数组最后一位下标
      * @return
      */
     private static int[] quickSort(int[] arrayToSort, int start, int end) {
@@ -333,5 +335,57 @@ public class SortTest {
         }
         return arrayToSort;
     }
+
+
+    /**
+     * 归并排序
+     * @param numbers
+     * @param left 0
+     * @param right 数组最后一位下标
+     */
+    public static int[] mergeSort(int[] numbers, int left, int right) {
+        int t = 1;// 每组元素个数
+        int size = right - left + 1;
+        while (t < size) {
+            int s = t;// 本次循环每组元素个数
+            t = 2 * s;
+            int i = left;
+            while (i + (t - 1) < size) {
+                merge(numbers, i, i + (s - 1), i + (t - 1));
+                i += t;
+            }
+            if (i + (s - 1) < right)
+                merge(numbers, i, i + (s - 1), right);
+        }
+        return numbers;
+    }
+    private static void merge(int[] data, int p, int q, int r) {
+        int[] B = new int[data.length];
+        int s = p;
+        int t = q + 1;
+        int k = p;
+        while (s <= q && t <= r) {
+            if (data[s] <= data[t]) {
+                B[k] = data[s];
+                s++;
+            } else {
+                B[k] = data[t];
+                t++;
+            }
+            k++;
+        }
+        if (s == q + 1)
+            B[k++] = data[t++];
+        else
+            B[k++] = data[s++];
+        for (int i = p; i <= r; i++)
+            data[i] = B[i];
+    }
+
+
+    /**
+     * 梳排序
+     * 它是冒泡排序的一种变体，就像希尔排序一样，也是利用一个间隔值来堆其进行分组，只不过希尔排序内部嵌套的是插入排序，而梳排序嵌套的是冒泡排序。
+     */
 
 }
