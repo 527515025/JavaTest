@@ -25,7 +25,7 @@ public class SortTest {
 //        print(bubbleSort(init()));
 //        print(bubbleSort2(init()));
 //        print(quickSort(init(), 0, init().length - 1));
-        print(mergeSort(init(),0,init().length - 1));
+        print(mergeSort(init(), 0, init().length - 1));
     }
 
     private static void print(int[] arrays) {
@@ -36,7 +36,7 @@ public class SortTest {
 
     private static int[] init() {
 //        int[] arrayToSort = {2, 68, 34, 98, 7, 37, 5, 8, 3, 10, 1, 33, 76, 23, 94, 31, 67, 97, 35, 38};
-        int[] arrayToSort = {35, 68, 34, 98, 7, 37, 5,100};
+        int[] arrayToSort = {35, 68, 34, 98, 7, 37, 5, 100};
         return arrayToSort;
     }
 
@@ -303,8 +303,8 @@ public class SortTest {
      * 解决：递归
      *
      * @param arrayToSort
-     * @param start 0
-     * @param end 数组最后一位下标
+     * @param start       0
+     * @param end         数组最后一位下标
      * @return
      */
     private static int[] quickSort(int[] arrayToSort, int start, int end) {
@@ -325,7 +325,7 @@ public class SortTest {
                     j--;
                 }
             } while (i <= j);// i <= j 说明第一趟还没有比较完。
-           // 由于第一趟的两个 while  i++和 j-- 操作，i 和j之间的元素都是排序好的，但是i和j 之间相差的元素个数不确定。
+            // 由于第一趟的两个 while  i++和 j-- 操作，i 和j之间的元素都是排序好的，但是i和j 之间相差的元素个数不确定。
             if (start < j) {
                 quickSort(arrayToSort, start, j); //递归比较第一趟的左边部分,第一趟循环完毕，下标 j 是小于 base 的 所以 j 之前的就是 左边部分
             }
@@ -339,17 +339,18 @@ public class SortTest {
 
     /**
      * 归并排序
+     *
      * @param numbers
-     * @param left 0
-     * @param right 数组最后一位下标
+     * @param left    0
+     * @param right   数组最后一位下标
      */
     public static int[] mergeSort(int[] numbers, int left, int right) {
         int t = 1;// 每组元素个数
         int size = right - left + 1;
         while (t < size) {
             int s = t;// 本次循环每组元素个数
-            t = 2 * s;
-            int i = left;
+            t = 2 * s; // 合并后组的元素个数
+            int i = left; //本组排序的起始下标
             while (i + (t - 1) < size) {
                 merge(numbers, i, i + (s - 1), i + (t - 1));
                 i += t;
@@ -359,6 +360,7 @@ public class SortTest {
         }
         return numbers;
     }
+
     private static void merge(int[] data, int p, int q, int r) {
         int[] B = new int[data.length];
         int s = p;
@@ -380,6 +382,7 @@ public class SortTest {
             B[k++] = data[s++];
         for (int i = p; i <= r; i++)
             data[i] = B[i];
+        print(data);
     }
 
 

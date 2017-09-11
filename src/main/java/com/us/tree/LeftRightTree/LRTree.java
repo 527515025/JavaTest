@@ -219,12 +219,6 @@ public class LRTree {
         }
     }
 
-    /**
-     * 分层遍历二叉树
-     */
-    public void LevelTraverse(Node currentNode) {
-
-    }
 
     /**
      * 后续遍历树中的所有节点
@@ -238,6 +232,13 @@ public class LRTree {
             //最后输出当前节点
             System.out.print(currentNode.value + " ");
         }
+    }
+    
+    /**
+     * 分层遍历二叉树
+     */
+    public void LevelTraverse(Node currentNode) {
+
     }
 
     /**
@@ -298,7 +299,5 @@ public class LRTree {
         int numRight = GetLeafNodeNum(root.rightChild);
         return (numLeft + numRight);
     }
-
-
 
 }
