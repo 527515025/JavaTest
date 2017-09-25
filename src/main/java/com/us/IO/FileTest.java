@@ -1,5 +1,6 @@
-package com.us.demo;
+package com.us.IO;
 
+import java.io.File;
 import java.io.RandomAccessFile;
 
 /**
@@ -13,8 +14,8 @@ public class FileTest {
     public static void main(String[] args) {
 //        ArraysTest();
         System.out.println(OS_NAME.contains("mac"));
-//       File file=new File("/Users/yangyibo/photo");
-//        System.out.println(file); //获取当前路径下的所有文件
+       File file=new File("/Users/yangyibo/photo");
+        System.out.println(file); //获取当前路径下的所有文件
 
     }
 

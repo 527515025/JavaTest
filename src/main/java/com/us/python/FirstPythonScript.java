@@ -7,6 +7,7 @@ import org.python.util.PythonInterpreter;
 
 /**
  * Created by yangyibo on 17/6/19.
+ * java 调用python 脚本
  */
 public class FirstPythonScript {
     public static void main(String[] args) {

@@ -11,11 +11,19 @@ import java.util.List;
  * Created by yangyibo on 17/3/13.
  */
 public class OkHttpClientTest {
-    private static String url = "http://localhost:8080/eventCollect/api/default";
-    private static String content = "Parsing events: Omegamon_Base;cms_hostname='itmserver';cms_port='370$i’;integration_type='U';master_reset_flag='';appl_label='';situation_name='disk';situation_type='S';situation_origin='itmserver:LZ';situation_time='01/06/2017 11:33:$i.000';situation_status='N';situation_thrunode='TEMS_TEST';situation_fullname='home_disk_error';situation_displayitem='';source='ITM';sub_source='itmserver:LZ';hostname='itmserver';origin='192.168.100.$i’;adapter_host='itmserver';date=‘$i/06/2017';severity='CRITICAL';msg='itm server home directory > 80%';situation_eventdata='~';END";
+    private static String url = "http://192.168.100.156:8080/eventCollect/api/default";
+    private static String content = ":\"\"##:\"\"##:\"10.0.170.144\"##:\"goldora1\"##:\"tivoli_eif\"##:\"ITM\"##:\"ITM_KLZ_DB\"##:\"Database oracle\"##:\"5\"##:\"cliffcliffcliffSMDGSIZE=414315 ASMDGUSEDPC=85.02 CHECKTM=-07-15-17.29.09 HOSTIP=10.1.84.88 HOSTNAME=goldora1  时间:07/15/ 17:40:53.001\"##:\"\"##:\"\"##:\"09/21/2017 10:29:01 AM\"##:\"\"##:\"1\"##:\"\"##:\"\"##:\"\"##:\"\"";
 
     public static void main(String[] args) {
-        send();
+        for (int i=0 ; i< 50 ;i++ ){
+            try {
+                Thread.sleep(100);
+                send();
+            }catch (Exception e){
+                System.out.println(e.getMessage().toString());
+            }
+
+        }
     }
 
     public static void send() {
