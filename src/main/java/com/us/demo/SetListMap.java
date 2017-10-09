@@ -1,5 +1,7 @@
 package com.us.demo;
 
+import com.us.Person;
+
 import java.util.*;
 
 /**
@@ -7,7 +9,7 @@ import java.util.*;
  */
 public class SetListMap {
     public static void main(String[] args) {
-        init();
+        list();
 //        setTest();
 //        intersect();
 
@@ -22,10 +24,9 @@ public class SetListMap {
 
     }
 
-    private static void init(){
-        List<String> strings = new ArrayList<>();
-        for(String str: strings) {
-            System.out.println("---"+str);
+    private static void printList( List<String> strings) {
+        for (String str : strings) {
+            System.out.println("---" + str);
         }
     }
 
@@ -38,7 +39,7 @@ public class SetListMap {
         lst2.add("1");
         lst2.add("2");
         lst2.add("4");
-        unionList(lst1,lst2);
+        unionList(lst1, lst2);
 //        //lst1去除掉 lst2 不包含的元素 "3" 取交集
 //        lst1.retainAll(lst2);
 //        lst1.forEach(x -> System.out.println(x));
@@ -53,24 +54,25 @@ public class SetListMap {
 
     /**
      * 去除重复两个集合中重复的数据
+     *
      * @param list1
      * @param list2
      * @param <E>
      * @return
      */
-    public static <E> List<E> unionList(List<E> list1,List<E> list2){
+    public static <E> List<E> unionList(List<E> list1, List<E> list2) {
         List<E> resultList = new ArrayList<E>();
-        List<E> tmpList1 ;
-        List<E> tmpList2 ;
-        if(null != list1 ){
+        List<E> tmpList1;
+        List<E> tmpList2;
+        if (null != list1) {
             tmpList1 = new ArrayList<E>(list1);
-            if( null != list2){
+            if (null != list2) {
                 tmpList2 = new ArrayList<E>(list2);
                 tmpList2.removeAll(tmpList1);
                 resultList.addAll(tmpList2);
             }
             resultList.addAll(tmpList1);
-        }else if (null != list2) {
+        } else if (null != list2) {
             tmpList2 = new ArrayList<E>(list2);
             resultList.addAll(tmpList2);
         }
@@ -88,9 +90,10 @@ public class SetListMap {
 
     /**
      * 遍历map
+     *
      * @param map
      */
-    public static void getMap(Map<String, Object> map){
+    public static void getMap(Map<String, Object> map) {
         map.put("1", "value1");
         map.put("2", "value2");
         map.put("3", "value3");
@@ -98,7 +101,7 @@ public class SetListMap {
         //第一种：普遍使用，二次取值
         System.out.println("通过Map.keySet遍历key和value：");
         for (String key : map.keySet()) {
-            System.out.println("key= "+ key + " and value= " + map.get(key));
+            System.out.println("key= " + key + " and value= " + map.get(key));
         }
 
         //第二种
@@ -119,5 +122,16 @@ public class SetListMap {
         for (Object v : map.values()) {
             System.out.println("value= " + v);
         }
+    }
+
+
+    private static void list() {
+        List<String> list = new ArrayList<>();
+        Person p = new Person();
+        for (int i = 0; i < 5; i++){
+            p.setName("abel"+i);
+            list.add(p.toString());
+        }
+        printList(list);
     }
 }
