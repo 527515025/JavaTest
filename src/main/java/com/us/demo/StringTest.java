@@ -20,7 +20,8 @@ public class StringTest {
 //        trim();
 //        instanceofTest(2);
 //        getUchat();
-        splitTest();
+//        splitTest();
+        splitTestEnter();
     }
 
 
@@ -116,5 +117,15 @@ public class StringTest {
         String s = "ownedByUser_cnname";
         String [] strings = s.split("_");
         Arrays.stream(strings).forEach(x -> System.out.println(x+"\n"));
+    }
+
+    private  static  void splitTestEnter() {
+        String s = "测试\n" +
+                "测试：请问";
+        if (s.contains("\n")) {
+            System.out.println("true");
+        }
+        String [] strings = s.split("\n");
+        Arrays.stream(strings).forEach(x -> System.out.println(x+"1 \n"));
     }
 }
