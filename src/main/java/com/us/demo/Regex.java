@@ -16,7 +16,8 @@ public class Regex {
 //        compress();
 //        zybCompress();
 //        zabbixSplit();
-        zabbixSplit2();
+//        zabbixSplit2();
+        solarwinds();
     }
 
     private static void pattern1() {
@@ -148,13 +149,13 @@ public class Regex {
         String raw_event;
         String content = "ZABBIX##Trigger_name:#abelProcessor load is too high on 35##Trigger_status:# PROBLEM##Trigger_severity:# High##Trigger_URL:# 192.168.100.35##Host_name :# 35##Host_ip:# 192.168.100.35##Events_time :#10:09:23##Item_name :#Processor load (1 min average per core)##Item_values:#1. Processor load (1 min average per core) (35:system.cpu.load[percpu,avg1]): 0.086426\n";
         Map<String, String> map = new HashMap<>();
-                String[] args = content.split("##");
-                Arrays.stream(args).forEach(x -> {
-                    if (x.contains(":#")) {
-                        String[] keyAndValue = x.split(":#");
-                        map.put(keyAndValue[0].trim(), keyAndValue[1].trim());
-                    }
-                });
+        String[] args = content.split("##");
+        Arrays.stream(args).forEach(x -> {
+            if (x.contains(":#")) {
+                String[] keyAndValue = x.split(":#");
+                map.put(keyAndValue[0].trim(), keyAndValue[1].trim());
+            }
+        });
         for (String key : map.keySet()) {
             System.out.println(key + " ----------" + map.get(key));
         }
@@ -163,8 +164,19 @@ public class Regex {
     public static void zabbixSplit2() {
         String raw_event;
         String content = "sdfsdfsdsdf2342423f##key##ZABBIX##Trigger_name:#abelProcessor load is too high on 35##Trigger_status:# PROBLEM##Trigger_severity:# High##Trigger_URL:# 192.168.100.35##Host_name :# 35##Host_ip:# 192.168.100.35##Events_time :#10:09:23##Item_name :#Processor load (1 min average per core)##Item_values:#1. Processor load (1 min average per core) (35:system.cpu.load[percpu,avg1]): 0.086426\n";
-        String[] args=content.split("##key##");
-        Arrays.stream(args).forEach(x-> System.out.println(x));
+        String[] args = content.split("##key##");
+        Arrays.stream(args).forEach(x -> System.out.println(x));
+    }
+
+
+    public static void solarwinds() {
+        String regex = "^:防火墙(([A-Z]){3}-([A-Z]){3}-([A-Z]){2}-([A-Z])*\\d*)";
+        String content = ":防火墙DCC-ECC-FW-OASRX14引擎";
+        Pattern p = Pattern.compile(regex);
+        Matcher m = p.matcher(content);
+        if (m.find()) {
+            System.out.println(m.group(0)+" --------- "+m.group(1));
+        }
     }
 }
 
