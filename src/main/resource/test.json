@@ -1,5 +1,5 @@
 {
-  "triggers": [
+  "trigger": [
     {
       "recovery_mode": "0",
       "correlation_mode": "0",

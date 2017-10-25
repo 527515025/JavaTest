@@ -1,6 +1,7 @@
 package com.us.IO;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.RandomAccessFile;
 
 /**
@@ -12,13 +13,24 @@ public class FileTest {
     private static String OS_NAME = System.getProperty("os.name").toLowerCase();
 
     public static void main(String[] args) {
-//        ArraysTest();
         System.out.println(OS_NAME.contains("mac"));
-       File file=new File("/Users/yangyibo/photo");
+        File file = new File("src/main/resource");
         System.out.println(file); //获取当前路径下的所有文件
+        try {
+            write();
+        } catch (Exception e) {
+
+        }
 
     }
 
+    private static void write() throws IOException {
+        RandomAccessFile rf = new RandomAccessFile("src/main/resource/test.json", "rw");
+        rf.seek(10);
+        rf.writeBytes("abel");
+        rf.close();
+        System.out.println();
 
+    }
 
 }
