@@ -9,25 +9,43 @@ import java.io.RandomAccessFile;
  */
 public class FileTest {
 
-    private RandomAccessFile randomAccessFile = null;
     private static String OS_NAME = System.getProperty("os.name").toLowerCase();
 
     public static void main(String[] args) {
         System.out.println(OS_NAME.contains("mac"));
-        File file = new File("src/main/resource");
-        System.out.println(file); //获取当前路径下的所有文件
         try {
             write();
+            read();
         } catch (Exception e) {
 
         }
 
     }
 
+    /**
+     * 获取当前路径下的所有文件
+     */
+    private static void getAllFileInPath(){
+        File file = new File("src/main/resource");
+        System.out.println(file);
+    }
+
+    /**
+     *
+     * @throws IOException
+     */
     private static void write() throws IOException {
-        RandomAccessFile rf = new RandomAccessFile("src/main/resource/test.json", "rw");
-        rf.seek(10);
-        rf.writeBytes("abel");
+        RandomAccessFile file = new RandomAccessFile("src/main/resource/testFile.txt", "rw");
+        file.seek(file.length());
+        file.write("a bcd你好啊的撒法\n".getBytes("UTF-8"));
+        file.close();
+        System.out.println();
+
+    }
+
+    private static void read() throws IOException {
+        RandomAccessFile rf = new RandomAccessFile("src/main/resource/testFile.txt", "r");
+        System.out.println(new String(rf.readLine().getBytes("ISO-8859-1"),"utf-8"));
         rf.close();
         System.out.println();
 
