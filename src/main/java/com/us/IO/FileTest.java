@@ -15,7 +15,7 @@ public class FileTest {
     public static void main(String[] args) {
         System.out.println(OS_NAME.contains("mac"));
         try {
-            write();
+            write("似懂非懂沙发上的讲话");
             read();
         } catch (Exception e) {
 
@@ -34,10 +34,10 @@ public class FileTest {
     /**
      * @throws IOException
      */
-    private static void write() throws IOException {
+    private static void write(String text) throws IOException {
         RandomAccessFile file = new RandomAccessFile("src/main/resource/testFile.txt", "rw");
         file.seek(pos);
-        file.write("a bcd你好啊的撒法".getBytes("UTF-8"));
+        file.write(text.getBytes("UTF-8"));
         file.close();
         System.out.println();
 
@@ -45,6 +45,7 @@ public class FileTest {
 
     private static void read() throws IOException {
         RandomAccessFile rf = new RandomAccessFile("src/main/resource/testFile.txt", "r");
+        rf.seek(pos);
         System.out.println(new String(rf.readLine().getBytes("ISO-8859-1"), "utf-8"));
         pos = rf.length();
         rf.close();
