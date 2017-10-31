@@ -1,10 +1,7 @@
 package com.us.demo;
 
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.TypeReference;
+import com.alibaba.fastjson.*;
 
 import java.util.Map;
 
@@ -13,9 +10,11 @@ import java.util.Map;
  */
 public class Json {
     public static void main(String[] args) {
-        System.out.println(newJsonStr());
+//        System.out.println(newJsonStr());
 //        jsonToMap(newJsonStr());
-        System.out.println(newJsonArray());
+//        jsonToMap();
+        jsonPath();
+//        System.out.println(newJsonArray());
     }
 
     /**
@@ -66,4 +65,93 @@ public class Json {
         }
     }
 
+    private static void  jsonToMap() {
+        String data = "{\n" +
+                "    \"code\": \"0\",\n" +
+                "    \"msg\": \"success\",\n" +
+                "    \"exception\": null,\n" +
+                "    \"data\": [\n" +
+                "        {\n" +
+                "            \"businessName\": \"柜面\",\n" +
+                "            \"componentName\": \"认证APP\",\n" +
+                "            \"alarmLevel\": \"2\",\n" +
+                "            \"alarmKey\": \"bff2f3decc181a8ba21c82aecff1ddfa\",\n" +
+                "            \"constraintDesc\": \"[交易类型:TS991203][所有交易数]\",\n" +
+                "            \"alarmTime\": \"2017-10-17 17:34:00\",\n" +
+                "            \"startTime\": \"2017-10-17 17:34:00\",\n" +
+                "            \"duration\": 1,\n" +
+                "            \"manageState\": \"异常\",\n" +
+                "            \"alarmType\": \"阀值告警\",\n" +
+                "            \"productType\": \"BPM\"\n" +
+                "        }    ]\n" +
+                "}";
+
+
+        JSONObject jsonObject = JSONObject.parseObject(data);
+        String str=jsonObject.get("data").toString();
+        System.out.println(str);
+        if (str.startsWith("[")&& str.endsWith("]")) {
+            System.out.println("-----------JSONArray----------------");
+        }
+
+        JSONArray jsonArray = JSONArray.parseArray(str);
+
+        Map<String, Object> map2 = JSONArray.parseObject(jsonArray.getString(0).toString(), new TypeReference<Map<String, Object>>() {
+        });
+
+        System.out.println(map2.get("constraintDesc"));
+        //        System.out.println(str);
+        System.out.println("end");
+    }
+
+
+    private static void jsonPath(){
+        String data = "{\n" +
+                "    \"code\": \"0\",\n" +
+                "    \"msg\": \"success\",\n" +
+                "    \"exception\": null,\n" +
+                "    \"data\": [\n" +
+                "        {\n" +
+                "            \"businessName\": \"柜面1\",\n" +
+                "            \"componentName\": \"认证APP\",\n" +
+                "            \"alarmLevel\": \"1\",\n" +
+                "            \"alarmKey\": \"bff2f3decc181a8ba21c82aecff1ddfa\",\n" +
+                "            \"constraintDesc\": \"[交易类型:TS991203][所有交易数]\",\n" +
+                "            \"alarmTime\": \"2017-10-17 17:34:00\",\n" +
+                "            \"startTime\": \"2017-10-17 17:34:00\",\n" +
+                "            \"duration\": 1,\n" +
+                "            \"manageState\": \"异常\",\n" +
+                "            \"alarmType\": \"阀值告警\",\n" +
+                "            \"productType\": \"BPM\"\n" +
+                "        },\n" +
+                "        {\n" +
+                "            \"businessName\": \"柜面2\",\n" +
+                "            \"componentName\": \"认证F5\",\n" +
+                "            \"alarmLevel\": \"2\",\n" +
+                "            \"alarmKey\": \"665b7d6f49f3d85d4b15b6a9ca38df90\",\n" +
+                "            \"constraintDesc\": \"[6.1.12.27][响应时间(ms)]\",\n" +
+                "            \"alarmTime\": \"2017-10-17 17:30:00\",\n" +
+                "            \"startTime\": \"2017-10-17 17:30:00\",\n" +
+                "            \"duration\": 2,\n" +
+                "            \"manageState\": \"未处理\",\n" +
+                "            \"alarmType\": \"维度阀值告警\",\n" +
+                "            \"productType\": \"BPM\"\n" +
+                "        }\n" +
+                "    ]\n" +
+                "}";
+        JSONObject jsonObject = JSONObject.parseObject(data);
+        System.out.println(JSONPath.eval(jsonObject,"$.data.componentName"));
+        // data list 中duration > 1
+        System.out.println(JSONPath.eval(jsonObject,"$.data[duration > 1]"));
+        // data list 中 componentName ＝  认证F5
+        System.out.println(JSONPath.eval(jsonObject,"$.data[componentName = '认证F5']"));
+        // data[0] 的所有属性值 只有value 没有 key
+        System.out.println(JSONPath.eval(jsonObject,"$.data[0].*"));
+        // 只取data list 中所有对象的 componentName 和  businessName属性
+        System.out.println(JSONPath.eval(jsonObject,"$.data['componentName','businessName']"));
+
+
+
+
+    }
 }
