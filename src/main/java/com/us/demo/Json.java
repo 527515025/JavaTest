@@ -181,9 +181,8 @@ public class Json {
                 "}";
 
         JSONObject jsonObject = JSONObject.parseObject(data);
-        String path = "$.data[0:].componentName[0:].msg";
-
-        recursionPath(path, jsonObject);
+        String path = "$.data[n].componentName[0:].msg";
+        System.out.println(path + recursionPath(path, jsonObject));
     }
 
 
@@ -192,20 +191,21 @@ public class Json {
      * $.data[0:] 代表  data是个数组，且data 中的 属性合并显示
      * $.data[n] 代表  data是个数组，且data 中的 属性单条显示
      */
-    private static void recursionPath(String path, JSONObject jsonObject) {
+    private static String recursionPath(String path, JSONObject jsonObject) {
         if (path.contains("[n]")) {
             int index = path.indexOf("[n]");
-            String path1 = path.substring(0, index);
-            for (int i = 0; i < JSONPath.size(jsonObject, path1); i++) {
-                String path2 = path.substring(index + 3);
-                if (path2.contains("[n]")) {
-                    recursionPath(path1 + "[" + i + "]" + path2, jsonObject);
+            String frontPath = path.substring(0, index);
+            for (int i = 0; i < JSONPath.size(jsonObject, frontPath); i++) {
+                String afterPath = path.substring(index + 3);
+                if (afterPath.contains("[n]")) {
+                    recursionPath(frontPath + "[" + i + "]" + afterPath, jsonObject);
                 } else {
-                    System.out.println(path1 + "[" + i + "]" + path2 + "------------------------" + JSONPath.eval(jsonObject, path1 + "[" + i + "]" + path2));
+                    return JSONPath.eval(jsonObject, frontPath + "[" + i + "]" + afterPath).toString();
                 }
             }
         } else {
-            System.out.println(path + "------------------------" + JSONPath.eval(jsonObject, path));
+            return JSONPath.eval(jsonObject, path).toString();
         }
+        return null;
     }
 }
