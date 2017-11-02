@@ -140,7 +140,7 @@ public class Json {
         String data = "[{\n" +
                 "    \"code\": \"0\",\n" +
                 "    \"msg\": \"success\",\n" +
-                "    \"exception\": null,\n" +
+                "    \"exception\": \"exception1\",\n" +
                 "    \"data\": [\n" +
                 "        {\n" +
                 "            \"businessName\": \"柜面\",\n" +
@@ -179,7 +179,7 @@ public class Json {
                 "    ]\n" +
                 "}]";
 
-        String path = "businessName=$.data[n].businessName##code=$.data[n].componentName[n].code##msg=$.data[n].componentName[n].msg";
+        String path = "code=$.data[n].componentName[n].code##msg=$.data[n].componentName[n].msg##businessName=$.data[n].businessName##state=$.data[n].manageState##exception=$.exception";
         JSONArray jsonArray = JSONArray.parseArray(data);
         for (Object obj : jsonArray) {
             JSONObject jsonObject = JSONObject.parseObject(obj.toString());
@@ -218,7 +218,7 @@ public class Json {
         Map<String, Object> map = new HashMap<>();
         for (int i = 0; i < paths.length; i++) {//i 属性
             String[] subPath = paths[i].split("=");
-            mapPutALl(recursionPath(subPath[1], jsonObject),map,subPath[0]);
+            map = mapPutALl(recursionPath(subPath[1], jsonObject),map, subPath[0]);
             printMap(map);
         }
         System.out.println("end");
@@ -244,22 +244,36 @@ public class Json {
                 }
             }
         } else {
+            //以最后一个点分割放入map
+            map.put(path.substring(0,path.lastIndexOf(".")),JSONPath.eval(jsonObject, path));
             System.out.println(JSONPath.eval(jsonObject, path).toString());
         }
         return map;
     }
 
-    private static Map<String, Object> mapPutALl(Map<String, Object> mapOld, Map<String, Object> mapNow,String field) {
+    /**
+     *
+     * @param mapOld
+     * @param mapNow
+     * @param field
+     * @return
+     */
+    private static Map<String, Object> mapPutALl(Map<String, Object> mapOld, Map<String, Object> mapNow, String field) {
+        boolean flag = true;
         for (Map.Entry<String, Object> entry : mapOld.entrySet()) {
             if (null != mapNow.get(entry.getKey())) {
-                mapNow.put(entry.getKey(), field+":"+mapNow.get(entry.getKey()) + ";" + entry.getValue());
+                mapNow.put(entry.getKey(), mapNow.get(entry.getKey()) + "; " + field + ":" + entry.getValue());
             } else {
                 for (Map.Entry<String, Object> entryNow : mapNow.entrySet()) {
                     if (entryNow.getKey().contains(entry.getKey())) {
-                        mapNow.put(entry.getKey(), mapNow.get(entry.getKey()) + ";" + entry.getValue());
+                        mapNow.put(entryNow.getKey(), entryNow.getValue() + ";" + field + ":" + entry.getValue());
+                        flag = false;
                     }
                 }
-                mapNow.put(entry.getKey(), entry.getValue());
+                if (flag) {
+                    mapNow.put(entry.getKey(), field + ":" + entry.getValue());
+                    flag = true;
+                }
             }
 
         }
