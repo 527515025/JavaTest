@@ -189,36 +189,15 @@ public class Json {
 //        recursionPath(path, jsonObject);
     }
 
-//    private static void mark(String path, JSONObject jsonObject) {
-//        String[] paths = path.split("##");
-//        List<String> list = null;
-//        Map<Integer, List<String>> map = new HashMap<>();
-//        Integer index = 0;
-//        for (int i = 0; i < paths.length; i++) {//i 属性
-//            list = recursionPath(paths[i].split("=")[1], jsonObject);
-//            map.put(i, list);
-//            index = index > list.size() ? index : list.size();
-//        }
-//        String[][] values = new String[index][paths.length];
-//        for (int i = 0; i < index; i++) {
-//            int k = 0;
-//            for (int j = 0; j < paths.length; j++) {
-//                if (j == paths.length - 1) {
-//                    k++;
-//                }
-//                values[i][j] = map.get(j).get(k);
-//            }
-//        }
-//
-//        System.out.println("end");
-//    }
 
     private static void mark(String path, JSONObject jsonObject) {
         String[] paths = path.split("##");
         Map<String, Object> map = new HashMap<>();
         for (int i = 0; i < paths.length; i++) {//i 属性
             String[] subPath = paths[i].split("=");
-            map = mapPutALl(recursionPath(subPath[1], jsonObject),map, subPath[0]);
+            map = mapPutALl(recursionPath(subPath[1], jsonObject), map, subPath[0]);
+
+
             printMap(map);
         }
         System.out.println("end");
@@ -245,13 +224,14 @@ public class Json {
             }
         } else {
             //以最后一个点分割放入map
-            map.put(path.substring(0,path.lastIndexOf(".")),JSONPath.eval(jsonObject, path));
-            System.out.println(JSONPath.eval(jsonObject, path).toString());
+            map.put(path.substring(0, path.lastIndexOf(".")), JSONPath.eval(jsonObject, path));
+//            System.out.println(JSONPath.eval(jsonObject, path).toString());
         }
         return map;
     }
 
     /**
+     * 将新解析的数据放到 原有数据的map 中，按照关系路径合并
      *
      * @param mapOld
      * @param mapNow
