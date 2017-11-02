@@ -215,15 +215,13 @@ public class Json {
 
     private static void mark(String path, JSONObject jsonObject) {
         String[] paths = path.split("##");
-        List<String> list = null;
+        Map<String, Object> map = new HashMap<>();
         for (int i = 0; i < paths.length; i++) {//i 属性
             String[] subPath = paths[i].split("=");
-            list = recursionPath(subPath[1], jsonObject);
-            list.stream().forEach(x-> System.out.println(x));
-            System.out.println("end");
+            mapPutALl(recursionPath(subPath[1], jsonObject),map,subPath[0]);
+            printMap(map);
         }
-
-
+        System.out.println("end");
     }
 
     /**
@@ -231,25 +229,40 @@ public class Json {
      * $.data[0:] 代表  data是个数组，且data 中的 属性合并显示
      * $.data[n] 代表  data是个数组，且data 中的 属性单条显示
      */
-    private static List<String> recursionPath(String path, JSONObject jsonObject) {
-        List<String> list = new ArrayList<>();
-        StringBuffer stringBuffer = new StringBuffer();
+    private static Map<String, Object> recursionPath(String path, JSONObject jsonObject) {
+        Map<String, Object> map = new HashMap<>();
         if (path.contains("[n]")) {
             int index = path.indexOf("[n]");
             String frontPath = path.substring(0, index);
             for (int i = 0; i < JSONPath.size(jsonObject, frontPath); i++) {
                 String afterPath = path.substring(index + 3);
                 if (afterPath.contains("[n]")) {
-                    list.addAll(recursionPath(frontPath + "[" + i + "]" + afterPath, jsonObject));
+                    map.putAll(recursionPath(frontPath + "[" + i + "]" + afterPath, jsonObject));
                 } else {
-                    list.add(JSONPath.eval(jsonObject, frontPath + "[" + i + "]" + afterPath).toString());
-                    System.out.println(frontPath + "[" + i + "]" +":------"+JSONPath.eval(jsonObject, frontPath + "[" + i + "]" + afterPath).toString());
+                    map.put(frontPath + "[" + i + "]", JSONPath.eval(jsonObject, frontPath + "[" + i + "]" + afterPath).toString());
+//                    System.out.println(frontPath + "[" + i + "]" +":------"+JSONPath.eval(jsonObject, frontPath + "[" + i + "]" + afterPath).toString());
                 }
             }
         } else {
             System.out.println(JSONPath.eval(jsonObject, path).toString());
-            stringBuffer.append(JSONPath.eval(jsonObject, path).toString());
         }
-        return list;
+        return map;
+    }
+
+    private static Map<String, Object> mapPutALl(Map<String, Object> mapOld, Map<String, Object> mapNow,String field) {
+        for (Map.Entry<String, Object> entry : mapOld.entrySet()) {
+            if (null != mapNow.get(entry.getKey())) {
+                mapNow.put(entry.getKey(), field+":"+mapNow.get(entry.getKey()) + ";" + entry.getValue());
+            } else {
+                for (Map.Entry<String, Object> entryNow : mapNow.entrySet()) {
+                    if (entryNow.getKey().contains(entry.getKey())) {
+                        mapNow.put(entry.getKey(), mapNow.get(entry.getKey()) + ";" + entry.getValue());
+                    }
+                }
+                mapNow.put(entry.getKey(), entry.getValue());
+            }
+
+        }
+        return mapNow;
     }
 }
