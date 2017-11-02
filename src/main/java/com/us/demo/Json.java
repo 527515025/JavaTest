@@ -3,8 +3,7 @@ package com.us.demo;
 
 import com.alibaba.fastjson.*;
 
-import java.util.Arrays;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by yangyibo on 17/6/9.
@@ -138,7 +137,7 @@ public class Json {
      * 使用 jsonPath［n］递归解析json
      */
     private static void recursion() {
-        String data = "{\n" +
+        String data = "[{\n" +
                 "    \"code\": \"0\",\n" +
                 "    \"msg\": \"success\",\n" +
                 "    \"exception\": null,\n" +
@@ -178,33 +177,79 @@ public class Json {
                 "            \"productType\": \"BPM2\"\n" +
                 "        }\n" +
                 "    ]\n" +
-                "}";
+                "}]";
 
-        JSONObject jsonObject = JSONObject.parseObject(data);
-        String path = "$.data[n].componentName[0:].msg";
-        recursionPath(path, jsonObject);
+        String path = "businessName=$.data[n].businessName##code=$.data[n].componentName[n].code##msg=$.data[n].componentName[n].msg";
+        JSONArray jsonArray = JSONArray.parseArray(data);
+        for (Object obj : jsonArray) {
+            JSONObject jsonObject = JSONObject.parseObject(obj.toString());
+            mark(path, jsonObject);
+        }
+//        JSONObject jsonObject = JSONObject.parseObject(data);
+//        recursionPath(path, jsonObject);
     }
 
+//    private static void mark(String path, JSONObject jsonObject) {
+//        String[] paths = path.split("##");
+//        List<String> list = null;
+//        Map<Integer, List<String>> map = new HashMap<>();
+//        Integer index = 0;
+//        for (int i = 0; i < paths.length; i++) {//i 属性
+//            list = recursionPath(paths[i].split("=")[1], jsonObject);
+//            map.put(i, list);
+//            index = index > list.size() ? index : list.size();
+//        }
+//        String[][] values = new String[index][paths.length];
+//        for (int i = 0; i < index; i++) {
+//            int k = 0;
+//            for (int j = 0; j < paths.length; j++) {
+//                if (j == paths.length - 1) {
+//                    k++;
+//                }
+//                values[i][j] = map.get(j).get(k);
+//            }
+//        }
+//
+//        System.out.println("end");
+//    }
+
+    private static void mark(String path, JSONObject jsonObject) {
+        String[] paths = path.split("##");
+        List<String> list = null;
+        for (int i = 0; i < paths.length; i++) {//i 属性
+            String[] subPath = paths[i].split("=");
+            list = recursionPath(subPath[1], jsonObject);
+            list.stream().forEach(x-> System.out.println(x));
+            System.out.println("end");
+        }
+
+
+    }
 
     /**
      * 使用 jsonPath［n］递归解析json
      * $.data[0:] 代表  data是个数组，且data 中的 属性合并显示
      * $.data[n] 代表  data是个数组，且data 中的 属性单条显示
      */
-    private static void recursionPath(String path, JSONObject jsonObject) {
+    private static List<String> recursionPath(String path, JSONObject jsonObject) {
+        List<String> list = new ArrayList<>();
+        StringBuffer stringBuffer = new StringBuffer();
         if (path.contains("[n]")) {
             int index = path.indexOf("[n]");
             String frontPath = path.substring(0, index);
             for (int i = 0; i < JSONPath.size(jsonObject, frontPath); i++) {
                 String afterPath = path.substring(index + 3);
                 if (afterPath.contains("[n]")) {
-                    recursionPath(frontPath + "[" + i + "]" + afterPath, jsonObject);
+                    list.addAll(recursionPath(frontPath + "[" + i + "]" + afterPath, jsonObject));
                 } else {
-                    System.out.println(JSONPath.eval(jsonObject, frontPath + "[" + i + "]" + afterPath).toString());
+                    list.add(JSONPath.eval(jsonObject, frontPath + "[" + i + "]" + afterPath).toString());
+                    System.out.println(frontPath + "[" + i + "]" +":------"+JSONPath.eval(jsonObject, frontPath + "[" + i + "]" + afterPath).toString());
                 }
             }
         } else {
             System.out.println(JSONPath.eval(jsonObject, path).toString());
+            stringBuffer.append(JSONPath.eval(jsonObject, path).toString());
         }
+        return list;
     }
 }
