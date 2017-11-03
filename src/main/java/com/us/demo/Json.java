@@ -63,7 +63,7 @@ public class Json {
 
     private static void printMap(Map<String, Object> map) {
         for (Map.Entry<String, Object> entry : map.entrySet()) {
-            System.out.println("key: " + entry.getKey() + "value : " + entry.getValue());
+            System.out.println("key: " + entry.getKey() + " value : " + entry.getValue());
         }
     }
 
@@ -208,6 +208,7 @@ public class Json {
                 map = mapPutALl(recursionPath(subPath[1], jsonObject), map, subPath[0]);
             }
         }
+        analysisMap(map);
         printMap(map);
         System.out.println("end");
     }
@@ -251,16 +252,25 @@ public class Json {
         boolean flag = true;
         for (Map.Entry<String, Object> entry : mapOld.entrySet()) {
             if (null != mapNow.get(entry.getKey())) {
-                mapNow.put(entry.getKey(), mapNow.get(entry.getKey()) + "; " + field + ":" + entry.getValue());
+                if (mapNow.get(entry.getKey()).toString().contains("#;#" + field + "#:#")) {
+                    // 说明是属性相加 ＝ epp 的一个属性
+                    mapNow.put(entry.getKey(), mapNow.get(entry.getKey()) + ";" + entry.getValue());
+                } else {
+                    mapNow.put(entry.getKey(), mapNow.get(entry.getKey()) + "#;#" + field + "#:#" + entry.getValue());
+                }
             } else {
                 for (Map.Entry<String, Object> entryNow : mapNow.entrySet()) {
                     if (entryNow.getKey().contains(entry.getKey())) {
-                        mapNow.put(entryNow.getKey(), entryNow.getValue() + ";" + field + ":" + entry.getValue());
+                        if (entryNow.getValue().toString().contains("#;#" + field + "#:#")) {
+                            mapNow.put(entryNow.getKey(), entryNow.getValue() + ";" + entry.getValue());
+                        }else {
+                            mapNow.put(entryNow.getKey(), entryNow.getValue() + "#;#" + field + "#:#" + entry.getValue());
+                        }
                         flag = false;
                     }
                 }
                 if (flag) {
-                    mapNow.put(entry.getKey(), field + ":" + entry.getValue());
+                    mapNow.put(entry.getKey(), field + "#:#" + entry.getValue());
                     flag = true;
                 }
             }
@@ -272,9 +282,18 @@ public class Json {
 
     private static String analysisMap(Map<String, Object> map) {
         for (Map.Entry<String, Object> entry : map.entrySet()) {
-            
-
+            Map<String, Object> eventMap = new HashMap<>();
+            Arrays.stream(entry.getValue().toString().split("#;#")).forEach(x -> {
+                String[] keyAndValue = x.split("#:#");
+                eventMap.put(keyAndValue[0], keyAndValue[1]);
+            });
+            convertEvent(eventMap);
         }
         return null;
+    }
+
+    private static void convertEvent(Map<String, Object> map) {
+        printMap(map);
+        System.out.println("--------------------------------------------");
     }
 }
