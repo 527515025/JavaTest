@@ -179,7 +179,7 @@ public class Json {
                 "    ]\n" +
                 "}]";
 
-        String path = "code=$.data[n].componentName[n].code##msg=$.data[n].componentName[n].msg##businessName=$.data[n].businessName##state=$.data[n].manageState##exception=$.exception";
+        String path = "code=$.data[n].componentName[n].code##msg=$.data[n].componentName[n].msg+$.data[n].businessName##businessName=$.data[n].businessName##state=$.data[n].manageState##exception=$.exception";
         JSONArray jsonArray = JSONArray.parseArray(data);
         for (Object obj : jsonArray) {
             JSONObject jsonObject = JSONObject.parseObject(obj.toString());
@@ -190,16 +190,25 @@ public class Json {
     }
 
 
+    /**
+     * @param path
+     * @param jsonObject
+     */
     private static void mark(String path, JSONObject jsonObject) {
         String[] paths = path.split("##");
         Map<String, Object> map = new HashMap<>();
         for (int i = 0; i < paths.length; i++) {//i 属性
             String[] subPath = paths[i].split("=");
-            map = mapPutALl(recursionPath(subPath[1], jsonObject), map, subPath[0]);
-
-
-            printMap(map);
+            if (subPath[1].contains("+")) {
+                String[] moreSubPath = subPath[1].split("\\+");
+                for (String str : moreSubPath) {
+                    map = mapPutALl(recursionPath(str, jsonObject), map, subPath[0]);
+                }
+            } else {
+                map = mapPutALl(recursionPath(subPath[1], jsonObject), map, subPath[0]);
+            }
         }
+        printMap(map);
         System.out.println("end");
     }
 
@@ -258,5 +267,14 @@ public class Json {
 
         }
         return mapNow;
+    }
+
+
+    private static String analysisMap(Map<String, Object> map) {
+        for (Map.Entry<String, Object> entry : map.entrySet()) {
+            
+
+        }
+        return null;
     }
 }
