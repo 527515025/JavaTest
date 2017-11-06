@@ -12,6 +12,7 @@ public class SetListMap {
         list();
 //        setTest();
 //        intersect();
+        getMap();
 
     }
 
@@ -93,10 +94,12 @@ public class SetListMap {
      *
      * @param map
      */
-    public static void getMap(Map<String, Object> map) {
+    public static void getMap() {
+        Map<String, Object> map = new HashMap<>();
         map.put("1", "value1");
         map.put("2", "value2");
         map.put("3", "value3");
+        map.put("4",null);
 
         //第一种：普遍使用，二次取值
         System.out.println("通过Map.keySet遍历key和value：");
