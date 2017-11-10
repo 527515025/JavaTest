@@ -5,8 +5,9 @@ package com.us.demo;
  */
 public class IntTest {
     public static void main(String[] args) {
-        compareInteger();
-        compareInt();
+//        compareInteger();
+//        compareInt();
+        valueString();
     }
 
     /**
@@ -32,5 +33,17 @@ public class IntTest {
         if (a == b) {
             System.out.println("compareInt: a == b: true");
         }
+    }
+
+    public static void valueString() {
+        String str = "1";
+        Integer i = 0;
+        try {
+            i = Integer.valueOf(str);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        System.out.println(i);
+
     }
 }
