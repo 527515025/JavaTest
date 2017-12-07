@@ -12,8 +12,9 @@ public class Json {
     public static void main(String[] args) {
 //        System.out.println(newJsonStr());
 //        jsonToMap(newJsonStr());
+        mapToJson(jsonToMap(newJsonStr()));
 //        jsonPath();
-        recursion();
+//        recursion();
 //        System.out.println(newJsonArray());
     }
 
@@ -25,7 +26,8 @@ public class Json {
     private static String newJsonStr() {
         JSONObject jb = new JSONObject();
         jb.put("name", "abel");
-        jb.put("age", 21);
+        jb.put("age", 23);
+        jb.put("address", null);
         return jb.toJSONString();
     }
 
@@ -60,6 +62,12 @@ public class Json {
         printMap(map2);
         return map;
     }
+
+    private static void mapToJson(Map<String, Object> map) {
+        JSONObject json = JSONObject.parseObject(map.toString());
+        System.out.println("to json String : "+json.toJSONString());
+    }
+
 
     private static void printMap(Map<String, Object> map) {
         for (Map.Entry<String, Object> entry : map.entrySet()) {
