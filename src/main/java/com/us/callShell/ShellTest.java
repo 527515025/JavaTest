@@ -21,7 +21,7 @@ public class ShellTest {
         try {
             String cmd = "", shpath = "";
             if (execCmd) {
-                shpath = "sh /Users/yangyibo/Desktop/callShell.sh" + " " + paras.toString();
+                shpath = "echo";
             } else {
                 shpath = "/Users/yangyibo/Desktop/callShell.sh";
 
