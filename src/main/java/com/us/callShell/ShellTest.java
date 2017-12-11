@@ -15,12 +15,18 @@ public class ShellTest {
         execShell(true, "{\"date\":\"2017-11-29 14:40:54\",\"severity\":\"MAJOR\",\"mc_object\":\"CELL:10.193.22.239:182\",\"msg\":\"Cell on 10.193.22.239:1828 is disconnected from Integration Server 10.193.16.183:12125.\",\"mc_appname\":\"\",\"mc_tool_class\":\"NGMS_BPPM\",\"mc_host_address\":\"10.193.16.183\",\"event_handle\":\"1118702\",\"AREA\":\"田林中心\",\"mc_parameter_value\":\"85.06\",\"mc_parameter\":\"CPUprcrProcessorTimePercent\",\"mc_object_class\":\"PROACTIVENET_COMPONENT\",\"SOURCE_IP\":\"10.193.16.176\",\"OCTOPUS\":\"34\",\"updatetime\":\"2017-11-29 16:29:55\",\"status\":\"BLACKOUT\"} ");
     }
 
+    /**
+     * 执行shell
+     * @param execCmd 传入脚本或者命令
+     * @param para 传入参数
+     */
     private static void execShell(boolean execCmd, String... para) {
         StringBuffer paras = new StringBuffer();
         Arrays.stream(para).forEach(x -> paras.append(x).append(" "));
         try {
             String cmd = "", shpath = "";
             if (execCmd) {
+                // 命令模式
                 shpath = "echo";
             } else {
                 shpath = "/Users/yangyibo/Desktop/callShell.sh";
