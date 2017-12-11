@@ -1,4 +1,4 @@
-package com.us.demo;
+package com.us.basics;
 
 import java.text.ParseException;
 import java.util.*;

@@ -1,11 +1,10 @@
-package com.us.demo;
+package com.us.basics;
 
 import com.us.Person;
 import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**

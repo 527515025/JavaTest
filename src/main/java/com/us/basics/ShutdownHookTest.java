@@ -1,4 +1,4 @@
-package com.us.demo;
+package com.us.basics;
 
 /**
  * Created by yangyibo on 17/10/24.

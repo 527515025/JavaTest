@@ -1,4 +1,4 @@
-package com.us.demo;
+package com.us.basics;
 
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;

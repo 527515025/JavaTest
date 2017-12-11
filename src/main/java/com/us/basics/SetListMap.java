@@ -1,4 +1,4 @@
-package com.us.demo;
+package com.us.basics;
 
 import com.us.Person;
 
