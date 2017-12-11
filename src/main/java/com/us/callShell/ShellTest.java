@@ -50,11 +50,18 @@ public class ShellTest {
         }
     }
 
+    /**
+     * 解决了 参数中包含 空格和脚本没有执行权限的问题
+     * @param scriptPath 脚本路径
+     * @param para 参数数组
+     */
     private void execShell(String scriptPath, String ... para) {
         try {
             String[] cmd = new String[]{scriptPath};
+            //为了解决参数中包含空格
             cmd=ArrayUtils.addAll(cmd,para);
 
+            //解决脚本没有执行权限
             ProcessBuilder builder = new ProcessBuilder("/bin/chmod", "755",scriptPath);
             Process process = builder.start();
             process.waitFor();
