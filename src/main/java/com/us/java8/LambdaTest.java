@@ -13,10 +13,11 @@ public class LambdaTest {
 
 
     public static void main(String[] args) {
+        map();
 //        forEachT();
 //        threadT();
 //        sortT();
-        streamsFilterT();
+//        streamsFilterT();
 //        streamsCountT();
 //        personTComparator();
 //        boysAndGirls();
@@ -24,6 +25,14 @@ public class LambdaTest {
 
     }
 
+
+    public static void map() {
+        Map<String,String> result =new HashMap<>();
+        result.put("name","abel");
+        result.put("address","shanghai");
+        result.put("ager","23");
+        System.out.println(result.entrySet().stream().map(e->e.getKey()+"=\""+e.getValue()+"\"").collect(Collectors.joining(";")));
+    }
 
 
 
