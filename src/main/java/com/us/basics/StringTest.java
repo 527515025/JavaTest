@@ -21,7 +21,8 @@ public class StringTest {
 //        instanceofTest(2);
 //        getUchat();
 //        splitTest();
-        splitTestEnter();
+//        splitTestEnter();
+        replaceAllTest();
     }
 
 
@@ -127,5 +128,11 @@ public class StringTest {
         }
         String [] strings = s.split("\n");
         Arrays.stream(strings).forEach(x -> System.out.println(x+"1 \n"));
+    }
+
+    private  static void replaceAllTest(){
+        String  str = "sdfsf$abel.123.12ssd";
+        str = str.replaceAll("\\$.*?\\.","bo");
+        System.out.println(str);
     }
 }
