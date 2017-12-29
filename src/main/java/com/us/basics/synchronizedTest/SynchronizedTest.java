@@ -11,6 +11,7 @@ package com.us.basics.synchronizedTest;
  * 　　5. 不同的对象实例的synchronized方法是不相干扰的。也就是说，其它线程照样可以同时访问相同类的另一个对象实例中的synchronized方法。
  * 　　6. synchronized关键字是不能继承的，也就是说，基类的方法synchronized f(){} 在继承类中并不自动是synchronized f(){}，而是变成了f(){}。继承类需要你显式的指定它的某个方法为synchronized方法。
  * 　　7.对一个全局对象或者类加锁时，对该类的所有对象都起作用。
+ * https://www.cnblogs.com/moleme/p/4392663.html
  */
 public class SynchronizedTest {
     public static void main(String[] args) {
@@ -24,7 +25,7 @@ public class SynchronizedTest {
 
     /**
      * 测试对象锁
-     * 用于测试对象锁时，可不可以调用其他方法。
+     * 用于测试对象锁时，可不可以调用实例对象的其他方法。
      * 结果：thread1 获取锁后，thread2 扔可以执行 add 方法
      */
     private static void objectLock(){
@@ -50,7 +51,7 @@ public class SynchronizedTest {
     /**
      * 测试对象锁
      * 用于测试锁住同一方法是否可以两个线程执行
-     * 结果：可以两个线程同时执行同一代码块，但是得是不同的实例
+     * 结果：可以两个线程同时执行同一代码块，但是不同的实例可以执行
      */
     private static void objectLock2(){
         Test1 test1 = new Test1();
