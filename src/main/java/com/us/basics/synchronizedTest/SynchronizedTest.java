@@ -100,7 +100,7 @@ public class SynchronizedTest {
 
 
     /**
-     * 测试对象
+     * 测试类锁
      * 用于测试类锁时，可不可以调用其他方法。
      * 结果：thread1 获取类锁后，thread2 扔可以执行 add 方法
      */
