@@ -2,7 +2,9 @@ package com.us.redis;
 
 import redis.clients.jedis.BinaryClient;
 import redis.clients.jedis.Jedis;
+
 import java.util.*;
+
 /**
  * Created by yangyibo on 2018/1/12.
  */
@@ -26,6 +28,8 @@ public class JedisTest {
 
     /**
      * 操作string类型的key
+     * string 是最基本的类型,而且 string 类型是二进制安全的。意思是 redis 的 string 可以 包含任何数据。
+     * 比如 jpg 图片或者序列化的对象。从内部实现来看其实 string 可以看作 byte数组,最大上限是 1G 字节
      */
     public static void testString() {
         Jedis jedis = connect();
@@ -42,6 +46,8 @@ public class JedisTest {
 
     /**
      * 操作map
+     * hash 是一个 string 类型的 field 和 value 的映射表。添加,删除操作都是 O(1)(平均)。
+     * hash 特别适合用于存储对象。相对于将对象的每个字段存成单个 string 类型。将一个对象存储在 hash 类型中会占用更少的内存,并且可以更方便的存取整个对象。
      */
     public static void testMap() {
         Map<String, String> map = new HashMap<>();
@@ -74,6 +80,7 @@ public class JedisTest {
 
     /**
      * list 链表
+     * list 是一个链表结构,可以理解为一个每个子元素都是 string 类型的双向链表
      */
     private static void testList() {
         Jedis jedis = connect();
@@ -112,8 +119,8 @@ public class JedisTest {
     }
 
     /**
-     * 集合是通过哈希表实现的，所以添加，删除，查找的复杂度都是O(1)。 集合中最大的成员数为 232 - 1 (4294967295, 每个集合可存储40多亿个成员)。
-     * set
+     * set 是无序集合,最大可以包含(2 的 32 次方-1)40多亿个元素。
+     * set 的是通过 hash table 实现的, 所以添加,删除,查找的复杂度都是 O(1)。hash table 会随着添加或者删除自动的调整大小。
      */
     public static void testSet() {
         Jedis jedis = connect();
@@ -138,10 +145,12 @@ public class JedisTest {
     }
 
     /**
-     * Sortset
-     * <p>
-     * sort set和set类型一样，也是string类型元素的集合，也没有重复的元素，不同的是sort set每个元素都会关联一个权，通过权值可以有序的获取集合中的元素
-     * 添加，删除，查找的复杂度都是O(1)
+     * sorted
+     * sorted set 是有序集合,它在 set 的基础上增加了一个顺序属性,这一属性在添加修 改元素的时候可以指定,每次指定后,会自动重新按新的值调整顺序。
+     * 可以理解了有两列的 mysql 表,一列存 value,一列存顺序。
+     *
+     * sort set和set类型一样，也是string类型元素的集合，也没有重复的元素，不同的是sort set每个元素都会关联一个权，
+     * 通过权值可以有序的获取集合中的元素添加，删除，查找的复杂度都是O(1)
      */
     public static void testSortSet() {
         Jedis jedis = connect();
@@ -156,9 +165,9 @@ public class JedisTest {
         System.out.println(jedis.zrevrange("sortKey", 0, -1));
 
         // 元素个数
-        System.out.println("元素个数："+jedis.zcard("sortKey"));
+        System.out.println("元素个数：" + jedis.zcard("sortKey"));
         // 元素abel 的 下标
-        System.out.println("元素xxx 的 下标："+jedis.zscore("sortKey", "abel"));
+        System.out.println("元素xxx 的 下标：" + jedis.zscore("sortKey", "abel"));
 
         // 删除元素 abel
 //        jedis.zrem("sortKey", "abel");
@@ -168,11 +177,10 @@ public class JedisTest {
         //给元素 redis 的 权值 + 50
         System.out.println("给元素的 权值  + 50： " + jedis.zincrby("sortKey", 50, "redis"));
         //权值在0-100的值
-        System.out.println("权值在0-100的值： " + jedis.zrangeByScore("sortKey",  0, 100));
+        System.out.println("权值在0-100的值： " + jedis.zrangeByScore("sortKey", 0, 100));
         //返回 mysql 的权值的排名，从0开始计数
         System.out.println(jedis.zrank("sortKey", "mysql"));
         // 输出整个集合值
         System.out.println("输出整个集合值： " + jedis.zrange("sortKey", 0, -1));
     }
-
 }
