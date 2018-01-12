@@ -19,10 +19,13 @@ public class JedisTest {
     }
 
     public static Jedis connect() {
-        Jedis jedis = new Jedis("192.168.100.76", 6379);
-        jedis.auth("admin");
-        //ping通显示PONG
-        System.out.println(jedis.ping());//去ping我们redis的主机所在ip和端口
+//        Jedis jedis = new Jedis("192.168.100.76", 6379);
+//        jedis.auth("admin");
+//        //ping通显示PONG
+//        System.out.println(jedis.ping());//去ping我们redis的主机所在ip和端口
+
+        //从redis 连接池中获取
+        Jedis jedis = JedisPoolTest.getJedis();
         return jedis;
     }
 
@@ -148,7 +151,7 @@ public class JedisTest {
      * sorted
      * sorted set 是有序集合,它在 set 的基础上增加了一个顺序属性,这一属性在添加修 改元素的时候可以指定,每次指定后,会自动重新按新的值调整顺序。
      * 可以理解了有两列的 mysql 表,一列存 value,一列存顺序。
-     *
+     * <p>
      * sort set和set类型一样，也是string类型元素的集合，也没有重复的元素，不同的是sort set每个元素都会关联一个权，
      * 通过权值可以有序的获取集合中的元素添加，删除，查找的复杂度都是O(1)
      */
