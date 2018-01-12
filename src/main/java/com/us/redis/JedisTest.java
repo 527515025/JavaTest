@@ -149,7 +149,7 @@ public class JedisTest {
         jedis.zadd("sortKey", 300, "abel");
         jedis.zadd("sortKey", 20, "mysql");
         jedis.zadd("sortKey", 40, "redis");
-        
+
         // 按权值从小到大排序
         System.out.println(jedis.zrange("sortKey", 0, -1));
         // 按权值从大到小排序
