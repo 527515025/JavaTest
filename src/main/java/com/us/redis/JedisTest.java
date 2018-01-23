@@ -15,7 +15,9 @@ public class JedisTest {
 //        testMap();
 //        testList();
 //        testSet();
-        testSortSet();
+//        testSortSet();
+        subscribe();
+        publish();
     }
 
     public static Jedis connect() {
@@ -185,5 +187,27 @@ public class JedisTest {
         System.out.println(jedis.zrank("sortKey", "mysql"));
         // 输出整个集合值
         System.out.println("输出整个集合值： " + jedis.zrange("sortKey", 0, -1));
+    }
+
+
+    /**
+     * 订阅一个频道
+     */
+    public static void subscribe(){
+        Jedis jedis = connect();
+        MyJedisPubSub jedisPubSub = new MyJedisPubSub();
+        jedis.subscribe(jedisPubSub, "abelChannel");
+    }
+
+    /**
+     * 向频道发送消息
+     */
+    public static void publish(){
+        Jedis jedis = connect();
+        int i =5 ;
+        while (i > 0 ) {
+            jedis.publish("abelChannel", "我是第"+i+"条消息。");
+            i--;
+        }
     }
 }
