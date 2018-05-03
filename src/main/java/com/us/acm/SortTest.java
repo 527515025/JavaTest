@@ -32,6 +32,7 @@ public class SortTest {
         for (int i : arrays) {
             System.out.print(i + " ");
         }
+        System.out.println();
     }
 
     private static int[] init() {
