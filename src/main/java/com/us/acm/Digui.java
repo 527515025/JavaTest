@@ -13,16 +13,21 @@ package com.us.acm;
  */
 public class Digui {
     public static void main(String[] args) {
-        System.out.println(fib(10));
+        System.out.println(fib(47));
     }
 
 
-    public static int fib(int i) {
+    /**
+     * 当输入大于 47 以后 返回值已经超出int 的范围了。
+     * @param i
+     * @return
+     */
+    public static Long fib(int i) {
         if (i != 1 && i != 2) {
             return (fib(i - 1) + fib(i - 2));
 
         } else {
-            return 1;
+            return 1l;
         }
     }
 }
