@@ -163,6 +163,6 @@ public class JsonToEventConterver {
 
     public static void main(String[] args) {
         String str = " request.body.mapping=agentHost=$.data[n].componentName##description=$.data[n].componentName+$.data[n].constraintDesc##manager=$.data[n].productType##alertType=$.data[n].alarmType+$.data[n].componentName##eventTime=$.data[n].alarmTime##severity=$.data[n].alarmLevel";
-        jsonConterver(str,);
+//        jsonConterver(str,);
     }
 }
