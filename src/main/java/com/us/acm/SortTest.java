@@ -24,8 +24,8 @@ public class SortTest {
 //        print(heapSort(init()));
 //        print(bubbleSort(init()));
 //        print(bubbleSort2(init()));
-//        print(quickSort(init(), 0, init().length - 1));
-        print(mergeSort(init(), 0, init().length - 1));
+        print(quickSort(init(), 0, init().length - 1));
+//        print(mergeSort(init(), 0, init().length - 1));
     }
 
     private static void print(int[] arrays) {
@@ -183,6 +183,7 @@ public class SortTest {
         for (int i = 0; i < arrayLength - 1; i++) {
             //建大顶堆
             buildMaxHeap(arrayToSort, arrayLength - 1 - i);
+            print(arrayToSort);
             //交换堆顶和最后一个元素
             swap(arrayToSort, 0, arrayLength - 1 - i);
         }
@@ -222,7 +223,7 @@ public class SortTest {
                 }
                 //如果k节点（k为根节点）的值小于其较大的子节点的值
                 if (data[k] < data[biggerIndex]) {
-                    //交换他们
+                    //交换他们交换他们
                     swap(data, k, biggerIndex);
                     //将biggerIndex赋予k，开始while循环的下一次循环，重新保证k节点的值大于其左右子节点的值
 //                    k = biggerIndex;
@@ -254,7 +255,6 @@ public class SortTest {
                     arrayToSort[j] = tmp;
                 }
             }
-            System.out.println();
             print(arrayToSort);
         }
         return arrayToSort;
