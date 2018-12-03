@@ -1,6 +1,8 @@
 package com.us.basics;
 
 import com.us.Person;
+import org.apache.commons.collections4.ListUtils;
+import org.python.google.common.collect.Lists;
 
 import java.util.*;
 
@@ -9,11 +11,11 @@ import java.util.*;
  */
 public class SetListMap {
     public static void main(String[] args) {
-        list();
+//        list();
 //        setTest();
 //        intersect();
-        getMap();
-
+//        getMap();
+        listPartition();
     }
 
     private static void setTest() {
@@ -136,5 +138,13 @@ public class SetListMap {
             list.add(p.toString());
         }
         printList(list);
+    }
+
+    /**
+     * 将list 分成多份，依赖maven collections4
+     */
+    private static void listPartition() {
+        List<Integer> intList = Lists.newArrayList(1, 2, 3, 4, 5, 6, 7, 8);
+        System.out.println(ListUtils.partition(intList, 2));
     }
 }
