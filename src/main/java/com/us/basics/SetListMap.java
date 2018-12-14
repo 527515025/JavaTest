@@ -15,7 +15,9 @@ public class SetListMap {
 //        setTest();
 //        intersect();
 //        getMap();
-        listPartition();
+//        listPartition();
+//        mapNullTest();
+        stringsLength();
     }
 
     private static void setTest() {
@@ -27,7 +29,7 @@ public class SetListMap {
 
     }
 
-    private static void printList( List<String> strings) {
+    private static void printList(List<String> strings) {
         for (String str : strings) {
             System.out.println("---" + str);
         }
@@ -101,7 +103,7 @@ public class SetListMap {
         map.put("1", "value1");
         map.put("2", "value2");
         map.put("3", "value3");
-        map.put("4",null);
+        map.put("4", null);
 
         //第一种：普遍使用，二次取值
         System.out.println("通过Map.keySet遍历key和value：");
@@ -133,8 +135,8 @@ public class SetListMap {
     private static void list() {
         List<String> list = new ArrayList<>();
         Person p = new Person();
-        for (int i = 0; i < 5; i++){
-            p.setName("abel"+i);
+        for (int i = 0; i < 5; i++) {
+            p.setName("abel" + i);
             list.add(p.toString());
         }
         printList(list);
@@ -147,4 +149,25 @@ public class SetListMap {
         List<Integer> intList = Lists.newArrayList(1, 2, 3, 4, 5, 6, 7, 8);
         System.out.println(ListUtils.partition(intList, 2));
     }
+
+    /**
+     * list 长度，
+     */
+    private static void stringsLength() {
+       String[] strings = new String[]{"1","2"};
+        System.out.println(strings.length);
+    }
+
+
+    /**
+     * map 取空
+     */
+    private static void mapNullTest() {
+        Map<String, Object> map = null;
+//        map.put("1", "value1");
+//        map.put("2", "value2");
+//        map.put("3", "value3");
+        System.out.println( map.get("5"));
+    }
 }
+
