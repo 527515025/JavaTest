@@ -12,10 +12,11 @@ public class Json {
     public static void main(String[] args) {
 //        System.out.println(newJsonStr());
 //        jsonToMap(newJsonStr());
-        mapToJson(jsonToMap(newJsonStr()));
+//        mapToJson(jsonToMap(newJsonStr()));
 //        jsonPath();
 //        recursion();
 //        System.out.println(newJsonArray());
+        jsonTest();
     }
 
     /**
@@ -65,7 +66,7 @@ public class Json {
 
     private static void mapToJson(Map<String, Object> map) {
         JSONObject json = JSONObject.parseObject(map.toString());
-        System.out.println("to json String : "+json.toJSONString());
+        System.out.println("to json String : " + json.toJSONString());
     }
 
 
@@ -271,7 +272,7 @@ public class Json {
                     if (entryNow.getKey().contains(entry.getKey())) {
                         if (entryNow.getValue().toString().contains("#;#" + field + "#:#")) {
                             mapNow.put(entryNow.getKey(), entryNow.getValue() + ";" + entry.getValue());
-                        }else {
+                        } else {
                             mapNow.put(entryNow.getKey(), entryNow.getValue() + "#;#" + field + "#:#" + entry.getValue());
                         }
                         flag = false;
@@ -303,5 +304,17 @@ public class Json {
     private static void convertEvent(Map<String, Object> map) {
         printMap(map);
         System.out.println("--------------------------------------------");
+    }
+
+
+    private static void jsonTest() {
+        String test = "{\"_os\":\"Android\",\"_locale\":\"zh_CN\",\"_app_version\":\"4.7.6\",\"_device\":\"Best_sonny_LT580\",\"_density\":\"XXHDPI\",\"_resolution\":\"1080x1776\",\"_os_version\":\"5.1\"}";
+        try{
+            Map<String, Object> map = JSONObject.parseObject(test);
+        }catch (JSONException e) {
+            System.out.println("不是json串！！！");
+        }
+        System.out.println();
+
     }
 }
