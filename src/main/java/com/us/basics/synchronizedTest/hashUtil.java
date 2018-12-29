@@ -27,10 +27,10 @@ public class hashUtil {
     }
 
     public static void main(String[] args) {
-        int has = getHash("0104cdd5d6c65b06a285164c90b29222412", 0);
-        int hash = "0104cdd5d6c65b06a285164c90b29222412".hashCode() % 100;
-        System.out.println(has % 100);
-        System.out.println(hash);
+
+//        int has = getHash("0104cdd5d6c65b06a285164c90b29222412", 0);
+//        int hash = "0104cdd5d6c65b06a285164c90b29222412".hashCode() % 100;
+        System.out.println(1100 % 100);
     }
 
 }
