@@ -17,7 +17,8 @@ public class Regex {
 //        zybCompress();
 //        zabbixSplit();
 //        zabbixSplit2();
-        solarwinds();
+//        solarwinds();
+        getSn();
     }
 
     private static void pattern1() {
@@ -172,6 +173,19 @@ public class Regex {
     public static void solarwinds() {
         String regex = "^:防火墙(([A-Z]){3}-([A-Z]){3}-([A-Z]){2}-([A-Z])*\\d*)";
         String content = ":防火墙DCC-ECC-FW-OASRX14引擎";
+        Pattern p = Pattern.compile(regex);
+        Matcher m = p.matcher(content);
+        if (m.find()) {
+            System.out.println(m.group(0)+" --------- "+m.group(1));
+        }
+    }
+
+    /**
+     * 获取 &order_sn=O01090801048eb27BF8E3
+     */
+    public static void getSn(){
+        String regex = "&order_sn=(.*?&)";
+        String content = "token=234234234&profile_id=23423423&order_sn=234234234234234&is_subsidy=-1&is_wallet_balance=-1&pay_method=wechat&order_source=1";
         Pattern p = Pattern.compile(regex);
         Matcher m = p.matcher(content);
         if (m.find()) {

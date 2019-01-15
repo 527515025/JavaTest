@@ -2,6 +2,7 @@ package com.us.basics;
 
 import com.us.Person;
 import org.apache.commons.collections4.ListUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.python.google.common.collect.Lists;
 
 import java.util.*;
@@ -17,7 +18,8 @@ public class SetListMap {
 //        getMap();
 //        listPartition();
 //        mapNullTest();
-        stringsLength();
+//        stringsLength();
+        mapIsNullTest();
     }
 
     private static void setTest() {
@@ -96,7 +98,7 @@ public class SetListMap {
     /**
      * 遍历map
      *
-     * @param map
+     * @param
      */
     public static void getMap() {
         Map<String, Object> map = new HashMap<>();
@@ -154,7 +156,7 @@ public class SetListMap {
      * list 长度，
      */
     private static void stringsLength() {
-       String[] strings = new String[]{"1","2"};
+        String[] strings = new String[]{"1", "2"};
         System.out.println(strings.length);
     }
 
@@ -163,11 +165,49 @@ public class SetListMap {
      * map 取空
      */
     private static void mapNullTest() {
-        Map<String, Object> map = null;
+        Map<String, Object> map = new HashMap<>();
 //        map.put("1", "value1");
 //        map.put("2", "value2");
 //        map.put("3", "value3");
-        System.out.println( map.get("5"));
+        System.out.println(map.get("5"));
+    }
+
+    /**
+     * map 判断空
+     */
+    private static void mapIsNullTest() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("1", "value1");
+        map.put("2", "value2");
+        map.put("3", "value3");
+        map.put("1","value5");
+        map.remove("1");
+        map.remove("2");
+        map.remove("3");
+//        map.put("1", map.get("1"));
+        map = isExistAndPutData(map, "1", "123123");
+
+        if (null == map || map.size() == 0) {
+            System.out.println("map is null");
+        }
+    }
+
+
+    /**
+     * 判断key对应的value是不是为空，如果为空则插入
+     *
+     * @param map
+     * @param key
+     * @param value
+     * @return
+     */
+    private static Map<String, Object> isExistAndPutData(Map<String, Object> map, String key, String value) {
+        System.out.println(map.get(key));
+        if (null == map.get(key)) {
+            map.put(key, value);
+            return map;
+        }
+        return map;
     }
 }
 

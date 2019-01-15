@@ -22,7 +22,8 @@ public class StringTest {
 //        getUchat();
 //        splitTest();
 //        splitTestEnter();
-        replaceAllTest();
+//        replaceAllTest();
+        spiltTest();
     }
 
 
@@ -134,5 +135,12 @@ public class StringTest {
         String  str = "sdfsf$abel.123.12ssd";
         str = str.replaceAll("\\$.*?\\.","bo");
         System.out.println(str);
+    }
+
+    private  static void spiltTest(){
+        String  str = "asd&=&123123";
+        String[] split = str.split("&=&");
+        String[] spiltTest = split[1].split(",");
+        System.out.println(spiltTest[0]);
     }
 }
