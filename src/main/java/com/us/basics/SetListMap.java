@@ -14,12 +14,13 @@ public class SetListMap {
     public static void main(String[] args) {
 //        list();
 //        setTest();
+        setTest2();
 //        intersect();
 //        getMap();
 //        listPartition();
 //        mapNullTest();
 //        stringsLength();
-        mapIsNullTest();
+//        mapIsNullTest();
     }
 
     private static void setTest() {
@@ -27,6 +28,26 @@ public class SetListMap {
         set.add("sdf");
         set.add("sdf");
         set.add("asdf");
+        set.stream().forEach(x -> System.out.println(x));
+
+    }
+
+    private static void setTest2() {
+        Set<String> set = new HashSet();
+//        set.add("sdf");
+//        set.add("sdf");
+//        set.add("asdf");
+        System.out.println(set);
+//        String ss= set.toString();
+//        ss = ss.substring(1, ss.length()-1);
+//        System.out.println(ss+"-----------");
+
+        System.out.println("set size"+set.size());
+       StringBuffer s = new StringBuffer();
+        s.append( set.toString());
+        s.deleteCharAt(0);
+        s.deleteCharAt(s.length()-1);
+        System.out.println(s.toString()+"-------------");
         set.stream().forEach(x -> System.out.println(x));
 
     }
