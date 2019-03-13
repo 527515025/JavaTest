@@ -17,8 +17,9 @@ public class DataTest {
 //        maptest();
 //        System.out.println(stringToDate("05/25/2017 10:17:39 PM"));
 //        System.out.println(sendEmailJudgementTime("16:32:39","16:56:39"));
-        System.out.println(timeStampToData("1497117051"));
+//        System.out.println(timeStampToData("1497117051"));
 //        zabbixTime();
+        System.out.println(getDateInterval());
 
     }
 
@@ -103,7 +104,7 @@ public class DataTest {
     private static Date timeStampToData(String time) {
         try {
             Long times = Long.valueOf(time);
-            times = times*1000;
+            times = times * 1000;
             Date date = new Date();
             date.setTime(times);
             return date;
@@ -111,6 +112,24 @@ public class DataTest {
             e.getMessage();
         }
         return null;
+    }
+
+    /**
+     * 计算两个时间的间隔
+     *
+     * @return
+     */
+    public static Integer getDateInterval() {
+        long diff=0;
+        try {
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date d1 = df.parse("2004-03-26 13:31:40");
+            Date d2 = df.parse("2004-03-06 13:31:20");
+            diff= d1.getTime() - d2.getTime();
+        } catch (Exception e) {
+
+        }
+        return (int) (diff/1000);
     }
 
 }
