@@ -14,12 +14,12 @@ import java.util.regex.Pattern;
 public class UrlToMap {
     public static void main(String[] args) {
 //        urlToMap();
-        removeRepeat(init());
-//        splitKeyAndVauleToMap();
+//        removeRepeat(init());
+        splitKeyAndVauleToMap();
     }
 
     private static void urlToMap() {
-        String content = "token=7a2af1b4dad21384f203102d95e48859&profile_id=34289671&order_sn=O01090801048eb27BF8E3&is_subsidy=-1&is_wallet_balance=-1&pay_method=wechat&order_source=1";
+        String content = "gid=02054896c951cfb4133f141074b01708c44;appid=1;plat=1;sver=5965;sys=android;sysver=7.1.1;pn=miao-114;mfo=OPPO;mfov=OPPO+A73;";
         MultiMap multiMap = new MultiMap();
         UrlEncoded.decodeTo(content, multiMap, "UTF-8");
         System.out.println();
@@ -27,18 +27,20 @@ public class UrlToMap {
     }
 
     private static void splitKeyAndVauleToMap() {
-        String content = "access_token=ed90a091cc4ff170b6ec0d896b7f791b; open_appid=mpqhwzwqknmifhbscx; open_id=d2a75cd307b41684c758a64b00f0ea6c; user_id=1703110002519634";
-        Map<String, String> map = new HashMap<>();
+        String content = "appid=1; plat=1; pn=miao-yqhy-1; gid=390675019";
         if (content.contains(";")) {
             String[] arr = content.split(";");
+            Map<String, String> map = new HashMap<>();
             Arrays.stream(arr).forEach(x -> {
                 if (x.contains("=")) {
                     String[] keyAndValue = x.split("=");
-                    map.put(keyAndValue[0].trim(), keyAndValue[1].trim());
+                    if (keyAndValue.length > 1){
+                        map.put(keyAndValue[0].trim(), keyAndValue[1].trim());
+                    }
                 }
             });
+            System.out.println(map.toString());
         }
-        System.out.println(map.toString());
     }
 
 
