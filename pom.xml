@@ -63,5 +63,14 @@
             <artifactId>jetty-util</artifactId>
             <version>6.1.26</version>
         </dependency>
+
+
+        <!-- send wechat -->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.2</version>
+        </dependency>
+
     </dependencies>
 </project>
