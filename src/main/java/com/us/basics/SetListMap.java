@@ -14,13 +14,14 @@ public class SetListMap {
     public static void main(String[] args) {
 //        list();
 //        setTest();
-        setTest2();
+//        setTest2();
 //        intersect();
 //        getMap();
 //        listPartition();
 //        mapNullTest();
 //        stringsLength();
 //        mapIsNullTest();
+        splitList();
     }
 
     private static void setTest() {
@@ -230,5 +231,23 @@ public class SetListMap {
         }
         return map;
     }
+
+
+    /**
+     * list 等分切分
+     *
+     */
+    private static void splitList(){
+        List<Integer> intList = Lists.newArrayList(1, 2, 3, 4, 5, 6, 7, 8,9,10,11,12,13,14,15,16,17,18);
+       if (intList.size() >= 5){
+//           Integer sum =  intList.size()/5;
+           List<List<Integer>> lists =  ListUtils.partition(intList,5);
+           for(List<Integer> s : lists) {
+               System.out.println(s.toString());
+           }
+       }
+    }
+
+
 }
 
