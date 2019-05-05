@@ -8,13 +8,12 @@ import java.util.Arrays;
 
 /**
  * Created by yangyibo on 17/11/29.
- * 脚本要有可执行权限 chmod +x  file
- * 如果要将执行结果输出到文件 则文件需要有所有人可写入权限 chmod 666 file
+ * 脚本要有可执行权限 chmod +x  file 使用第二个call 则不需要添加可执行权限
  */
 public class ShellTest {
     public static void main(String[] args) {
 //        execShell(true, "{\"date\":\"2017-11-29 14:40:54\",\"severity\":\"MAJOR\",\"mc_object\":\"CELL:10.193.22.239:182\",\"msg\":\"Cell on 10.193.22.239:1828 is disconnected from Integration Server 10.193.16.183:12125.\",\"mc_appname\":\"\",\"mc_tool_class\":\"NGMS_BPPM\",\"mc_host_address\":\"10.193.16.183\",\"event_handle\":\"1118702\",\"AREA\":\"田林中心\",\"mc_parameter_value\":\"85.06\",\"mc_parameter\":\"CPUprcrProcessorTimePercent\",\"mc_object_class\":\"PROACTIVENET_COMPONENT\",\"SOURCE_IP\":\"10.193.16.176\",\"OCTOPUS\":\"34\",\"updatetime\":\"2017-11-29 16:29:55\",\"status\":\"BLACKOUT\"} ");
-        execShell("/Users/yangyibo/Desktop/mission.sh", "2019-01-04", "2015-03-25", "miao-136", "sdfs234234m23j423423j4h23j", "18400293887", "156.23.45.22");
+        execShell("/Users/yangyibo/Desktop/login.sh", "2019-01-04", "2015-03-25", "miao-136", "sdfs234234m23j423423j4h23j", "18400293887", "156.23.45.22");
     }
 
     /**
