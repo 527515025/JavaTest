@@ -8,6 +8,10 @@ import java.io.File;
 import java.net.InetAddress;
 
 /**
+ *  https://github.com/maxmind/MaxMind-DB-Reader-java
+ *
+ * Java 通过ip 获取 地理位置
+ *
  * @author yyb
  * @time 2019/6/19
  */
@@ -49,5 +53,5 @@ public class GeoipTest {
 
 
 
-    //https://blog.csdn.net/huiyanshizhen21/article/details/85201638
+
 }
