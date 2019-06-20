@@ -4,15 +4,20 @@ import com.us.Person;
 
 /**
  * 本例子用于测试两个线程共用变量情况
- * 值传递和引用传递
+ * 基础类型 值传递和  对象 引用传递
+ *
+ *
  *
  * @author yyb
  * @time 2019/6/20
  */
 public class ThreadTest {
     public static void main(String[] args) {
-        main1();
-//        main2();
+        Person p = new Person();
+        main1(0, p);
+        main1(1, p);
+//        main2("abel",0);
+//        main2("yiyi",1);
     }
 
 
@@ -20,15 +25,11 @@ public class ThreadTest {
      * 用于测试多线程访问同一对象时，对象修改变化
      * 引用传递
      */
-    private static void main1() {
-        Person p = new Person();
+    private static void main1(int age, Person p) {
         p.setName("abel");
-        p.setAge(0);
-        System.out.println("-0-----main1----"+p.getAge());
+        p.setAge(age);
+        System.out.println("-0-----main1----" + p.getAge());
         createThread1(p);
-        p.setAge(p.getAge() + 1);
-        System.out.println("--1----main1----"+p.getAge());
-        createThread2(p);
     }
 
 
@@ -46,21 +47,6 @@ public class ThreadTest {
         });
         thread.start();
 
-    }
-
-    /**
-     * 线程2
-     *
-     * @param para
-     */
-    private static void createThread2(Person para) {
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                pringln(para);
-            }
-        });
-        thread.start();
     }
 
     private static void pringln(Person para) {
@@ -83,15 +69,9 @@ public class ThreadTest {
      * 用于测试多线程访问同一对象时，对象修改变化
      * 值传递
      */
-    private static void main2() {
-        String p = "asc";
-        int i = 0;
+    private static void main2(String p, int i) {
         createThread3(p, i);
-        p = "zxc";
-        i++;
-        createThread4(p, i);
     }
-
 
     /**
      * 线程1
@@ -109,27 +89,12 @@ public class ThreadTest {
 
     }
 
-    /**
-     * 线程2
-     *
-     * @param para
-     */
-    private static void createThread4(String para, Integer i) {
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                pringln2(para, i);
-            }
-        });
-        thread.start();
-    }
-
     private static void pringln2(String para, Integer i) {
         Thread t = Thread.currentThread();
         String name = t.getName();
         System.out.println(name + "----begin-----" + para + "----" + i);
         try {
-            Thread.sleep(2000);
+            Thread.sleep(5000);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
