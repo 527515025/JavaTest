@@ -27,7 +27,7 @@ public class Digui {
             return (fib(i - 1) + fib(i - 2));
 
         } else {
-            return 1l;
+            return 1L;
         }
     }
 }
