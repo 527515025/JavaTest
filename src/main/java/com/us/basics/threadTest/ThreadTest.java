@@ -11,8 +11,8 @@ import com.us.Person;
  */
 public class ThreadTest {
     public static void main(String[] args) {
-//        main1();
-        main2();
+        main1();
+//        main2();
     }
 
 
@@ -24,11 +24,11 @@ public class ThreadTest {
         Person p = new Person();
         p.setName("abel");
         p.setAge(0);
-        while (p.getAge() < 2) {
-            createThread1(p);
-            p.setAge(p.getAge() + 1);
-            createThread2(p);
-        }
+        System.out.println("-0-----main1----"+p.getAge());
+        createThread1(p);
+        p.setAge(p.getAge() + 1);
+        System.out.println("--1----main1----"+p.getAge());
+        createThread2(p);
     }
 
 
