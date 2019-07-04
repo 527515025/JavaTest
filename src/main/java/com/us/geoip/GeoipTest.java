@@ -22,7 +22,7 @@ import com.maxmind.db.CHMCache;
  * @time 2019/6/19
  */
 public class GeoipTest {
-    private final static String IP = "223.66.149.1";
+    private final static String IP = "127.0.0.1";
 
 
 
