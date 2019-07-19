@@ -7,8 +7,14 @@ import com.maxmind.geoip2.record.*;
 
 import java.io.File;
 import java.io.IOException;
+
 import com.maxmind.db.Reader;
+
 import java.net.InetAddress;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import com.maxmind.db.Reader.FileMode;
 
 import com.maxmind.db.CHMCache;
@@ -22,20 +28,17 @@ import com.maxmind.db.CHMCache;
  * @time 2019/6/19
  */
 public class GeoipTest {
-    private final static String IP = "127.0.0.1";
-
-
+    private static volatile DatabaseReader readerIp;
 
     public static void main(String[] args) throws Exception {
-        noCache();
-//        haveCache();
-
+//        noCache("1.180.164.207");
+//        haveCache("1.180.164.207");
     }
 
-    private static void haveCache() throws IOException {
+    private static void haveCache(String ip) throws IOException {
         File database = new File("/Users/yangyibo/test/GeoLite2-City/GeoLite2-City.mmdb");
-        Reader r  = new Reader(database, FileMode.MEMORY_MAPPED, new CHMCache());
-        InetAddress ipAddress = InetAddress.getByName(IP);
+        Reader r = new Reader(database, FileMode.MEMORY_MAPPED, new CHMCache());
+        InetAddress ipAddress = InetAddress.getByName(ip);
         // 获取查询结果
         JsonNode response = r.get(ipAddress);
         //国家
@@ -60,14 +63,10 @@ public class GeoipTest {
     }
 
 
-    private static void noCache() throws Exception{
-        //GeoIP2-City 数据库文件D
-        File database = new File("/Users/yangyibo/test/GeoLite2-City/GeoLite2-City.mmdb");
+    private static String noCache(String ip) throws Exception {
 
-        // 创建 DatabaseReader对象
-        DatabaseReader reader = new DatabaseReader.Builder(database).build();
-
-        InetAddress ipAddress = InetAddress.getByName(IP);
+        DatabaseReader reader = GeoipTest.getIpInstance();
+        InetAddress ipAddress = InetAddress.getByName(ip);
 
         // 获取查询结果
         CityResponse response = reader.city(ipAddress);
@@ -91,6 +90,25 @@ public class GeoipTest {
         Location location = response.getLocation();
         System.out.println("经度:" + location.getLatitude());
         System.out.println("维度:" + location.getLongitude());
+        return subdivision.getNames().get("zh-CN") + "--";
+    }
+
+
+    /**
+     * 获取数据库连接对象，单例
+     *
+     * @return
+     */
+    public static DatabaseReader getIpInstance() throws IOException {
+        if (readerIp == null) {
+            synchronized (GeoipTest.class) {
+                if (readerIp == null) {
+                    File database = new File("/Users/yangyibo/test/GeoLite2-City/GeoLite2-City.mmdb");
+                    readerIp = new DatabaseReader.Builder(database).build();
+                }
+            }
+        }
+        return readerIp;
     }
 
 }
