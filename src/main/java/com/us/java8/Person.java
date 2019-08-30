@@ -10,6 +10,7 @@ public class Person {
     int age;
     String name;
     int sex;
+    String group;
     List<String>  friend;
 
     public List<String> getFriend() {
@@ -43,6 +44,15 @@ public class Person {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+
+    public String getGroup() {
+        return group;
+    }
+
+    public void setGroup(String group) {
+        this.group = group;
     }
 
     @Override
