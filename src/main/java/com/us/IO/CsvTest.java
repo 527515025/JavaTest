@@ -17,13 +17,13 @@ import java.util.List;
 public class CsvTest {
     private static Long pos = 0L;
 
-    private static void read() throws IOException {
-        RandomAccessFile rf = new RandomAccessFile("xxx.csv", "r");
+    private static void read(String path) throws IOException {
+        RandomAccessFile rf = new RandomAccessFile(path, "r");
 
         String line=null;
         while((line=rf.readLine())!=null)
         {
-            System.out.println(new String(line.getBytes("ISO-8859-1"), "gbk"));
+            System.out.println(new String(line.getBytes(),"ISO-8859-1"));
 
         }
         rf.close();
@@ -54,16 +54,32 @@ public class CsvTest {
     }
 
     public static void main(String[] args) throws Exception {
-        File file = new File("xxx/1.csv");
-        Writer writer = new FileWriter(file);
-        //分隔符为逗号
-        CSVWriter csvWriter = new CSVWriter(writer);
-        String[] strs = {"abc" , "abc" , "abc"};
-        csvWriter.writeNext(strs);
-        csvWriter.close();
+//        File file = new File("xxx/1.csv");
+//        Writer writer = new FileWriter(file);
+//        //分隔符为逗号
+//        CSVWriter csvWriter = new CSVWriter(writer);
+//        String[] strs = {"abc" , "abc" , "abc"};
+//        csvWriter.writeNext(strs);
+//        csvWriter.close();
+        read("/Users/yangyibo/Desktop/xxx.xlsx");
+//        getoder();
     }
 
 
+
+    public static void getoder() throws Exception{
+            RandomAccessFile rf = new RandomAccessFile("/Users/yangyibo/Desktop/xxx.xlsx", "r");
+
+            String line=null;
+            while((line=rf.readLine())!=null)
+            {
+                System.out.println(line);
+
+            }
+            rf.close();
+            System.out.println();
+
+    }
 
 
 }
