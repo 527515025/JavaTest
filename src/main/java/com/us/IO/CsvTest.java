@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * 读写csv
  *
- * @author yyb
+ * @author 小心心
  * @time 2019/7/19
  */
 public class CsvTest {
@@ -23,7 +23,7 @@ public class CsvTest {
         String line=null;
         while((line=rf.readLine())!=null)
         {
-            System.out.println(new String(line.getBytes(),"ISO-8859-1"));
+            System.out.println(new String(line.getBytes("ISO-8859-1"), "gbk"));
 
         }
         rf.close();
@@ -61,14 +61,14 @@ public class CsvTest {
 //        String[] strs = {"abc" , "abc" , "abc"};
 //        csvWriter.writeNext(strs);
 //        csvWriter.close();
-        read("/Users/yangyibo/Desktop/xxx.xlsx");
+        read("/Users/xxx/Desktop/xxx.xlsx");
 //        getoder();
     }
 
 
 
     public static void getoder() throws Exception{
-            RandomAccessFile rf = new RandomAccessFile("/Users/yangyibo/Desktop/xxx.xlsx", "r");
+            RandomAccessFile rf = new RandomAccessFile("/Users/xxx/Desktop/xxx.xlsx", "r");
 
             String line=null;
             while((line=rf.readLine())!=null)
