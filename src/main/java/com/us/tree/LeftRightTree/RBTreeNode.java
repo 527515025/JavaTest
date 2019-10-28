@@ -2,14 +2,30 @@ package com.us.tree.LeftRightTree;
 
 /**
  * 红黑树数据对象
+ *
  * @author yyb
  * @time 2019/10/28
  */
 public class RBTreeNode<T extends Comparable<T>> {
+    /**
+     * 值
+     */
     private T value;
+    /**
+     * 左节点
+     */
     private RBTreeNode<T> left;
+    /**
+     * 右节点
+     */
     private RBTreeNode<T> right;
+    /**
+     * 父节点
+     */
     private RBTreeNode<T> parent;
+    /**
+     * 颜色，红色
+     */
     private boolean red;
 
     public RBTreeNode() {
@@ -65,7 +81,7 @@ public class RBTreeNode<T extends Comparable<T>> {
     }
 
     /**
-     * is leaf node
+     * 是叶子节点
      **/
     boolean isLeaf() {
         return left == null && right == null;
