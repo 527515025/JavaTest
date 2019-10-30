@@ -57,7 +57,7 @@ public class RBTree<T extends Comparable<T>> {
     }
 
     /**
-     * 获取根节点
+     * 获取根节点，根节点为root 的左子节点
      *
      * @return
      */
@@ -392,33 +392,40 @@ public class RBTree<T extends Comparable<T>> {
                     rotateRight(ancestor);
 
                     if (isRight) {
-                        //如果是case3 则需要将自身颜色设置为黑色
+                        //如果是case3 则自身和父节点进行位置交换，所以自己应该设为黑色
                         x.setRed(false);
+                        //因为叔叔为空所以树的上层都已经稳定所以结束循环
                         parent = null;
-                        //end loop
                     } else {
-                        //如果是case2 则需要将父亲颜色设置为褐色
+                        //如果是case2  因为此时父节经过旋转，原祖父节点将成为兄弟节点 需要将父亲颜色设置为黑色
                         parent.setRed(false);
                     }
                     //因为uncle 是空所以 旋转后祖父会成为叶子节点，所以祖父应该设置为红色
                     ancestor.setRed(true);
                 } else {
+                    //父节点是祖父的右节点
                     boolean isLeft = x == parent.getLeft();
                     if (isLeft) {
+                        //如果父节点是祖父的右子节点，自己是父亲的左子节点 case3 则需要先将自己进行右旋再进行左旋，两步调整
                         rotateRight(parent);
                     }
+                    //如果父节点是祖父的右子节点，自己是父亲的右子节点，case2 则需要将父节点进行左旋
                     rotateLeft(ancestor);
 
                     if (isLeft) {
+                        //如果是case3 则自身和父节点进行位置交换，所以自己应该设为黑色
                         x.setRed(false);
+                        //因为叔叔为空所以树的上层都已经稳定所以结束循环
                         parent = null;
-                        //end loop
                     } else {
+                        //如果是case2 因为此时父节经过旋转，原祖父节点将成为兄弟节点 需要将父亲颜色设置为黑色
                         parent.setRed(false);
                     }
-                    ancestor.setRed(true);
+                    //因为uncle 是空所以 旋转后祖父会成为叶子节点，所以祖父应该设置为红色
+                     ancestor.setRed(true);
                 }
-            } else {//uncle is red
+            } else {
+                //叔叔节点为叶子节点，设置叔叔和父亲为黑色，设置祖父为红色，循环遍历设置到root节点
                 parent.setRed(false);
                 uncle.setRed(false);
                 parent.getParent().setRed(true);
@@ -426,6 +433,7 @@ public class RBTree<T extends Comparable<T>> {
                 parent = x.getParent();
             }
         }
+        //最终 设置根节点为黑色
         getRoot().makeBlack();
         getRoot().setParent(null);
     }
@@ -574,9 +582,10 @@ public class RBTree<T extends Comparable<T>> {
 //        bst.addNode(22);
 
 
-        bst.addNode(7);
+        bst.addNode(10);
         bst.addNode(5);
-        bst.addNode(6);
+        bst.addNode(14);
+        bst.addNode(7);
 
         bst.printTree(bst.getRoot());
     }
