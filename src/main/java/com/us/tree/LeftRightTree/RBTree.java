@@ -1,5 +1,7 @@
 package com.us.tree.LeftRightTree;
 
+import java.util.concurrent.atomic.AtomicLong;
+
 /**
  * https://mp.weixin.qq.com/s?__biz=MjM5NjQ5MTI5OA==&mid=2651745738&idx=2&sn=dc7570dfb3b652ec26a9b90d5e965149&chksm=bd12b4878a653d91346b06f2870242708e667725dbbaf273a3eb7cea9c8193115f80463db65f&scene=21#wechat_redirect
  * <p>
@@ -17,19 +19,18 @@ package com.us.tree.LeftRightTree;
 public class RBTree<T extends Comparable<T>> {
     private final RBTreeNode<T> root;
     /**
-     * node number
+     * 记录节点数， AtomicLong 原子操作线程安全，csa 算法实现乐观锁
      */
-    private java.util.concurrent.atomic.AtomicLong size =
-            new java.util.concurrent.atomic.AtomicLong(0);
+    private AtomicLong size = new AtomicLong(0);
 
-    //in overwrite mode,all node's value can not  has same  value
     /**
-     * in non-overwrite mode,node can have same value, suggest don't use non-overwrite mode.
+     * 在非覆盖模式下，节点可以有相同的值，但建议不要使用非覆盖模式。
+     * true 为覆盖模式，所有节点的值相同则覆盖
      */
     private volatile boolean overrideMode = true;
 
     public RBTree() {
-        this.root = new RBTreeNode<T>();
+        this.root = new RBTreeNode<>();
     }
 
     public RBTree(boolean overrideMode) {
@@ -47,7 +48,7 @@ public class RBTree<T extends Comparable<T>> {
     }
 
     /**
-     * number of tree number
+     * 获取节点数
      *
      * @return
      */
@@ -56,7 +57,7 @@ public class RBTree<T extends Comparable<T>> {
     }
 
     /**
-     * get the root node
+     * 获取根节点
      *
      * @return
      */
@@ -65,16 +66,13 @@ public class RBTree<T extends Comparable<T>> {
     }
 
     /**
-     * add value to a new node,if this value exist in this tree,
-     * if value exist,it will return the exist value.otherwise return null
-     * if override mode is true,if value exist in the tree,
-     * it will override the old value in the tree
+     * 添加节点，如果树中存在该值
      *
      * @param value
      * @return
      */
     public T addNode(T value) {
-        RBTreeNode<T> t = new RBTreeNode<T>(value);
+        RBTreeNode<T> t = new RBTreeNode<>(value);
         return addNode(t);
     }
 
@@ -309,12 +307,14 @@ public class RBTree<T extends Comparable<T>> {
         node.setRight(null);
         node.setRed(true);
         setParent(node, null);
+        //如果根节点没有值则，node 作为根节点的左节点（即红黑树的根节点）
         if (root.getLeft() == null) {
             root.setLeft(node);
             //root node is black
             node.setRed(false);
             size.incrementAndGet();
         } else {
+            //查询父节点
             RBTreeNode<T> x = findParentNode(node);
             int cmp = x.getValue().compareTo(node.getValue());
 
@@ -334,7 +334,7 @@ public class RBTree<T extends Comparable<T>> {
             } else {
                 x.setRight(node);
             }
-
+            //修改父节点颜色
             fixInsert(node);
             size.incrementAndGet();
         }
@@ -353,6 +353,7 @@ public class RBTree<T extends Comparable<T>> {
 
         while (child != null) {
             int cmp = child.getValue().compareTo(x.getValue());
+            //查到相同同节点
             if (cmp == 0) {
                 return child;
             }
@@ -368,7 +369,7 @@ public class RBTree<T extends Comparable<T>> {
     }
 
     /**
-     * red black tree insert fix.
+     * 红黑树插入节点调整
      *
      * @param x
      */
@@ -378,23 +379,28 @@ public class RBTree<T extends Comparable<T>> {
         while (parent != null && parent.isRed()) {
             RBTreeNode<T> uncle = getUncle(x);
             if (uncle == null) {
-                //need to rotate
+                //叔叔为空需要旋转
                 RBTreeNode<T> ancestor = parent.getParent();
-                //ancestor is not null due to before before add,tree color is balance
+                // 祖父是不会为null 的，应为之前之前添加的时候 颜色和树已经平衡调整过了
                 if (parent == ancestor.getLeft()) {
                     boolean isRight = x == parent.getRight();
                     if (isRight) {
+                        //如果父节点是祖父的左子节点，自己是父亲的右子节点 case3 则需要先将自己进行左旋再进行右旋，两步调整
                         rotateLeft(parent);
                     }
+                    //如果父节点是祖父的左子节点，自己是父亲的左子节点，case2 则需要将父节点进行右旋
                     rotateRight(ancestor);
 
                     if (isRight) {
+                        //如果是case3 则需要将自身颜色设置为黑色
                         x.setRed(false);
                         parent = null;
                         //end loop
                     } else {
+                        //如果是case2 则需要将父亲颜色设置为褐色
                         parent.setRed(false);
                     }
+                    //因为uncle 是空所以 旋转后祖父会成为叶子节点，所以祖父应该设置为红色
                     ancestor.setRed(true);
                 } else {
                     boolean isLeft = x == parent.getLeft();
@@ -425,7 +431,7 @@ public class RBTree<T extends Comparable<T>> {
     }
 
     /**
-     * get uncle node
+     * 获取叔叔节点
      *
      * @param node
      * @return
@@ -443,6 +449,10 @@ public class RBTree<T extends Comparable<T>> {
         }
     }
 
+    /**
+     * 左旋，对传入node 的右子节点进行左旋
+     * @param node
+     */
     private void rotateLeft(RBTreeNode<T> node) {
         RBTreeNode<T> right = node.getRight();
         if (right == null) {
@@ -471,6 +481,10 @@ public class RBTree<T extends Comparable<T>> {
         }
     }
 
+    /**
+     * 右旋 对传入node 的左子节点进行右旋
+     * @param node
+     */
     private void rotateRight(RBTreeNode<T> node) {
         RBTreeNode<T> left = node.getLeft();
         if (left == null) {
@@ -548,10 +562,21 @@ public class RBTree<T extends Comparable<T>> {
 
     public static void main(String[] args) {
         RBTree<Integer> bst = new RBTree<>();
-        bst.addNode(1);
-        bst.addNode(2);
-        bst.addNode(3);
-        bst.addNode(4);
+//        bst.addNode(10);
+//        bst.addNode(5);
+//        bst.addNode(13);
+//        bst.addNode(7);
+//        bst.addNode(11);
+//        bst.addNode(45);
+//        bst.addNode(23);
+//        bst.addNode(21);
+//        bst.addNode(19);
+//        bst.addNode(22);
+
+
+        bst.addNode(7);
+        bst.addNode(5);
+        bst.addNode(6);
 
         bst.printTree(bst.getRoot());
     }
