@@ -1,4 +1,4 @@
-package com.us.tree.LeftRightTree;
+package com.us.tree.RBTree;
 
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -458,7 +458,7 @@ public class RBTree<T extends Comparable<T>> {
     }
 
     /**
-     * 左旋，对传入node 的右子节点进行左旋
+     * 左旋，对传入node 的右子节点进行左旋（右子节点只能进行左旋）
      * @param node
      */
     private void rotateLeft(RBTreeNode<T> node) {
@@ -490,7 +490,7 @@ public class RBTree<T extends Comparable<T>> {
     }
 
     /**
-     * 右旋 对传入node 的左子节点进行右旋
+     * 右旋 对传入node 的左子节点进行右旋，（左子节点只能进行右旋）
      * @param node
      */
     private void rotateRight(RBTreeNode<T> node) {
