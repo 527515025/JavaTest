@@ -318,6 +318,7 @@ public class RBTree<T extends Comparable<T>> {
             RBTreeNode<T> x = findParentNode(node);
             int cmp = x.getValue().compareTo(node.getValue());
 
+            //开启复写且父节点值等于新添加的节点值
             if (this.overrideMode && cmp == 0) {
                 T v = x.getValue();
                 x.setValue(node.getValue());
@@ -326,15 +327,18 @@ public class RBTree<T extends Comparable<T>> {
                 //value exists,ignore this node
                 return x.getValue();
             }
-
+            // 插入节点与父节点不相等
             setParent(node, x);
 
             if (cmp > 0) {
+                //小于父节点 设置为左节点
                 x.setLeft(node);
             } else {
+                //大于父节点 设置为右节点
                 x.setRight(node);
             }
-            //修改父节点颜色
+            //进行树修复，修改颜色、左旋或右旋
+            // 1。叔叔节点也为红色。 2。叔叔节点为空，且祖父节点、父节点和新节点处于一条斜线上。 3。叔叔节点为空，且祖父节点、父节点和新节点不处于一条斜线上。
             fixInsert(node);
             size.incrementAndGet();
         }
@@ -342,7 +346,7 @@ public class RBTree<T extends Comparable<T>> {
     }
 
     /**
-     * find the parent node to hold node x,if parent value equals x.value return parent.
+     * 查找节点的父节点，从root 节点开始遍历查找
      *
      * @param x
      * @return
@@ -359,9 +363,11 @@ public class RBTree<T extends Comparable<T>> {
             }
             if (cmp > 0) {
                 dataRoot = child;
+                //继续向左子树查询
                 child = child.getLeft();
             } else if (cmp < 0) {
                 dataRoot = child;
+                //向右子树查询
                 child = child.getRight();
             }
         }
@@ -518,7 +524,12 @@ public class RBTree<T extends Comparable<T>> {
         }
     }
 
-
+    /**
+     * 设置父节点
+     * 如果当前节点不为空，则设置父节点为传入父节点，如果传入父节点为root， 则设置父节点为null。
+     * @param node
+     * @param parent
+     */
     private void setParent(RBTreeNode<T> node, RBTreeNode<T> parent) {
         if (node != null) {
             node.setParent(parent);
@@ -584,8 +595,7 @@ public class RBTree<T extends Comparable<T>> {
 
         bst.addNode(10);
         bst.addNode(5);
-        bst.addNode(14);
-        bst.addNode(7);
+        bst.addNode(10);
 
         bst.printTree(bst.getRoot());
     }
