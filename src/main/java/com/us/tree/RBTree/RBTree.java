@@ -99,25 +99,31 @@ public class RBTree<T extends Comparable<T>> {
     }
 
     /**
-     * remove the node by give value,if this value not exists in tree return null
+     * 通过value 删除树的节点，如果节点不存在，则返回null
      *
-     * @param value include search key
-     * @return the value contain in the removed node
+     * @param value 查询的key
+     * @return 删除包含值的节点
      */
     public T remove(T value) {
+        // 获取根结点
         RBTreeNode<T> dataRoot = getRoot();
         RBTreeNode<T> parent = root;
 
         while (dataRoot != null) {
+            // 从根节点查找 value值
             int cmp = dataRoot.getValue().compareTo(value);
             if (cmp < 0) {
+                //如果value 小于根节点值则向左子树查询
                 parent = dataRoot;
                 dataRoot = dataRoot.getRight();
             } else if (cmp > 0) {
+                //如果value 大于根节点值则向左子树查询
                 parent = dataRoot;
                 dataRoot = dataRoot.getLeft();
             } else {
+                //如果value值相等，找到需要删除的节点
                 if (dataRoot.getRight() != null) {
+                    //查询待删除节点是否有右节点
                     RBTreeNode<T> min = removeMin(dataRoot.getRight());
                     //x used for fix color balance
                     RBTreeNode<T> x = min.getRight() == null ? min.getParent() : min.getRight();
@@ -277,27 +283,30 @@ public class RBTree<T extends Comparable<T>> {
     }
 
     /**
-     * find the successor node
+     * 查找后续节点
      *
-     * @param node current node's right node
+     * @param node 当前节点的左节点
      * @return
      */
     private RBTreeNode<T> removeMin(RBTreeNode<T> node) {
-        //find the min node
+        //查询最小的节点
         RBTreeNode<T> parent = node;
         while (node != null && node.getLeft() != null) {
+            //有左节点，继续向下查询
             parent = node;
             node = node.getLeft();
         }
-        //remove min node
+        //传入节点没有左子节点，传入节点为最小节点时直接返回
         if (parent == node) {
             return node;
         }
+        //此时最小节点为node
 
+        //用最小节点的右子节点替换到最小节点的位置
         parent.setLeft(node.getRight());
+        //设置最小节点的父节点。为最小节点右子节点的父节点
         setParent(node.getRight(), parent);
-
-        //don't remove right pointer,it is used for fixed color balance
+        //返回最小节点，此时没有移除最小节点与其右子节点的关系
         return node;
     }
 
@@ -593,9 +602,21 @@ public class RBTree<T extends Comparable<T>> {
 //        bst.addNode(22);
 
 
+//        bst.addNode(10);
+//        bst.addNode(5);
+//        bst.addNode(10);
+
+
+
+//        delete case2
         bst.addNode(10);
-        bst.addNode(5);
-        bst.addNode(10);
+        bst.addNode(7);
+        bst.addNode(15);
+        bst.addNode(12);
+        bst.addNode(17);
+
+
+        bst.remove(7);
 
         bst.printTree(bst.getRoot());
     }
