@@ -1,4 +1,4 @@
-package com.us.basics;
+package com.us.basics.http;
 import java.io.IOException;
 
 import org.apache.http.HttpEntity;

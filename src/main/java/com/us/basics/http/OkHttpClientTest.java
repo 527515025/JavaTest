@@ -1,4 +1,4 @@
-package com.us.basics;
+package com.us.basics.http;
 
 import com.alibaba.fastjson.JSONArray;
 import okhttp3.*;
