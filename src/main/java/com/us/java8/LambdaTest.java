@@ -207,11 +207,12 @@ public class LambdaTest {
         List<Person> persons = new ArrayList<>();
 
         for (int i = 1; i <= 40; i++) {
+            Random r = new Random();
             Person person = new Person();
             person.setName("abel-" + i);
             person.setSex((int) (Math.random() * 2));
             person.setGroup(String.valueOf(i%2));
-            person.setAge(25 + i);
+            person.setAge(25 + r.nextInt(50));
             persons.add(person);
         }
         return persons;
@@ -225,6 +226,16 @@ public class LambdaTest {
     private static void groupBy() {
         List<Person> persons = getPersionList();
         Map<String, List<Person>> sumCase = persons.stream().collect(Collectors.groupingBy(Person::getGroup));
+        //按照年龄升序排列
+        List<Person> personsSort = persons.stream().sorted(Comparator.comparingInt(Person::getAge)).collect(Collectors.toList());
+        //按照排序后的数据进行分组， 并返回排序后分组的结果
+        LinkedHashMap<Integer, List<Person>> age = personsSort.stream().collect(Collectors.groupingBy(Person::getAge, LinkedHashMap::new, Collectors.toList()));
+
+
+        //将list 排序，并按照排序后的结果进行有序分组
+        LinkedHashMap<Integer, List<Person>> ageMap = personsSort.stream().sorted(Comparator.comparingInt(Person::getAge)).collect(Collectors.groupingBy(Person::getAge, LinkedHashMap::new, Collectors.toList()));
+
+
         System.out.println(persons.size());
     }
 
