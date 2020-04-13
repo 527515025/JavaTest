@@ -106,26 +106,6 @@ StringUtils.isEmpty(" bob ") = false
 getFields()：获得某个类的所有的公共（public）的字段，包括父类中的字段。 
 getDeclaredFields()：获得某个类的所有声明的字段，即包括public、private和proteced，但是不包括父类的申明字段。
 
-##java8 interface 的默认方法与abstract class的非抽象方法的区别？
-
-1.语法层面上的区别
-
-　　1）抽象类可以提供成员方法的实现细节，而接口中只能存在public abstract 方法；
-
-　　2）抽象类中的成员变量可以是各种类型的，而接口中的成员变量只能是public static final类型的；
-
-　　3）接口中不能含有静态代码块以及静态方法，而抽象类可以有静态代码块和静态方法；
-
-　　4）一个类只能继承一个抽象类，而一个类却可以实现多个接口。
-
-2.设计层面上的区别
-
-　　1）抽象类是对一种事物的抽象，即对类抽象，而接口是对行为的抽象。抽象类是对整个类整体进行抽象，包括属性、行为，但是接口却是对类局部（行为）进行抽象。举个简单的例子，飞机和鸟是不同类的事物，但是它们都有一个共性，就是都会飞。那么在设计的时候，可以将飞机设计为一个类Airplane，将鸟设计为一个类Bird，但是不能将 飞行 这个特性也设计为类，因此它只是一个行为特性，并不是对一类事物的抽象描述。此时可以将 飞行 设计为一个接口Fly，包含方法fly( )，然后Airplane和Bird分别根据自己的需要实现Fly这个接口。然后至于有不同种类的飞机，比如战斗机、民用飞机等直接继承Airplane即可，对于鸟也是类似的，不同种类的鸟直接继承Bird类即可。从这里可以看出，继承是一个 "是不是"的关系，而 接口 实现则是 "有没有"的关系。如果一个类继承了某个抽象类，则子类必定是抽象类的种类，而接口实现则是有没有、具备不具备的关系，比如鸟是否能飞（或者是否具备飞行这个特点），能飞行则可以实现这个接口，不能飞行就不实现这个接口。
-
-　　2）设计层面不同，抽象类作为很多子类的父类，它是一种模板式设计。而接口是一种行为规范，它是一种辐射式设计。什么是模板式设计？最简单例子，大家都用过ppt里面的模板，如果用模板A设计了ppt B和ppt C，ppt B和ppt C公共的部分就是模板A了，如果它们的公共部分需要改动，则只需要改动模板A就可以了，不需要重新对ppt B和ppt C进行改动。而辐射式设计，比如某个电梯都装了某种报警器，一旦要更新报警器，就必须全部更新。也就是说对于抽象类，如果需要添加新的方法，可以直接在抽象类中添加具体的实现，子类可以不进行变更；而对于接口则不行，如果接口进行了变更，则所有实现这个接口的类都必须进行相应的改动。
-　　
-　　
-
 ##java 对象的序列化和反序列化
 
  对象序列化可以将一个对象保存到一个文件，可以将通过流的方式在网络上传输，可以将文件的内容读取转化为一个对象。所谓对象流也就是将对象的内容流化，可以对流化后的对象进行读写操作，也可将流化后的对象传输于网络之间。序列化是为了解决在对象流进行读写操作时引发的问题。
@@ -296,6 +276,47 @@ Java中，栈的大小通过-Xss来设置，当栈中存储数据比较多时，
 分代垃圾回收方式确实也考虑了实时性要求而提供了并发回收器，支持最大暂停时间的设置，但是受限于分代垃圾回收的内存划分模型，其效果也不是很理想。
 
 为了达到实时性的要求（其实Java语言最初的设计也是在嵌入式系统上的），一种新垃圾回收方式呼之欲出，它既支持短的暂停时间，又支持大的内存空间分配。可以很好的解决传统分代方式带来的问题。
+
+##
+
+## Jvm性能监控
+
+###  jconsole 
+
+直接在jdk/bin目录下点击jconsole.exe即可启动，或者 执行jconsole 命令 
+
+在弹出的框中可以选择本机的监控本机的java应用，也可以选择远程的java服务来监控，如果监控远程服务需要在tomcat启动脚本中添加如下代码：
+
+```
+ -Dcom.sun.management.jmxremote.port=6969  
+ -Dcom.sun.management.jmxremote.ssl=false  
+ -Dcom.sun.management.jmxremote.authenticate=false
+```
+
+连接进去之后，就可以看到jconsole概览图和主要的功能：概述、内存、线程、类、VM、MBeans
+
+**CPU Profiler简介**
+
+社区实现的JVM Profiler很多，比如已经商用且功能强大的[JProfiler](https://www.ej-technologies.com/products/jprofiler/overview.html)，也有免费开源的产品，如[JVM-Profiler](https://github.com/uber-common/jvm-profiler)，功能各有所长。我们日常使用的Intellij IDEA最新版内部也集成了一个简单好用的Profiler，详细的介绍参见[官方Blog](https://blog.jetbrains.com/idea/2018/09/intellij-idea-2018-3-eap-git-submodules-jvm-profiler-macos-and-linux-and-more/)。
+
+在用IDEA打开需要诊断的Java项目后，在“Preferences -> Build, Execution, Deployment -> Java Profiler”界面添加一个“CPU Profiler”，然后回到项目，单击右上角的“Run with Profiler”启动项目并开始CPU Profiling过程。一定时间后（推荐5min），在Profiler界面点击“Stop Profiling and Show Results”，即可看到Profiling的结果，包含火焰图和调用树，如下图所示：
+
+这里要说明一下，因为我们没有在项目中引入任何依赖，仅仅是“Run with Profiler”，Profiler就能获取我们程序运行时的信息。这个功能其实是通过JVM Agent实现的，为了更好地帮助大家系统性的了解它，我们在这里先对JVM Agent做个简单的介绍。
+
+因为字节码文件由十六进制值组成，而JVM以两个十六进制值为一组。即以字节为单位进行读取。在Java中一般是用javac命令编译源代码为字节码文件
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ##intern()
@@ -995,3 +1016,52 @@ executorService.shutdown();
 
 https://www.cnblogs.com/dolphin0520/p/3932921.html
 https://www.cnblogs.com/waytobestcoder/p/5323130.html
+
+# java8
+
+##java8 interface 的默认方法与abstract class的非抽象方法的区别？
+
+1.语法层面上的区别
+
+　　1）抽象类可以提供成员方法的实现细节，而接口中只能存在public abstract 方法；
+
+　　2）抽象类中的成员变量可以是各种类型的，而接口中的成员变量只能是public static final类型的；
+
+　　3）接口中不能含有静态代码块以及静态方法，而抽象类可以有静态代码块和静态方法；
+
+　　4）一个类只能继承一个抽象类，而一个类却可以实现多个接口。
+
+2.设计层面上的区别
+
+　　1）抽象类是对一种事物的抽象，即对类抽象，而接口是对行为的抽象。抽象类是对整个类整体进行抽象，包括属性、行为，但是接口却是对类局部（行为）进行抽象。举个简单的例子，飞机和鸟是不同类的事物，但是它们都有一个共性，就是都会飞。那么在设计的时候，可以将飞机设计为一个类Airplane，将鸟设计为一个类Bird，但是不能将 飞行 这个特性也设计为类，因此它只是一个行为特性，并不是对一类事物的抽象描述。此时可以将 飞行 设计为一个接口Fly，包含方法fly( )，然后Airplane和Bird分别根据自己的需要实现Fly这个接口。然后至于有不同种类的飞机，比如战斗机、民用飞机等直接继承Airplane即可，对于鸟也是类似的，不同种类的鸟直接继承Bird类即可。从这里可以看出，继承是一个 "是不是"的关系，而 接口 实现则是 "有没有"的关系。如果一个类继承了某个抽象类，则子类必定是抽象类的种类，而接口实现则是有没有、具备不具备的关系，比如鸟是否能飞（或者是否具备飞行这个特点），能飞行则可以实现这个接口，不能飞行就不实现这个接口。
+
+　　2）设计层面不同，抽象类作为很多子类的父类，它是一种模板式设计。而接口是一种行为规范，它是一种辐射式设计。什么是模板式设计？最简单例子，大家都用过ppt里面的模板，如果用模板A设计了ppt B和ppt C，ppt B和ppt C公共的部分就是模板A了，如果它们的公共部分需要改动，则只需要改动模板A就可以了，不需要重新对ppt B和ppt C进行改动。而辐射式设计，比如某个电梯都装了某种报警器，一旦要更新报警器，就必须全部更新。也就是说对于抽象类，如果需要添加新的方法，可以直接在抽象类中添加具体的实现，子类可以不进行变更；而对于接口则不行，如果接口进行了变更，则所有实现这个接口的类都必须进行相应的改动。
+　　
+
+## Java 8 Optional 
+
+* 静态方法 `empty()` 创建一个空的 Optional 对象 Optional<String> empty = Optional.empty();
+
+* 静态方法 `of()` 创建一个非空的 Optional 对象  传递给 `of()` 方法的参数必须是非空的，也就是说不能为 null，否则仍然会抛出 NullPointerException。Optional<String> opt = Optional.of("沉默王二");
+
+* 静态方法 `ofNullable()` 创建一个即可空又可非空的 Optional 对象 Optional<String> optOrNull = Optional.ofNullable(name);
+
+* 静态方法`ofNullable()` 方法内部有一个三元表达式，如果为参数为 null，则返回私有常量 EMPTY；否则使用 new 关键字创建了一个新的 Optional 对象——不会再抛出 NPE 异常了。
+
+* `isPresent()` 判断一个 Optional 对象是否存在，如果存在，该方法返回 true
+
+* `ifPresent()`，允许我们使用函数式编程的方式执行一些代码，因此，我把它称为非空表达式。
+
+  ```
+  Optional<String> opt = Optional.of("沉默王二");
+  opt.ifPresent(str -> System.out.println(str.length()));
+  ```
+
+  
+
+* 
+
+
+
+
+
