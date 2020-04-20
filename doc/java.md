@@ -1059,9 +1059,14 @@ https://www.cnblogs.com/waytobestcoder/p/5323130.html
 
   
 
-* 
 
+## 分析Java Swap 内存运行情况
 
+1. 使用 Linux top 命令查看各进程使用内存情况  **RES** 为 **实际使用的物理内存**
+2. 在项目中添加**`-XX:NativeMemoryTracking=detail`** JVM参数重启项目，使用命令 **`jcmd pid VM.native_memory detail`** 查看到的内存分布
+3. 使用命令`gdp -pid pid`进入GDB之后，然后使用命令`dump memory mem.bin startAddress endAddress`dump内存，其中startAddress和endAddress可以从/proc/pid/smaps中查找。然后使用`strings mem.bin`查看dump的内容
+4. 项目启动使用strace追踪系统调用，使用该mmap申请的地址空间在pmap对应
+5. 因为strace命令中已经显示申请内存的线程ID。直接使用命令`jstack pid`去查看线程栈，找到对应的线程栈（注意10进制和16进制转换）
 
 
 

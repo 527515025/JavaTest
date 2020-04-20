@@ -617,4 +617,8 @@ Linux CGroup全称Linux Control Group， 是Linux内核的一个功能，用来�
 
 /bin/sh 与 /bin/bash 虽然大体上没什么区别, 但仍存在不同的标准. 标记为 “#!/bin/sh” 的脚本不应使用任何 POSIX 没有规定的特性 (如 let 等命令, 但 “#!/bin/bash” 可以). Debian 曾经采用 /bin/bash 更改 /bin/dash，目的使用更少的磁盘空间、提供较少的功能、获取更快的速度。但是后来经过 shell 脚本测试存在运行问题。因为原先在 bash shell 下可以运行的 shell script (shell 脚本)，在 /bin/sh 下还是会出现一些意想不到的问题，不是100%的兼用。
 
-#
+linux查看内存占用情况  top 命令
+
+## dump
+
+ 从正在运行的Linux进程中dump出内存内容
