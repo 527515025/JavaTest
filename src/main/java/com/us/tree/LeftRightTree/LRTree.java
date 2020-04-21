@@ -194,7 +194,7 @@ public class LRTree {
     }
 
     /**
-     * 先续遍历树中的所有节点
+     * 先续遍历树中的所有节点, 最先输出跟节点， 先输出当前节点，然后输出左子树，然后输出右子树
      */
     public void preOrder(Node currentRoot) {
         if (currentRoot != null) {
@@ -206,7 +206,7 @@ public class LRTree {
     }
 
     /**
-     * 中续遍历树中的所有节点
+     * 中续遍历树中的所有节点 ，中间输出跟节点 。先左节点， 中间节点，右节点
      *
      * @param currentNode
      */
@@ -221,7 +221,7 @@ public class LRTree {
 
 
     /**
-     * 后续遍历树中的所有节点
+     * 后续遍历树中的所有节点 最后输出跟节点，先左，右，后中
      *
      * @param currentNode
      */

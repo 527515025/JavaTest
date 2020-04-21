@@ -16,9 +16,10 @@ public class BigDecimalTest {
     }
 
     public static void fDiscount(){
-        BigDecimal commodityPrice = new BigDecimal(15) ;
-        BigDecimal pay = new BigDecimal(4) ;
-        BigDecimal subsidy = new BigDecimal(1) ;
+        BigDecimal commodityPrice = new BigDecimal(2.9) ;
+        BigDecimal pay = new BigDecimal(2.9) ;
+        BigDecimal subsidy = new BigDecimal(0) ;
+        BigDecimal freight = new BigDecimal(0) ;
         BigDecimal fDiscount = commodityPrice.subtract(pay).subtract(subsidy).divide(new BigDecimal(3), 6, BigDecimal.ROUND_HALF_UP);
         System.out.println(fDiscount);
     }
