@@ -25,9 +25,16 @@ public class BigDecimalTest {
     }
 
 
+    public static void amount(){
+        BigDecimal commodityPrice = new BigDecimal(2.9) ;
+        BigDecimal amount = new BigDecimal(2) ;
+        BigDecimal freight = new BigDecimal(2) ;
+        BigDecimal commodityPrice1 = commodityPrice.multiply(amount).add(freight);
+        System.out.println(commodityPrice1);
+    }
 
     public static void main(String[] args) {
 
-        compareToTest();
+        amount();
     }
 }
