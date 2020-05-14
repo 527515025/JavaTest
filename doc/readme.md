@@ -1,4 +1,9 @@
+工程师的自我修养
+
+https://tech.meituan.com/2018/08/16/10-principles-for-engineers.html
+
 #Java
+
 合辑 | 面试必备！18篇Java面试疑难点详解
 
 https://developer.aliyun.com/article/745626?utm_content=g_1000104832&from=timeline 
@@ -9,6 +14,8 @@ https://blog.csdn.net/thinkwon/category_9731418.html
 
 必须深入理解的50个JAVA基础概念
 https://zhuanlan.zhihu.com/c_1046719595074949120
+
+https://mp.weixin.qq.com/s?__biz=MjM5NjQ5MTI5OA==&mid=2651749434&idx=3&sn=5ffa63ad47fe166f2f1a9f604ed10091&chksm=bd12a5778a652c61509d9e718ab086ff27ad8768586ea9b38c3dcf9e017a8e49bcae3df9bcc8&scene=21#wechat_redirect  不可不说的Java“锁”事
 
 ## java性能
 
@@ -68,7 +75,23 @@ https://mp.weixin.qq.com/s/uP_AR3i9sysJQ0MhXWau_w
 https://mp.weixin.qq.com/s/F_wrb6g1jnC_g903EHlS-w
 
 
+
+# 算法
+
+拜托，别问我什么各种Tree了，干就完事！
+https://mp.weixin.qq.com/s/oG7Ba20zJ5VxnUPr59qGfg
+
 #扩展
 
 深入探秘 Netty、Kafka 中的零拷贝技术！
 https://mp.weixin.qq.com/s/ck6yO0xPPyfggdUri_w91g
+
+
+
+
+
+
+
+https://mp.weixin.qq.com/s/UJ2yy7pb8EXZSlQVJIymBg  5大Java服务困局，阿里工程师如何打破？ 必读
+
+https://mp.weixin.qq.com/s/feJKRqYJTVEIxl6jvjevAg 从头到尾说一次 Java 的垃圾回收
