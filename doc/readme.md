@@ -17,6 +17,10 @@ https://zhuanlan.zhihu.com/c_1046719595074949120
 
 https://mp.weixin.qq.com/s?__biz=MjM5NjQ5MTI5OA==&mid=2651749434&idx=3&sn=5ffa63ad47fe166f2f1a9f604ed10091&chksm=bd12a5778a652c61509d9e718ab086ff27ad8768586ea9b38c3dcf9e017a8e49bcae3df9bcc8&scene=21#wechat_redirect  不可不说的Java“锁”事
 
+
+反射
+https://mp.weixin.qq.com/s/VksjLKLOnxSWM6wy-tkGMg
+
 ## java性能
 
 Java线程池实现原理及其在美团业务中的实践
@@ -56,6 +60,9 @@ https://blog.csdn.net/guo_qiangqiang/article/details/88794971
 很用心的为你写了 9 道 MySQL 面试题
 https://mp.weixin.qq.com/s/oLnJpG8G9_VjQmaXrH7oAQ
 
+100道MySQL数据库经典面试题解析
+https://mp.weixin.qq.com/s/iW0FfhP0vsyABoEiZUqsMQ
+
 # redis
 
 面试问Redis锁，我脸都绿了......
@@ -65,6 +72,8 @@ https://mp.weixin.qq.com/s/n8ITjkVg8_y_XGi8j8-vRw
 https://mp.weixin.qq.com/s/z1qVQWNM5ql5Y6H4huWKmw
 看完这篇Redis缓存三大问题，够你和面试官battle几回合了
 https://mp.weixin.qq.com/s/x_PzzfJfsQbZmx0IYg_tpg
+构建基于Redis的分布式锁
+https://mp.weixin.qq.com/s/u7D-VHkXggo7JCXwwu1UYw
 
 # HTTP
 
@@ -73,7 +82,8 @@ https://mp.weixin.qq.com/s/uP_AR3i9sysJQ0MhXWau_w
 
 面试 HTTP ，99% 的面试官都爱问这些问题
 https://mp.weixin.qq.com/s/F_wrb6g1jnC_g903EHlS-w
-
+四连问：API 接口应该如何设计？如何保证安全？如何签名？如何防重？
+https://mp.weixin.qq.com/s/jFaBFgpceE-mJzubjEH8sg
 
 
 # 算法

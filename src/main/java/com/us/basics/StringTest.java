@@ -1,5 +1,8 @@
 package com.us.basics;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONException;
 import com.us.Person;
 import org.apache.commons.lang3.StringUtils;
 
@@ -23,7 +26,8 @@ public class StringTest {
 //        splitTest();
 //        splitTestEnter();
 //        replaceAllTest();
-        spiltTest();
+//        spiltTest();
+        stringToarray();
     }
 
 
@@ -115,32 +119,47 @@ public class StringTest {
         System.out.println(str);
     }
 
-    private  static  void splitTest() {
+    private static void splitTest() {
         String s = "ownedByUser_cnname";
-        String [] strings = s.split("_");
-        Arrays.stream(strings).forEach(x -> System.out.println(x+"\n"));
+        String[] strings = s.split("_");
+        Arrays.stream(strings).forEach(x -> System.out.println(x + "\n"));
     }
 
-    private  static  void splitTestEnter() {
+    private static void splitTestEnter() {
         String s = "测试\n" +
                 "测试：请问";
         if (s.contains("\n")) {
             System.out.println("true");
         }
-        String [] strings = s.split("\n");
-        Arrays.stream(strings).forEach(x -> System.out.println(x+"1 \n"));
+        String[] strings = s.split("\n");
+        Arrays.stream(strings).forEach(x -> System.out.println(x + "1 \n"));
     }
 
-    private  static void replaceAllTest(){
-        String  str = "sdfsf$abel.123.12ssd";
-        str = str.replaceAll("\\$.*?\\.","bo");
+    private static void replaceAllTest() {
+        String str = "sdfsf$abel.123.12ssd";
+        str = str.replaceAll("\\$.*?\\.", "bo");
         System.out.println(str);
     }
 
-    private  static void spiltTest(){
-        String  str = "asd&=&123123";
+    private static void spiltTest() {
+        String str = "asd&=&123123";
         String[] split = str.split("&=&");
         String[] spiltTest = split[1].split(",");
         System.out.println(spiltTest[0]);
+    }
+
+
+    private static void stringToarray() {
+        String str = "1;2";
+        try {
+            JSONArray ja = JSON.parseArray(str);
+            ja.forEach(x -> {
+                System.out.println(x);
+            });
+        } catch (JSONException e) {
+            Arrays.stream(str.toString().split(";")).forEach(x -> {
+                System.out.println(x);
+            });
+        }
     }
 }
