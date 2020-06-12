@@ -17,9 +17,12 @@ https://zhuanlan.zhihu.com/c_1046719595074949120
 
 https://mp.weixin.qq.com/s?__biz=MjM5NjQ5MTI5OA==&mid=2651749434&idx=3&sn=5ffa63ad47fe166f2f1a9f604ed10091&chksm=bd12a5778a652c61509d9e718ab086ff27ad8768586ea9b38c3dcf9e017a8e49bcae3df9bcc8&scene=21#wechat_redirect  不可不说的Java“锁”事
 
-
 反射
 https://mp.weixin.qq.com/s/VksjLKLOnxSWM6wy-tkGMg
+Java集合框架综述，这篇让你吃透！
+https://mp.weixin.qq.com/s/A89RoKsCZx7uPUvMS_kk_Q
+Java 泛型中的通配符 T，E，K，V，
+https://mp.weixin.qq.com/s/zp_w_UQjVWJBkMObPDxmGA
 
 ## java性能
 
@@ -46,6 +49,9 @@ https://mp.weixin.qq.com/s/ZqK5-2T3jZ9JTCdRA_st4w
 设计模式在外卖营销业务中的实践
 https://mp.weixin.qq.com/s/9gDGQhzRAL3pj35VAinZbQ
 
+#Spring
+Spring IOC 知识点总结
+https://mp.weixin.qq.com/s/vOsNtW72nBSQW_Lp9rTLQA
 
 # MYSQL
 
@@ -63,6 +69,9 @@ https://mp.weixin.qq.com/s/oLnJpG8G9_VjQmaXrH7oAQ
 100道MySQL数据库经典面试题解析
 https://mp.weixin.qq.com/s/iW0FfhP0vsyABoEiZUqsMQ
 
+MySQL 可重复读
+https://mp.weixin.qq.com/s/gPBi9_a3LWyncWiWPYWkuQ
+
 # redis
 
 面试问Redis锁，我脸都绿了......
@@ -74,6 +83,7 @@ https://mp.weixin.qq.com/s/z1qVQWNM5ql5Y6H4huWKmw
 https://mp.weixin.qq.com/s/x_PzzfJfsQbZmx0IYg_tpg
 构建基于Redis的分布式锁
 https://mp.weixin.qq.com/s/u7D-VHkXggo7JCXwwu1UYw
+
 
 # HTTP
 
@@ -90,6 +100,37 @@ https://mp.weixin.qq.com/s/jFaBFgpceE-mJzubjEH8sg
 
 拜托，别问我什么各种Tree了，干就完事！
 https://mp.weixin.qq.com/s/oG7Ba20zJ5VxnUPr59qGfg
+十大经典排序算法最强总结（含JAVA代码实现
+https://mp.weixin.qq.com/s/jRBaQSpSouFQ70x4gUtDLg
+
+## ES
+Elasticsearch分布式一致性原理剖析之节点篇
+https://mp.weixin.qq.com/s/tOAfwG6Ctkqo28iG88E0yA
+
+Elasticsearch中的切词怎么实现的?
+https://mp.weixin.qq.com/s/aiFo5iS-Y0Z1XDcKkOBLug
+
+Elasticsearch分布式一致性原理剖析之Meta篇
+https://mp.weixin.qq.com/s/PdQ9JIroHOfYkvUymtQdPQ
+2020 年最新 Elasticsearch 7.x 使用教程，帮你总结好了
+https://mp.weixin.qq.com/s/3PZEhM5ykt-g_OCEKdRaVQ
+
+
+从Elasticsearch来看分布式系统架构设计
+https://mp.weixin.qq.com/s/0SNTbguJRRxTDhR6zQiRRQ
+
+#zookeeper 
+不懂 ZooKeeper？没关系，这一篇给你讲的明明白白
+https://mp.weixin.qq.com/s/X-10DjJQE3sIBVmoOVV77g
+
+# Docker
+入门 Docker , 这一篇就够了
+https://mp.weixin.qq.com/s/u0LRq_NNkCtU3wkdMdYlUA
+
+## dubbo
+
+通过手写Dubbo了解RPC框架原理
+https://live.csdn.net/room/weixin_48013460/08rWiAbu
 
 #扩展
 
@@ -97,11 +138,27 @@ https://mp.weixin.qq.com/s/oG7Ba20zJ5VxnUPr59qGfg
 https://mp.weixin.qq.com/s/ck6yO0xPPyfggdUri_w91g
 
 
+点赞功能，用 MySQL 还是 Redis ？
+https://mp.weixin.qq.com/s/hRMr9EvsBX6RW8Smxem4lQ
 
-
-
-
-
+如何设计 QQ、微信等第三方账号登陆 ？还要我说出数据库表设计！
+https://mp.weixin.qq.com/s/YcH1s1hRshZaT2nsAXsIUg
 https://mp.weixin.qq.com/s/UJ2yy7pb8EXZSlQVJIymBg  5大Java服务困局，阿里工程师如何打破？ 必读
 
 https://mp.weixin.qq.com/s/feJKRqYJTVEIxl6jvjevAg 从头到尾说一次 Java 的垃圾回收
+
+Kafka的存储机制以及可靠性
+https://mp.weixin.qq.com/s/qpDAMtxRmRytusRlN1vCXw
+分布式一致性机制整理
+https://mp.weixin.qq.com/s/6DjKLsKpQD5EsihMsEJ27Q
+深夜，聊聊设计模式
+https://mp.weixin.qq.com/s/SJiMuHb_C773QdN8Qt0tqA
+
+
+
+
+
+
+用户画像从0到100的构建思路
+https://mp.weixin.qq.com/s/RFkKkQ8wE5nsOFCXW2cr4g
+
