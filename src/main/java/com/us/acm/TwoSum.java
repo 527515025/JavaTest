@@ -15,7 +15,7 @@ import java.util.Map;
  */
 public class TwoSum {
     public static void main(String[] args) {
-        int[] result = twoSum2(new int[]{1, 15, 3, 4, 5, 6, 7, 2, 9, 0}, 19);
+        int[] result = twoSum(new int[]{3, 2, 4}, 6);
         Arrays.stream(result).parallel().forEach(x -> System.out.println(x));
     }
 
@@ -34,8 +34,10 @@ public class TwoSum {
 
         for (int i = 0; i < nums.length; i++) {
             Integer value = map.get(target - nums[i]);
-            if (null != value) {
+            //因为自身只能使用一次，所以 value != i 不取自身
+            if (null != value && value != i) {
                 return new int[]{i, value};
+
             }
         }
         throw new IllegalArgumentException("No two sum solution");
@@ -53,11 +55,12 @@ public class TwoSum {
     public static int[] twoSum2(int[] nums, int target) {
         Map<Integer, Integer> map = new HashMap<>();
         for (int i = 0; i < nums.length; i++) {
-            map.put(nums[i], i);
             Integer value = map.get(target - nums[i]);
             if (null != value) {
                 return new int[]{i, value};
             }
+            //因为自身只能使用一次，所以应该先查寻再放入map
+            map.put(nums[i], i);
         }
         throw new IllegalArgumentException("No two sum solution");
     }
