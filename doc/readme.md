@@ -10,10 +10,20 @@ https://developer.aliyun.com/article/745626?utm_content=g_1000104832&from=timeli
 Java面试总结 csdn
 https://blog.csdn.net/thinkwon/category_9731418.html
 
+面试官：Thread.sleep(0) 有什么用？我没回答上来
+https://mp.weixin.qq.com/s/44n9nI9HTiRLD1Pee6pCeg
+
+
+
 ## java基础
+
+面试官：为什么 HashMap 的加载因子是0.75
+https://mp.weixin.qq.com/s/grvEQGhKim-z8GjUKR-NCg
 
 必须深入理解的50个JAVA基础概念
 https://zhuanlan.zhihu.com/c_1046719595074949120
+几张动态图捋清Java常用数据结构及其设计原理
+https://mp.weixin.qq.com/s/Mxi0StZRz96SX4LXEdEeaQ
 
 https://mp.weixin.qq.com/s?__biz=MjM5NjQ5MTI5OA==&mid=2651749434&idx=3&sn=5ffa63ad47fe166f2f1a9f604ed10091&chksm=bd12a5778a652c61509d9e718ab086ff27ad8768586ea9b38c3dcf9e017a8e49bcae3df9bcc8&scene=21#wechat_redirect  不可不说的Java“锁”事
 
@@ -34,7 +44,7 @@ https://mp.weixin.qq.com/s/4HziA8SERLNEqlrowQ6piA
 
 ## 关键字
 
-Java8系列之重新认识HashMap
+Java8系列之重新认识HashMap   [美团技术团队](javascript:void(0);)
 https://mp.weixin.qq.com/s?__biz=MjM5NjQ5MTI5OA==&mid=2651745258&idx=1&sn=df5ffe0fd505a290d49095b3d794ae7a&scene=21#wechat_redirect
 
 HashMap 为什么线程不安全
@@ -52,6 +62,9 @@ https://mp.weixin.qq.com/s/9gDGQhzRAL3pj35VAinZbQ
 #Spring
 Spring IOC 知识点总结
 https://mp.weixin.qq.com/s/vOsNtW72nBSQW_Lp9rTLQA
+
+面试官：连Spring三级缓存都答不好，自己走还是我送你？
+https://mp.weixin.qq.com/s/ORN39HESeZeCWqJJQcvHSg
 
 # MYSQL
 
@@ -71,6 +84,8 @@ https://mp.weixin.qq.com/s/iW0FfhP0vsyABoEiZUqsMQ
 
 MySQL 可重复读
 https://mp.weixin.qq.com/s/gPBi9_a3LWyncWiWPYWkuQ
+大厂面试官必问的Mysql锁机制
+https://mp.weixin.qq.com/s/ZDg0WOYesY7zcLlfBEUbow
 
 # redis
 
@@ -83,7 +98,8 @@ https://mp.weixin.qq.com/s/z1qVQWNM5ql5Y6H4huWKmw
 https://mp.weixin.qq.com/s/x_PzzfJfsQbZmx0IYg_tpg
 构建基于Redis的分布式锁
 https://mp.weixin.qq.com/s/u7D-VHkXggo7JCXwwu1UYw
-
+造了一个 Redis 分布锁的轮子，没想到还学到这么多东西！！！
+https://mp.weixin.qq.com/s/GiPuNT_GjbT-j90C2v4Ydw
 
 # HTTP
 
@@ -132,6 +148,15 @@ https://mp.weixin.qq.com/s/u0LRq_NNkCtU3wkdMdYlUA
 通过手写Dubbo了解RPC框架原理
 https://live.csdn.net/room/weixin_48013460/08rWiAbu
 
+#kafka
+Kafka的Exactly-once语义与事务机制
+https://mp.weixin.qq.com/s/7ZUmktjZpBstcwGx2icdbQ
+Kafka的存储机制以及可靠性
+https://mp.weixin.qq.com/s/qpDAMtxRmRytusRlN1vCXw
+
+#spark
+Spark底层原理概述
+https://mp.weixin.qq.com/s/M-Umwa9405QSamB8EsB3Vw
 #扩展
 
 深入探秘 Netty、Kafka 中的零拷贝技术！
@@ -147,8 +172,7 @@ https://mp.weixin.qq.com/s/UJ2yy7pb8EXZSlQVJIymBg  5大Java服务困局，阿里
 
 https://mp.weixin.qq.com/s/feJKRqYJTVEIxl6jvjevAg 从头到尾说一次 Java 的垃圾回收
 
-Kafka的存储机制以及可靠性
-https://mp.weixin.qq.com/s/qpDAMtxRmRytusRlN1vCXw
+
 分布式一致性机制整理
 https://mp.weixin.qq.com/s/6DjKLsKpQD5EsihMsEJ27Q
 深夜，聊聊设计模式
@@ -156,9 +180,16 @@ https://mp.weixin.qq.com/s/SJiMuHb_C773QdN8Qt0tqA
 
 
 
-
-
+如何画好一张架构图？
+https://mp.weixin.qq.com/s/2HjvNnfP7bLNQF5xh8PxIQ
 
 用户画像从0到100的构建思路
 https://mp.weixin.qq.com/s/RFkKkQ8wE5nsOFCXW2cr4g
+
+搜索引擎是如何工作的
+https://mp.weixin.qq.com/s/tziIc5YUsPMROpEldyM-Mw
+
+## 分布式
+分布式系统事务一致性
+https://mp.weixin.qq.com/s/hjCHBxGF94rlbpRfo-ud8g
 

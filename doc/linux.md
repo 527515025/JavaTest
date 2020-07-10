@@ -1,5 +1,11 @@
 # 操作
 
+
+Linux常用命令 & 实用命令万字总结
+https://mp.weixin.qq.com/s/nFayZVwAmCqzFshFPqNraA
+
+
+
 Vmware vSphere Client安装redhat7.4虚拟机教程
 
 ```
