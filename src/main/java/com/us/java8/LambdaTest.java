@@ -1,6 +1,7 @@
 package com.us.java8;
 
-import com.us.Person;
+
+import com.us.bean.Person;
 
 import java.util.*;
 import java.util.function.Predicate;

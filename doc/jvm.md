@@ -146,3 +146,10 @@ https://blog.csdn.net/u012998254/article/details/81428621
 
 
 
+实现通过类的权限定名获取该类的二进制字节流的代码块叫做类加载器。
+
+主要有一下四种类加载器:
+1. 启动类加载器(Bootstrap ClassLoader)用来加载 java 核心类库，无法被 java 程序直接引用。
+2. 扩展类加载器(extensions class loader):它用来加载 Java 的扩展库。Java 虚拟机的实现会提供一个扩展库目录。该类加载器在此目录里面查找并加载 Java 类。
+3. 系统类加载器（system class loader）：它根据 Java 应用的类路径（CLASSPATH）来加载 Java 类。一般来说，Java 应用的类都是由它来完成加载的。可以通过ClassLoader.getSystemClassLoader()来获取它。
+4. 用户自定义类加载器，通过继承 java.lang.ClassLoader 类的方式实现。
