@@ -1,6 +1,6 @@
 package com.us.basics;
 
-import com.us.Person;
+import com.us.bean.Person;
 import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.Field;

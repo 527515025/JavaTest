@@ -1,23 +1,23 @@
 package com.us.basics.threadTest;
 
-import com.us.Person;
+
+import com.us.bean.Person;
 
 /**
  * 本例子用于测试两个线程共用变量情况
  * 基础类型 值传递和  对象 引用传递
- *
- *
  *
  * @author yyb
  * @time 2019/6/20
  */
 public class ThreadTest {
     public static void main(String[] args) {
-        Person p = new Person();
-        main1(0, p);
-        main1(1, p);
+//        Person p = new Person();
+//        main1(0, p);
+//        main1(1, p);
 //        main2("abel",0);
 //        main2("yiyi",1);
+        managePrintName();
     }
 
 
@@ -100,4 +100,47 @@ public class ThreadTest {
         }
         System.out.println(name + "-----end------" + para + "----" + i);
     }
+
+
+
+/*****************************************************************************************************************************/
+
+
+    /**
+     * 同一个线程操作同一个对象，catch改变值
+     */
+    private static void managePrintName(){
+        Person person = new Person();
+        person.setName("abc");
+
+        Integer tryIndex = 1;
+        Integer tryMaxNum = 3;
+        try {
+            printName1(person);
+        } catch (Exception e) {
+            while (tryIndex <= tryMaxNum) {
+                try {
+                    Thread.sleep(1000);
+                    printName1(person);
+                } catch (Exception ex) {
+                    System.out.println("error");
+                }
+                tryIndex++;
+            }
+        }
+    }
+
+
+
+    private static void printName1(Person person) throws Exception {
+        System.out.println(person.getName());
+        printName2(person);
+    }
+
+
+    private static void printName2(Person person) throws Exception {
+        person.setName("yang");
+        System.out.println(person.getName());
+    }
+
 }

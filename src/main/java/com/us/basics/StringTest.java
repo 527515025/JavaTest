@@ -3,7 +3,7 @@ package com.us.basics;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONException;
-import com.us.Person;
+import com.us.bean.Person;
 import org.apache.commons.lang3.StringUtils;
 
 import java.text.SimpleDateFormat;

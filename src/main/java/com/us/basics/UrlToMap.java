@@ -1,6 +1,7 @@
 package com.us.basics;
 
-import com.us.Person;
+
+import com.us.bean.Person;
 import org.mortbay.util.MultiMap;
 import org.mortbay.util.UrlEncoded;
 

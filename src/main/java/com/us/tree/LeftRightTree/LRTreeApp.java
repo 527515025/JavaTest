@@ -11,7 +11,7 @@ public class LRTreeApp {
         System.out.println(tree.GetDepth(tree.getRoot()));
     }
 
-    private static LRTree init() {
+    public static LRTree init() {
         LRTree tree = new LRTree();
         tree.insert(8);
         tree.insert(50);

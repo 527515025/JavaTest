@@ -12,7 +12,7 @@ package com.us.tree.LeftRightTree;
 public class LRTree {
 
     //节点对象
-    class Node {
+    public class Node {
         public long value;
 
         public Node leftChild;
@@ -233,7 +233,7 @@ public class LRTree {
             System.out.print(currentNode.value + " ");
         }
     }
-    
+
     /**
      * 分层遍历二叉树
      */
