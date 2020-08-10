@@ -1,7 +1,8 @@
 工程师的自我修养
 
 https://tech.meituan.com/2018/08/16/10-principles-for-engineers.html
-
+优秀技术人，如何做到高效沟通？
+https://developer.aliyun.com/article/768253?utm_content=g_1000155943
 #Java
 
 合辑 | 面试必备！18篇Java面试疑难点详解
@@ -56,6 +57,8 @@ https://mp.weixin.qq.com/s/AOzBTeVWs2a8dE9P36N7GA
 
 9种设计模式在Spring中的运用，一定要非常熟练！
 https://mp.weixin.qq.com/s/ZqK5-2T3jZ9JTCdRA_st4w
+设计模式也可以这么简单
+https://mp.weixin.qq.com/s/pjQ6xqDvHHlfANUW_o2dTQ
 设计模式在外卖营销业务中的实践
 https://mp.weixin.qq.com/s/9gDGQhzRAL3pj35VAinZbQ
 
@@ -100,6 +103,10 @@ https://mp.weixin.qq.com/s/x_PzzfJfsQbZmx0IYg_tpg
 https://mp.weixin.qq.com/s/u7D-VHkXggo7JCXwwu1UYw
 造了一个 Redis 分布锁的轮子，没想到还学到这么多东西！！！
 https://mp.weixin.qq.com/s/GiPuNT_GjbT-j90C2v4Ydw
+SpringBoot + Redis 分布式锁：模拟抢单
+https://mp.weixin.qq.com/s/U_JPYoubiAtTWHbISmLULA
+
+https://mp.weixin.qq.com/s/pEgYloiG7485x-m6UAIjXQ
 
 # HTTP
 
@@ -154,6 +161,11 @@ https://mp.weixin.qq.com/s/7ZUmktjZpBstcwGx2icdbQ
 Kafka的存储机制以及可靠性
 https://mp.weixin.qq.com/s/qpDAMtxRmRytusRlN1vCXw
 
+源码分析zookeeper在kafka的作用
+https://mp.weixin.qq.com/s/8vSmtK0_t_4-Z4uHsjfH4Q
+Kafka数据可靠性保证三板斧-ACK/ISR/HW
+https://mp.weixin.qq.com/s/70i4-ma9eMTKwhFcl9ieNw
+
 #spark
 Spark底层原理概述
 https://mp.weixin.qq.com/s/M-Umwa9405QSamB8EsB3Vw
@@ -173,8 +185,7 @@ https://mp.weixin.qq.com/s/UJ2yy7pb8EXZSlQVJIymBg  5大Java服务困局，阿里
 https://mp.weixin.qq.com/s/feJKRqYJTVEIxl6jvjevAg 从头到尾说一次 Java 的垃圾回收
 
 
-分布式一致性机制整理
-https://mp.weixin.qq.com/s/6DjKLsKpQD5EsihMsEJ27Q
+
 深夜，聊聊设计模式
 https://mp.weixin.qq.com/s/SJiMuHb_C773QdN8Qt0tqA
 
@@ -189,7 +200,26 @@ https://mp.weixin.qq.com/s/RFkKkQ8wE5nsOFCXW2cr4g
 搜索引擎是如何工作的
 https://mp.weixin.qq.com/s/tziIc5YUsPMROpEldyM-Mw
 
+SpringBoot 整合Shiro实现动态权限加载更新+Session共享+单点登录
+https://mp.weixin.qq.com/s/kPFyH7rsE_py--ZuLEZMtw
+
+10张流程图+部署图，讲透单点登录原理与简单实现！
+https://mp.weixin.qq.com/s/WV6dhQ34wWUAeiTaipisIA
+
 ## 分布式
 分布式系统事务一致性
 https://mp.weixin.qq.com/s/hjCHBxGF94rlbpRfo-ud8g
+
+分布式一致性机制整理
+https://mp.weixin.qq.com/s/6DjKLsKpQD5EsihMsEJ27Q
+
+最简单的6种防止数据重复提交的方法！(干货)
+https://mp.weixin.qq.com/s/p1MRZpnxohnX2jIpZDczmQ
+
+
+##Flink
+这一次，你能彻底搞懂 Flink！！！
+https://mp.weixin.qq.com/s/lVVoMnTIuGp_a2ingpQbHw
+Flink架构分析之资源分配
+https://mp.weixin.qq.com/s/u7Aq7nkmI7WmAs61yks1UA
 
