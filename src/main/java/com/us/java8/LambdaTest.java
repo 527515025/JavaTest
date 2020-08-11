@@ -4,8 +4,12 @@ package com.us.java8;
 import com.us.bean.Person;
 
 import java.util.*;
+import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Created by yangyibo on 16/12/26.
@@ -14,7 +18,7 @@ public class LambdaTest {
 
 
     public static void main(String[] args) {
-        groupBy();
+//        groupBy();
 //        map();
 //        forEachT();
 //        threadT();
@@ -24,6 +28,10 @@ public class LambdaTest {
 //        personTComparator();
 //        boysAndGirls();
 //        stringToIntT();
+//        supplierTest();
+//        consumerTest();
+//        predicateTest();
+        FunctionTest();
 
     }
 
@@ -212,7 +220,7 @@ public class LambdaTest {
             Person person = new Person();
             person.setName("abel-" + i);
             person.setSex((int) (Math.random() * 2));
-            person.setGroup(String.valueOf(i%2));
+            person.setGroup(String.valueOf(i % 2));
             person.setAge(25 + r.nextInt(50));
             persons.add(person);
         }
@@ -241,4 +249,178 @@ public class LambdaTest {
     }
 
 
+    /*********************************************函数式接口********************************************************************************/
+
+
+    /**
+     * 使用场景：提前定义可能返回的一个指定类型结果，等需要调用的时候再获取结果。
+     *
+     * @param supplier
+     * @return
+     */
+    public static String getSupplierValue(Supplier<String> supplier) {
+        return supplier.get();
+    }
+
+    /**
+     * 函数，懒加载
+     */
+    public static void supplierTest() {
+        // 示例1
+        int num1 = 100;
+        int num2 = 200;
+        // 提前定义好需要返回的指定类型结果，但不运行
+        Supplier<Integer> supplier = () -> num1 + num2;
+        //此示例中返回的结果引用的对象num1和num2其实是不能更改的，如果我们在supplier定义后，suppliser.get()调用前将num1或num更改了，则编译会报错！
+        // num1 =101;
+        // 调取get()方法获取一个结果
+        System.out.println(supplier.get());
+
+        // 示例2
+        String str = "abcdefghijklmn";
+        String s = getSupplierValue(() -> str.substring(1, 5));
+        System.out.println(s);
+    }
+
+
+    /**
+     * 函数无返回
+     */
+    public static void consumerTest() {
+        // 传入一个加法并打印结果 30
+        modify(10, x -> System.out.println(x + 20));
+
+        // 传入一个减法并打印结果 -10
+        modify(10, x -> System.out.println(x - 20));
+
+
+        /**
+         * 定义一个消费方法，将李四筛选出来存入 li
+         */
+        List<Person> li = new ArrayList<>();
+
+        // 定义一个消费方法，li
+        Consumer<Person> consumer = x -> {
+            if (x.getName().equals("李四")) {
+                li.add(x);
+            }
+        };
+
+        List<Person> list = new ArrayList<>();
+        list.add(new Person(21, "张三"));
+        list.add(new Person(22, "李四"));
+        list.add(new Person(23, "赵六"));
+        list.add(new Person(30, "王五"));
+        list.add(new Person(52, "李四"));
+
+        // 传入一个消费方法
+        list.forEach(consumer);
+
+        // 打印消费方法处理后的li
+        System.out.println(li);
+
+    }
+
+    /**
+     * 使用场景：处理一些结果或数据，不需要返回的消费型，例如打印、发送通知等操作。
+     * 定义一个方法，第二个参数为一个Consumer(对参数进行操作的函数)
+     *
+     * @param num
+     * @param consumer
+     */
+    public static void modify(int num, Consumer<Integer> consumer) {
+        // 执行accept()方法，方法的具体实现不关心，调用的时候才关心
+        consumer.accept(num);
+    }
+
+
+    /**
+     * 使用场景：对一个数据进行判断，并返回boolean
+     * boolean test(T t) 判断指定值是否符合条件
+     * Predicate<T> and(Predicate<? super T> other) 与操作
+     * Predicate<T> or(Predicate<? super T> other) 或操作
+     * static <T> Predicate<T> isEqual(Object targetRef) 静态方法，equals判断第一个test与第二个test方法相同
+     */
+    public static void predicateTest() {
+
+        //示例1 设置断言x == 10
+        Predicate<Integer> predicate = (x) -> x == 10;
+        //传入x = 10
+        System.out.println("x = 10 ?" + predicate.test(10));
+        //断言逻辑取反
+        predicate = predicate.negate();
+        System.out.println("x != 10 ?" + predicate.test(10));
+
+
+        //示例2 将list集合里面小于20的数据移除
+        List<Integer> list = new ArrayList<>();
+        list.add(9);
+        list.add(12);
+        list.add(21);
+        list.add(60);
+        // 使用lambda表达式Predicate，判断list里数是否满足条件，并删除,
+        // 查看list.removeIf()方法源码，我们发现他实现的方式就是遍历集合并对每个集合元素调用Predicate.test()方法，验证结果并移除元素。
+        list.removeIf(x -> x < 20);
+        System.out.println(list);
+
+        // 示例3 统计集合中相等的对象的个数
+        Person p = new Person(22, "李四");
+        // 使用isEqual生成一个断言
+        Predicate<Person> predicate3 = Predicate.isEqual(p);
+        Long count = Stream.of(
+                new Person(21, "张三"),
+                new Person(22, "李四"),
+                new Person(23, "王五"),
+                new Person(24, "王五"),
+                new Person(22, "李四"),
+                new Person(26, "张三")
+        ).filter(predicate3).count();
+        System.out.println(count);
+    }
+
+
+    /**
+     *  函数有返回
+     */
+    public static void FunctionTest() {
+        //示例1：定义一个 funciton ,实现将String转换为Integer
+        Integer a = FunctionTest("100", x -> Integer.parseInt(x));
+        // 结果：class java.lang.Integer
+        System.out.println(a.getClass());
+
+        //示例2：使用andThen() 实现一个函数 y=10x + 10; 结果30
+        Function<Integer, Integer> function2 = x -> 10 * x;
+        // andThen 返回首先将此函数应用于的组合函数它的输入
+        function2 = function2.andThen(x -> x + 10);
+        System.out.println(function2.apply(2));
+
+
+        //示例3：使用compose() 实现一个函数 y=(10+x)2; 结果 26
+        Function<Integer, Integer> function3 = x -> x * 2;
+        // compose 将此函数应用于给定参数。
+        function3 = function3.compose(x -> x + 10);
+        System.out.println(function3.apply(3));
+
+
+        //示例5：使用使用compose()、andThen()实现一个函数 y=(10+x)2+10; 结果 36
+        Function<Integer, Integer> function4 = x -> x * 2;
+        function4 = function4.compose(x -> x + 10);
+        function4 = function4.andThen(x -> x + 10);
+        System.out.println(function4.apply(3));
+
+    }
+
+    /**
+     * 使用场景：根据一个数据类型得到另一个数据类型。
+     * 方法：
+     * <p>
+     * R apply(T t); 根据一个数据类型T加工得到一个数据类型R
+     * <V> Function<V, R> compose(Function<? super V, ? extends T> before) 组合函数，调用当前function之前调用
+     * <V> Function<T, V> andThen(Function<? super R, ? extends V> after) 组合函数，调用当前function之后调用
+     * static <T> Function<T, T> identity() 静态方法，返回与原函数参数一致的结果。x=y;
+     */
+    public static Integer FunctionTest(String a, Function<String, Integer> function) {
+        return function.apply(a);
+    }
 }
+
