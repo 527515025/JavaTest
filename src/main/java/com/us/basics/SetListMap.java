@@ -1,11 +1,14 @@
 package com.us.basics;
 
+import com.google.common.base.Joiner;
+import com.google.common.base.Splitter;
 import com.us.bean.Person;
 import org.apache.commons.collections4.ListUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.python.google.common.collect.Lists;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by yangyibo on 17/6/13.
@@ -21,7 +24,8 @@ public class SetListMap {
 //        mapNullTest();
 //        stringsLength();
 //        mapIsNullTest();
-        splitList();
+//        splitList();
+        mapToUrlParam();
     }
 
     private static void setTest() {
@@ -43,12 +47,12 @@ public class SetListMap {
 //        ss = ss.substring(1, ss.length()-1);
 //        System.out.println(ss+"-----------");
 
-        System.out.println("set size"+set.size());
-       StringBuffer s = new StringBuffer();
-        s.append( set.toString());
+        System.out.println("set size" + set.size());
+        StringBuffer s = new StringBuffer();
+        s.append(set.toString());
         s.deleteCharAt(0);
-        s.deleteCharAt(s.length()-1);
-        System.out.println(s.toString()+"-------------");
+        s.deleteCharAt(s.length() - 1);
+        System.out.println(s.toString() + "-------------");
         set.stream().forEach(x -> System.out.println(x));
 
     }
@@ -202,7 +206,7 @@ public class SetListMap {
         map.put("1", "value1");
         map.put("2", "value2");
         map.put("3", "value3");
-        map.put("1","value5");
+        map.put("1", "value5");
         map.remove("1");
         map.remove("2");
         map.remove("3");
@@ -235,19 +239,73 @@ public class SetListMap {
 
     /**
      * list 等分切分
-     *
      */
-    private static void splitList(){
-        List<Integer> intList = Lists.newArrayList(1, 2, 3, 4, 5, 6, 7, 8,9,10,11,12,13,14,15,16,17,18);
-       if (intList.size() >= 5){
+    private static void splitList() {
+        List<Integer> intList = Lists.newArrayList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18);
+        if (intList.size() >= 5) {
 //           Integer sum =  intList.size()/5;
-           List<List<Integer>> lists =  ListUtils.partition(intList,5);
-           for(List<Integer> s : lists) {
-               System.out.println(s.toString());
-           }
-       }
+            List<List<Integer>> lists = ListUtils.partition(intList, 5);
+            for (List<Integer> s : lists) {
+                System.out.println(s.toString());
+            }
+        }
     }
 
+
+    /**
+     * map 参数按照升序排列
+     *
+     * @return
+     */
+    private static void mapToUrlParam() {
+        String signSecret = "3E4BA352ED4A4984BD579AC72E08B258";
+        Map<String, String> data = new HashMap<>();
+        data.put("yang", "6");
+        data.put("sbo", "5");
+        data.put("ayi", "1");
+        data.put("dan", "2");
+        data.put("dao", "3");
+        data.put("dui", "4");
+
+        String str = Joiner.on("#").withKeyValueSeparator("=").join(data);
+        List<String> list = com.google.common.collect.Lists.newArrayList(Splitter.on("#").trimResults().splitToList(str));
+        Collections.sort(list);
+        String req = Joiner.on("&").join(list).concat(signSecret);
+        System.out.println(req);
+
+
+    }
+
+    /**
+     * map 参数按照升序排列方法2
+     *
+     * @return
+     */
+    private static void mapToUrlParam2() {
+        String signSecret = "3E4BA352ED4A4984BD579AC72E08B258";
+        Map<String, String> data = new HashMap<>();
+        data.put("yang", "6");
+        data.put("sbo", "5");
+        data.put("ayi", "1");
+        data.put("dan", "2");
+        data.put("dao", "3");
+        data.put("dui", "4");
+
+        List<String> keys = new ArrayList<>();
+        data.entrySet().stream().parallel().forEach(x -> {
+            keys.add(x.getKey());
+        });
+        StringBuffer sb = new StringBuffer();
+        List<String> keysSorted = keys.stream().parallel().sorted().collect(Collectors.toList());
+        keysSorted.forEach(x -> {
+            sb.append(x).append("=").append(data.get(x)).append("&");
+        });
+        if (sb.length() > 0) {
+            sb.deleteCharAt(sb.length() - 1);
+            sb.append(signSecret);
+        }
+        System.out.println(sb.toString());
+    }
 
 }
 
