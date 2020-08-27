@@ -25,7 +25,8 @@ public class SetListMap {
 //        stringsLength();
 //        mapIsNullTest();
 //        splitList();
-        mapToUrlParam();
+        listIterator();
+//        mapToUrlParam();
     }
 
     private static void setTest() {
@@ -249,6 +250,24 @@ public class SetListMap {
                 System.out.println(s.toString());
             }
         }
+    }
+
+
+    /**
+     * list Iterator 遍历
+     */
+    private static void listIterator() {
+        List<Integer> intList = Lists.newArrayList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18);
+        Iterator<Integer> iter = intList.iterator();
+        while (iter.hasNext()) {
+            Integer i = iter.next();
+            System.out.println(i);
+            if (i.equals(8)) {
+                iter.remove();
+                break;
+            }
+        }
+       intList.stream().forEach(x->System.out.println(x));
     }
 
 
