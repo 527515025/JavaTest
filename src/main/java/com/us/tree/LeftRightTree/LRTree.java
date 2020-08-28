@@ -1,7 +1,6 @@
 package com.us.tree.LeftRightTree;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by yangyibo on 17/7/18.
@@ -297,14 +296,52 @@ public class LRTree {
         return (numLeft + numRight);
     }
 
+    /**
+     * 深度优先遍历
+     * 二叉树
+     *
+     * @param root
+     */
+    void dfs(Node root) {
+        if (root == null) {
+            return;
+        }
+        System.out.println(root.value);
+        dfs(root.leftChild);
+        dfs(root.rightChild);
+    }
 
     /**
+     * 二叉树 广度优先
      *
+     * @param root
+     */
+    public void bfs(Node root) {
+        Queue<Node> queue = new ArrayDeque<>();
+        queue.add(root);
+        while (!queue.isEmpty()) {
+            Node node = queue.poll();
+            System.out.println(node.value);
+            if (node.leftChild != null) {
+                queue.add(node.leftChild);
+            }
+            if (node.rightChild != null) {
+                queue.add(node.rightChild);
+            }
+        }
+    }
+
+
+    /**
+     * 可用队列替换
      */
     private List<List<Long>> levels = new ArrayList<>();
 
     /**
+     * 深度优先
      * 递归 分层遍历二叉树
+     * 结点的层次：从根结点开始，假设根结点为第1层，根结点的子节点为第2层，依此类推，如果某一个结点位于第L层，则其子节点位于第L+1层 [5]  。
+     *
      * 时间复杂度 oN
      * 空间复杂度ON
      */
@@ -313,7 +350,7 @@ public class LRTree {
         //输出
         levels.forEach(x -> {
             System.out.println("--------------------");
-            x.forEach(y ->{
+            x.forEach(y -> {
                 System.out.print(y + " ");
             });
             System.out.println();
@@ -322,7 +359,7 @@ public class LRTree {
     }
 
     /**
-     * 分层遍历二叉树
+     * 分层遍历二叉树 递归
      */
     public void levelTraversRecursion(Node currentNode, int level) {
         if (currentNode == null) {
@@ -334,6 +371,44 @@ public class LRTree {
         levels.get(level).add(currentNode.value);
         levelTraversRecursion(currentNode.leftChild, level + 1);
         levelTraversRecursion(currentNode.rightChild, level + 1);
+    }
+
+    //出现层次识别可以使用队列 模式识别
+
+    /**
+     * 二叉树 广度优先 改造的分层遍历
+     * 时间复杂度 oN
+     * 空间复杂度ON
+     * new Node(111111111) 为层次的分界符号
+     * <p>
+     * 大致思想， 广度优先优先遍历，将每层的节点放入队列，然后出列，判断是否为分界符。
+     * 如果为分界符，则判断队列中是否还有元素，如果有则放入新的分界符，输出打印时跳过分界符号。
+     *
+     * @param root
+     */
+    public void bfsLevelTravers(Node root) {
+        Queue<Node> queue = new ArrayDeque<>();
+        queue.add(root);
+        queue.add(new Node(111111111));
+        while (!queue.isEmpty()) {
+            for (int i = 0; i < queue.size(); i++) {
+                Node node = queue.poll();
+                if (node.value == 111111111) {
+                    System.out.println("--------------------------");
+                    if (!queue.isEmpty()) {
+                        queue.add(new Node(111111111));
+                    }
+                } else {
+                    System.out.println(node.value);
+                }
+                if (node.leftChild != null) {
+                    queue.add(node.leftChild);
+                }
+                if (node.rightChild != null) {
+                    queue.add(node.rightChild);
+                }
+            }
+        }
     }
 
 }
