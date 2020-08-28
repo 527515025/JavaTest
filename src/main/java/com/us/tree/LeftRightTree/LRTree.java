@@ -341,7 +341,7 @@ public class LRTree {
      * 深度优先
      * 递归 分层遍历二叉树
      * 结点的层次：从根结点开始，假设根结点为第1层，根结点的子节点为第2层，依此类推，如果某一个结点位于第L层，则其子节点位于第L+1层 [5]  。
-     *
+     * <p>
      * 时间复杂度 oN
      * 空间复杂度ON
      */
@@ -411,4 +411,53 @@ public class LRTree {
         }
     }
 
+    /**
+     * 广度优先
+     * 蛇形遍历
+     * 二叉树的锯齿形层次遍历 ，（即先从左往右，再从右往左进行下一层遍历，以此类推，层与层之间交替进行）
+     *
+     * 双端队列，
+     *
+     * @param root
+     */
+    public List<List<Long>> snakeTraversal(Node root) {
+        if (root == null) {
+            return new ArrayList<>();
+        }
+        List<List<Long>> results = new ArrayList<>();
+        LinkedList<Long> levelList = new LinkedList<>();
+        //遍历方向
+        boolean forward = true;
+        //双端队列
+        LinkedList<Node> queue = new LinkedList<>();
+        queue.add(root);
+        //分界
+        queue.add(null);
+        while (queue.size() > 0) {
+            Node currNode = queue.pollFirst();
+            if (currNode != null) {
+                if (forward) {
+                    levelList.addLast(currNode.value);
+                } else {
+                    levelList.addFirst(currNode.value);
+                }
+                if (currNode.leftChild != null) {
+                    queue.add(currNode.leftChild);
+                }
+                if (currNode.rightChild != null) {
+                    queue.add(currNode.rightChild);
+                }
+            } else {
+                //为分界节点
+                results.add(levelList);
+                forward = !forward;
+                //清空本层
+                levelList = new LinkedList<>();
+                if (queue.size() > 0) {
+                    queue.addLast(null);
+                }
+            }
+        }
+        return results;
+    }
 }

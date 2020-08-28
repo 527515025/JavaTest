@@ -45,8 +45,8 @@ public class LRTreeApp {
         System.out.print("－－－－－－－－二叉树的节点个数 －－－－－－－－");
         System.out.println(tree.GetNodeNum(tree.getRoot()));
 
-        System.out.println("－－－－－－－－删除节点－－－－－－－－－－");
-        System.out.println(tree.delete(7));
+//        System.out.println("－－－－－－－－删除节点－－－－－－－－－－");
+//        System.out.println(tree.delete(7));
 
         System.out.print("－－－－－－－－先续遍历 －－－－－－－－ ");
         tree.traverse(1);
@@ -66,8 +66,26 @@ public class LRTreeApp {
         System.out.println("－－－－－－－二叉树的深度－－－－－－－－－");
         System.out.println(tree.GetDepth(tree.getRoot()));
 
+        System.out.println("－－－－－－二叉树第分层遍历－－－－－－－－");
+        tree.levelTraverses(tree.getRoot());
+
         System.out.println("－－－－－－二叉树第K层的节点个数－－－－－－－－");
-        System.out.println(tree.GetNodeNumKthLevel(tree.getRoot(),5));
+        System.out.println(tree.GetNodeNumKthLevel(tree.getRoot(), 5));
+
+        System.out.println("－－－－－－二叉树深度优先遍历－－－－－－－－");
+        tree.dfs(tree.getRoot());
+
+        System.out.println("－－－－－－二叉树广度优先遍历－－－－－－－－");
+        tree.bfs(tree.getRoot());
+
+
+        System.out.println("－－－－－－二叉树广度优先第分层遍历－－－－－－－－");
+        tree.bfsLevelTravers(tree.getRoot());
+
+
+
+        System.out.println("－－－－－－二叉树广度优先蛇形遍历－－－－－－－－");
+        tree.snakeTraversal(tree.getRoot());
 
     }
 }
