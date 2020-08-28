@@ -1,5 +1,8 @@
 package com.us.tree.LeftRightTree;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by yangyibo on 17/7/18.
  * http://www.cnblogs.com/licheng/archive/2010/04/06/1705547.html
@@ -234,12 +237,6 @@ public class LRTree {
         }
     }
 
-    /**
-     * 分层遍历二叉树
-     */
-    public void LevelTraverse(Node currentNode) {
-
-    }
 
     /**
      * 得到二叉树的节点个数
@@ -298,6 +295,45 @@ public class LRTree {
         int numLeft = GetLeafNodeNum(root.leftChild);
         int numRight = GetLeafNodeNum(root.rightChild);
         return (numLeft + numRight);
+    }
+
+
+    /**
+     *
+     */
+    private List<List<Long>> levels = new ArrayList<>();
+
+    /**
+     * 递归 分层遍历二叉树
+     * 时间复杂度 oN
+     * 空间复杂度ON
+     */
+    public List<List<Long>> levelTraverses(Node currentNode) {
+        levelTraversRecursion(currentNode, 0);
+        //输出
+        levels.forEach(x -> {
+            System.out.println("--------------------");
+            x.forEach(y ->{
+                System.out.print(y + " ");
+            });
+            System.out.println();
+        });
+        return levels;
+    }
+
+    /**
+     * 分层遍历二叉树
+     */
+    public void levelTraversRecursion(Node currentNode, int level) {
+        if (currentNode == null) {
+            return;
+        }
+        if (levels.size() == level) {
+            levels.add(new ArrayList<>());
+        }
+        levels.get(level).add(currentNode.value);
+        levelTraversRecursion(currentNode.leftChild, level + 1);
+        levelTraversRecursion(currentNode.rightChild, level + 1);
     }
 
 }
