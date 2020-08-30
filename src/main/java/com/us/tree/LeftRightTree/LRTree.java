@@ -381,7 +381,7 @@ public class LRTree {
      * 空间复杂度ON
      * new Node(111111111) 为层次的分界符号
      * <p>
-     * 大致思想， 广度优先优先遍历，将每层的节点放入队列，然后出列，判断是否为分界符。
+     * 大致思想， 广度优先优先遍历，将每层的节点放入队列，然后出列，判断是否为分界符。遍历其子节点
      * 如果为分界符，则判断队列中是否还有元素，如果有则放入新的分界符，输出打印时跳过分界符号。
      *
      * @param root
@@ -417,6 +417,7 @@ public class LRTree {
      * 二叉树的锯齿形层次遍历 ，（即先从左往右，再从右往左进行下一层遍历，以此类推，层与层之间交替进行）
      * <p>
      * 双端队列， null 为分界值，和分层遍历思维一致，只是在每层参数放置时，放入双端队列也就是链表
+     *
      * 时间复杂度：O(N)
      * 空间复杂度：O(N)
      *
@@ -430,7 +431,7 @@ public class LRTree {
         LinkedList<Long> levelList = new LinkedList<>();
         //遍历方向
         boolean forward = true;
-        //双端队列
+        //双端队列 维护节点信息
         LinkedList<Node> queue = new LinkedList<>();
         queue.add(root);
         //分界
@@ -470,12 +471,21 @@ public class LRTree {
 
     /**
      * 深度优先
-     * 递归 分层遍历二叉树
-     * 结点的层次：从根结点开始，假设根结点为第1层，根结点的子节点为第2层，依此类推，如果某一个结点位于第L层，则其子节点位于第L+1层 [5]  。
+     * 递归 蛇形遍历二叉树  考虑双端队列
+     * <p>
+     * <p>
+     * 结点的层次：从根结点开始，假设根结点为第1层，根结点的子节点为第2层，依此类推，如果某一个结点位于第L层，则其子节点位于第L+1层 [5]
+     * 递归遍历每层节点，然后将节点和节点的层级信息存储起来，获取每层的节点信息。
+     * <p>
+     * <p>
      * <p>
      * 时间复杂度 oN
-     * 空间复杂度ON
+     * 空间复杂度 O(H)，其中 HH 是树的高度。例如：包含 NN 个节点的树，高度大约为 log_2{N}
+     * 与 BFS 不同，在 DFS 中不需要维护双端队列。方法递归调用会产生额外的内存消耗。
+     * 方法 DFS(node, level) 的调用堆栈大小刚好等于节点所在层数。
+     * 因此 DFS 的空间复杂度为 O(log2N)，这比 BFS 好很多。
      */
+
     public List<LinkedList<Long>> dfsSnakeTraversal(Node currentNode) {
         dfsLevelTraversRecursion(currentNode, 0);
         return snakeTravers;
