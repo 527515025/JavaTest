@@ -417,10 +417,13 @@ public class LRTree {
      * 二叉树的锯齿形层次遍历 ，（即先从左往右，再从右往左进行下一层遍历，以此类推，层与层之间交替进行）
      * <p>
      * 双端队列， null 为分界值，和分层遍历思维一致，只是在每层参数放置时，放入双端队列也就是链表
-     *
+     * <p>
      * 时间复杂度：O(N)
      * 空间复杂度：O(N)
      *
+     *
+     * ArrayList 是数组 所以 add（0，e） 是在内存中System.arrayCopy 拷贝一个新的数组，并将后面的所有元素位置+1
+     * LinkedList 是链表
      * @param root
      */
     public List<List<Long>> snakeTraversal(Node root) {
@@ -428,7 +431,7 @@ public class LRTree {
             return new ArrayList<>();
         }
         List<List<Long>> results = new ArrayList<>();
-        LinkedList<Long> levelList = new LinkedList<>();
+        List<Long> levelList = new ArrayList<>();
         //遍历方向
         boolean forward = true;
         //双端队列 维护节点信息
@@ -440,9 +443,9 @@ public class LRTree {
             Node currNode = queue.pollFirst();
             if (currNode != null) {
                 if (forward) {
-                    levelList.addLast(currNode.value);
+                    levelList.add(currNode.value);
                 } else {
-                    levelList.addFirst(currNode.value);
+                    levelList.add(0, currNode.value);
                 }
                 if (currNode.leftChild != null) {
                     queue.add(currNode.leftChild);
@@ -464,10 +467,6 @@ public class LRTree {
         return results;
     }
 
-    /**
-     *
-     */
-    private List<LinkedList<Long>> snakeTravers = new ArrayList<>();
 
     /**
      * 深度优先
@@ -475,7 +474,8 @@ public class LRTree {
      * <p>
      * <p>
      * 结点的层次：从根结点开始，假设根结点为第1层，根结点的子节点为第2层，依此类推，如果某一个结点位于第L层，则其子节点位于第L+1层 [5]
-     * 递归遍历每层节点，然后将节点和节点的层级信息存储起来，获取每层的节点信息。
+     *
+     * 递归遍历每层节点，然后将节点和节点的层级信息存储起来，获取每层的节点信息。根据奇数层反转，偶数层不反转即可
      * <p>
      * <p>
      * <p>
@@ -486,25 +486,28 @@ public class LRTree {
      * 因此 DFS 的空间复杂度为 O(log2N)，这比 BFS 好很多。
      */
 
-    public List<LinkedList<Long>> dfsSnakeTraversal(Node currentNode) {
+
+    private List<List<Long>> snakeTravers = new ArrayList<>();
+
+    public List<List<Long>> dfsSnakeTraversal(Node currentNode) {
         dfsLevelTraversRecursion(currentNode, 0);
         return snakeTravers;
     }
 
     /**
-     * 分层遍历二叉树 递归
+     * 分层蛇形遍历二叉树 递归
      */
     public void dfsLevelTraversRecursion(Node currentNode, int level) {
         if (currentNode == null) {
             return;
         }
         if (snakeTravers.size() == level) {
-            snakeTravers.add(new LinkedList<>());
+            snakeTravers.add(new ArrayList<>());
         }
         if (level % 2 > 0) {
-            snakeTravers.get(level).addFirst(currentNode.value);
+            snakeTravers.get(level).add(0, currentNode.value);
         } else {
-            snakeTravers.get(level).addLast(currentNode.value);
+            snakeTravers.get(level).add(currentNode.value);
         }
         dfsLevelTraversRecursion(currentNode.leftChild, level + 1);
         dfsLevelTraversRecursion(currentNode.rightChild, level + 1);
