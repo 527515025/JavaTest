@@ -3,25 +3,37 @@ package com.us.basics;
 /**
  * Created by yangyibo on 17/12/11.
  * 在Java中，位运算符有很多，例如与(&)、非(~)、或(|)、异或(^)、移位(<<和>>)等
- *
- *  <<      :     左移运算符，num << 1,相当于num乘以2
- *  >>      :     右移运算符，num >> 1,相当于num除以2
- *  >>>    :     无符号右移，忽略符号位，空位都以0补齐
- *  异或运算符 ^ 一句话，相异为真 返回 boolean
- *
+ * <p>
+ * <<      :     左移运算符，num << 1,相当于num乘以2
+ * >>      :     右移运算符，num >> 1,相当于num除以2
+ * >>>    :     无符号右移，忽略符号位，空位都以0补齐
+ * 异或运算符 ^ 一句话，相异为真 返回 boolean
+ * <p>
  * 0001 | 0100，也就是0101 或只要两位有一位 为真则为真 ，便拥有了Select和Update两项权限。
  * 0001 ~ 0100  也就是 1010 只有两位都为 0 则为真。
  * 0001 & 0101  也就是 0001 只有两位都为 1 则为真
- *
- *
+ * <p>
+ * <p>
  * <p>
  * 使用位掩码的方式，只需要用一个大于或等于0且小于16的整数即可表示所有的16种权限的状态。
  */
 public class BitMask {
-    public static int ADD = 1 << 0; //1*2的0次方 的二进制 0001
-    public static int DELETE = 1 << 1; //1*2的1次方 的二进制 0010
-    public static int UPDATE = 1 << 2; //1*2的2次方 的二进制 0100
-    public static int SELECT = 1 << 3; //1*2的3次方 的二进制 1000
+    /**
+     * 1*2的0次方 的二进制 0001
+     */
+    public static int ADD = 1 << 0;
+    /**
+     * 1*2的1次方 的二进制 0010
+     */
+    public static int DELETE = 1 << 1;
+    /**
+     * 1*2的2次方 的二进制 0100
+     */
+    public static int UPDATE = 1 << 2;
+    /**
+     * 1*2的3次方 的二进制 1000
+     */
+    public static int SELECT = 1 << 3;
 
     // 当前状态
     private int currentStatus;
@@ -33,6 +45,7 @@ public class BitMask {
 
     /**
      * 添加某个操作权限
+     *
      * @param more
      * @return
      */
@@ -43,6 +56,7 @@ public class BitMask {
 
     /**
      * 除去某个操作权限
+     *
      * @param more
      * @return
      */
@@ -54,11 +68,12 @@ public class BitMask {
 
     /**
      * 是否拥有某个权限
+     *
      * @param more
      * @return
      */
     private boolean isPermission(int more) {
-        return (currentStatus & more) > 0 ;
+        return (currentStatus & more) > 0;
     }
 
 
@@ -78,9 +93,12 @@ public class BitMask {
      * 测试与
      */
     public static void test1() {
-        int a =5; //0101
-        int b =6; //0110
-        System.out.println(a&b); //输出为 0100 为 4
+        //0101
+        int a = 5;
+        //0110
+        int b = 6;
+        //输出为 0100 为 4
+        System.out.println(a & b);
 
     }
 
@@ -88,9 +106,12 @@ public class BitMask {
      * 测试或
      */
     public static void test2() {
-        int a =5; //0101
-        int b =6; //0110
-        System.out.println(a|b); // 输出为 0111 为 7
+        //0101
+        int a = 5;
+        //0110
+        int b = 6;
+        //输出为 0111 为 7
+        System.out.println(a | b);
 
     }
 
@@ -100,9 +121,11 @@ public class BitMask {
      * 非操作比较绕，可以理解为绝对值＋1 并取负数
      */
     public static void test3() {
-        int a =5; //0101
-        System.out.println(~a); // 输出为 －6
-
+        //0101
+        int a = 5;
+        //输出为 －6
+        System.out.println(~a);
+        System.out.println(" ~a == -6 is " + (~a == -6));
     }
 
 }

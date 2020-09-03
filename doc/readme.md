@@ -3,20 +3,27 @@
 https://tech.meituan.com/2018/08/16/10-principles-for-engineers.html
 优秀技术人，如何做到高效沟通？
 https://developer.aliyun.com/article/768253?utm_content=g_1000155943
-#扩展
+5大Java服务困局，阿里工程师如何打破？ 必读：
+https://mp.weixin.qq.com/s/UJ2yy7pb8EXZSlQVJIymBg  
 
-1.3万亿条数据查询毫秒级响应，如何做到的？：https://mp.weixin.qq.com/s/U1XwI7XaI3CarOwOypbfxg
+如何写好代码？
+https://developer.aliyun.com/article/769281?utm_content=g_1000164026&from=timeline
+我在阿里收获的N个成长
+https://developer.aliyun.com/article/770189?utm_content=g_1000170567&from=timeline
+
+#架构
+
+
 领域驱动设计详解：是什么、为什么、怎么做？：
 https://mp.weixin.qq.com/s/jo3jNikkxrM4ouzvjA-fFQ
+多研究些架构，少谈些框架(1)
+https://mp.weixin.qq.com/s/VllG1y8xqv4Ll-ns376kCw
 
-深入探秘 Netty、Kafka 中的零拷贝技术！
-https://mp.weixin.qq.com/s/ck6yO0xPPyfggdUri_w91g
+搜索引擎是如何工作的
+https://mp.weixin.qq.com/s/tziIc5YUsPMROpEldyM-Mw
 
 点赞功能，用 MySQL 还是 Redis ？
 https://mp.weixin.qq.com/s/hRMr9EvsBX6RW8Smxem4lQ
-
-5大Java服务困局，阿里工程师如何打破？ 必读：
-https://mp.weixin.qq.com/s/UJ2yy7pb8EXZSlQVJIymBg  
 
 如何画好一张架构图？
 https://mp.weixin.qq.com/s/2HjvNnfP7bLNQF5xh8PxIQ
@@ -24,8 +31,16 @@ https://mp.weixin.qq.com/s/2HjvNnfP7bLNQF5xh8PxIQ
 用户画像从0到100的构建思路
 https://mp.weixin.qq.com/s/RFkKkQ8wE5nsOFCXW2cr4g
 
-搜索引擎是如何工作的
-https://mp.weixin.qq.com/s/tziIc5YUsPMROpEldyM-Mw
+异地多活，不就是每个地区都搭建一个服务吗？
+https://mp.weixin.qq.com/s/ZNficcNr04Yrn5RPSnpnPg
+
+### 高并发
+高并发系统三大利器之缓存
+https://mp.weixin.qq.com/s/CpWT4w1xN_NShq8KvG05Pg
+谈谈高并发系统的限流
+https://mp.weixin.qq.com/s/n85JD8Eg5WtIOS7fikJA0Q
+知乎1.3万亿条数据查询毫秒级响应，如何做到的？（MySQL Sharding 和 MHA 的缺点  10）
+https://mp.weixin.qq.com/s/U1XwI7XaI3CarOwOypbfxg
 
 ### 单点登录
 如何设计 QQ、微信等第三方账号登陆 ？还要我说出数据库表设计！
@@ -36,9 +51,8 @@ https://mp.weixin.qq.com/s/kPFyH7rsE_py--ZuLEZMtw
 
 10张流程图+部署图，讲透单点登录原理与简单实现！
 https://mp.weixin.qq.com/s/WV6dhQ34wWUAeiTaipisIA
-
-
-
+面试官问我：如何设计 QQ、微信等第三方账号登陆 ？还要我说出数据库表设计！
+https://mp.weixin.qq.com/s/oUlUiwQ_MJytmEyEiSq0LA
 #Java
 
 合辑 | 面试必备！18篇Java面试疑难点详解
@@ -49,16 +63,36 @@ https://blog.csdn.net/thinkwon/category_9731418.html
 面试官：Thread.sleep(0) 有什么用？我没回答上来
 https://mp.weixin.qq.com/s/44n9nI9HTiRLD1Pee6pCeg
 
-
+你还在被 Java NIO 虐？该试试 Netty 了！
+https://mp.weixin.qq.com/s/Ft6mPILiY9t76-RRTEYdwg
+超详细Netty入门，看这篇就够了！
+https://developer.aliyun.com/article/769587?utm_content=g_1000165559
+老板：再用Log4j就收拾东西回家吧！
+https://mp.weixin.qq.com/s/6cXRKMtE9CZpuBzlwlBmgQ
 
 ## java基础
 
 https://mp.weixin.qq.com/s/feJKRqYJTVEIxl6jvjevAg 从头到尾说一次 Java 的垃圾回收
+十个问题弄清JVM&GC（二）
+https://developer.aliyun.com/article/770672?utm_content=g_1000172931&from=timeline
+Java内存模型与指令重排
+https://mp.weixin.qq.com/s/ewqzycgyxfprTQ_H3u-d4Q
+
+一文吃透Java集合框架
+：https://mp.weixin.qq.com/s/g66EiEQmHkJNCu09d8VwNw
 
 必须深入理解的50个JAVA基础概念
 https://zhuanlan.zhihu.com/c_1046719595074949120
 
 https://mp.weixin.qq.com/s?__biz=MjM5NjQ5MTI5OA==&mid=2651749434&idx=3&sn=5ffa63ad47fe166f2f1a9f604ed10091&chksm=bd12a5778a652c61509d9e718ab086ff27ad8768586ea9b38c3dcf9e017a8e49bcae3df9bcc8&scene=21#wechat_redirect  不可不说的Java“锁”事
+
+谈谈你对 ThreadLocal 的理解
+https://mp.weixin.qq.com/s/LW_hWJOTcbUDHeSgTw3q0Q
+
+一文讲透 “进程、线程、协程”
+https://mp.weixin.qq.com/s/BzJw4S3O7lZikTyhGa4P9A
+为什么阿里巴巴要禁用 Executors 创建线程池？
+https://mp.weixin.qq.com/s/YYDxYh2rucM7Uvr3oLX7Qw
 
 学Java反射这篇就够了
 https://mp.weixin.qq.com/s/VksjLKLOnxSWM6wy-tkGMg
@@ -67,11 +101,11 @@ https://mp.weixin.qq.com/s/A89RoKsCZx7uPUvMS_kk_Q
 Java 泛型中的通配符 T，E，K，V，
 https://mp.weixin.qq.com/s/zp_w_UQjVWJBkMObPDxmGA
 
-
 5分钟理解一致性哈希算法：https://mp.weixin.qq.com/s/N3EcFZ9QC-lIwGgNk2pMiw
 
 阿里内部员工，排查Java问题常用的工具单：https://mp.weixin.qq.com/s/4e2TbYxisifYDWfaSsFu7A
-
+Caffeine Cache-高性能Java本地缓存之王
+https://mp.weixin.qq.com/s/nufyT-VH1EqyQzurkqtq_w
 
 ## java性能
 
@@ -80,6 +114,8 @@ https://tech.meituan.com/2020/04/02/java-pooling-pratice-in-meituan.html
 
 Java 性能优化的 45 个细节
 https://mp.weixin.qq.com/s/4HziA8SERLNEqlrowQ6piA
+你还在生产玩 JDK7，JDK 15 却要来了!
+https://mp.weixin.qq.com/s/9GZAeZroqtS3uD90Mp_NuA
 
 ## 关键字
 
@@ -91,7 +127,8 @@ https://mp.weixin.qq.com/s?__biz=MjM5NjQ5MTI5OA==&mid=2651745258&idx=1&sn=df5ffe
 
 HashMap 为什么线程不安全
 https://mp.weixin.qq.com/s/AOzBTeVWs2a8dE9P36N7GA
-
+彻底服了：HashMap 夺命二十一问，顶不住了
+https://mp.weixin.qq.com/s/K4lOPQ6qTZDXgdnrwMpyZg
 
 
 ### 设计模式
@@ -109,7 +146,8 @@ https://mp.weixin.qq.com/s/SJiMuHb_C773QdN8Qt0tqA
 ## 数据结构
 
 几张动态图捋清Java常用数据结构及其设计原理：https://mp.weixin.qq.com/s/Mxi0StZRz96SX4LXEdEeaQ
-
+快速入门数据结构和算法（阿里）
+https://mp.weixin.qq.com/s/Z6zISNEZDRqRJn5YpNpl_A
 
 从B+树到LSM树，及LSM树在HBase中的应用：
 https://mp.weixin.qq.com/s/m8JKMGhbnZHyHz7rFTGsEQ
@@ -121,15 +159,23 @@ https://mp.weixin.qq.com/s/m8JKMGhbnZHyHz7rFTGsEQ
 
 Spring IOC 知识点总结
 https://mp.weixin.qq.com/s/vOsNtW72nBSQW_Lp9rTLQA
+Spring IoC是如何进行依赖注入的
+https://mp.weixin.qq.com/s/r2qx9MtlHRkOuep4TKMyLg
 
-面试官：连Spring三级缓存都答不好，自己走还是我送你？
-https://mp.weixin.qq.com/s/ORN39HESeZeCWqJJQcvHSg
+面试官：说说 Spring AOP 原理？拜托这已经被问烂了！：
+https://mp.weixin.qq.com/s/QivyQKCncjIM8WoNRPkprw
 
-面试官：说说 Spring AOP 原理？拜托这已经被问烂了！：https://mp.weixin.qq.com/s/QivyQKCncjIM8WoNRPkprw
 我们已经不用AOP做操作日志了很久了！：
 https://mp.weixin.qq.com/s/7gibT_CyEW1cU3GJf9P2YQ
+Spring浅谈源码系列7：AOP实现原理详解
+https://mp.weixin.qq.com/s/7gr1XMN4x9uZclw-Bab9JQ
+Spring浅谈源码系列8：Spring事务概述
+https://mp.weixin.qq.com/s/64wfq7-m7TDs6MWtJYhcgw
 
-
+Spring Boot Actuator 模块详解:：健康检查，度量，指标收集和监控
+https://mp.weixin.qq.com/s/8y-HhMrENt3h-Di2FHUiew
+Spring Boot 最最最常用的注解梳理
+https://mp.weixin.qq.com/s/iDg61eFmtDz0nsN5HHWNVw
 # HTTP
 
 HTTPS 原理看了很多，这个是最清晰的！
@@ -140,7 +186,8 @@ https://mp.weixin.qq.com/s/F_wrb6g1jnC_g903EHlS-w
 四连问：API 接口应该如何设计？如何保证安全？如何签名？如何防重？
 https://mp.weixin.qq.com/s/jFaBFgpceE-mJzubjEH8sg
 
-
+HTTPS 原理分析
+https://mp.weixin.qq.com/s/1TL7JokwkwpycCIkWia9zw
 
 
 # 算法
@@ -149,7 +196,8 @@ https://mp.weixin.qq.com/s/jFaBFgpceE-mJzubjEH8sg
 https://mp.weixin.qq.com/s/oG7Ba20zJ5VxnUPr59qGfg
 十大经典排序算法最强总结（含JAVA代码实现
 https://mp.weixin.qq.com/s/jRBaQSpSouFQ70x4gUtDLg
-
+面试官：知道时间轮算法吗？在Netty和Kafka中如何应用的？
+https://mp.weixin.qq.com/s/511Dcgg5ZtmpRwYIXQbnaQ
 
 
 # MYSQL
@@ -158,10 +206,13 @@ https://mp.weixin.qq.com/s/jRBaQSpSouFQ70x4gUtDLg
 https://developer.aliyun.com/ask/281382?utm_content=g_1000111214&from=timeline
 什么是 MySQL 索引?
 https://mp.weixin.qq.com/s/yxS4tpX_6fz9LBsh0UoHpw
+MySQL：互联网公司常用分库分表方案汇总
+https://mp.weixin.qq.com/s/OM3oNqu8jIbmkdsvEhtL4g
 
 mysql索引类型：FULLTEXT、NORMAL、SPATIAL、UNIQUE的详细介绍
 https://blog.csdn.net/guo_qiangqiang/article/details/88794971
-
+跟大家聊聊mysql主从复制原理
+https://mp.weixin.qq.com/s/HJYkDheKbCdANj91zRDx2g
 很用心的为你写了 9 道 MySQL 面试题
 https://mp.weixin.qq.com/s/oLnJpG8G9_VjQmaXrH7oAQ
 
@@ -172,29 +223,68 @@ MySQL 可重复读
 https://mp.weixin.qq.com/s/gPBi9_a3LWyncWiWPYWkuQ
 大厂面试官必问的Mysql锁机制
 https://mp.weixin.qq.com/s/ZDg0WOYesY7zcLlfBEUbow
+来跟我一起测试一下mysql的事务
+https://mp.weixin.qq.com/s/8LTmbYYqrxN-B3TQ0NnBnw
 
 Mysql 索引使用规则和设计优化：
 https://mp.weixin.qq.com/s/y32nKY46Zi6O_5M021E2ZA
+数据库连接池终于搞对了，这次直接从100ms优化到3ms！
+https://mp.weixin.qq.com/s/Bx8OmkRb7SlSWZ_wIOl2LA
 
 ## ES
 Elasticsearch分布式一致性原理剖析之节点篇
 https://mp.weixin.qq.com/s/tOAfwG6Ctkqo28iG88E0yA
+Elasticsearch分布式一致性原理剖析之Meta篇
+https://mp.weixin.qq.com/s/PdQ9JIroHOfYkvUymtQdPQ
+从Elasticsearch来看分布式系统架构设计
+https://mp.weixin.qq.com/s/0SNTbguJRRxTDhR6zQiRRQ
 
 Elasticsearch中的切词怎么实现的?
 https://mp.weixin.qq.com/s/aiFo5iS-Y0Z1XDcKkOBLug
 
-Elasticsearch分布式一致性原理剖析之Meta篇
-https://mp.weixin.qq.com/s/PdQ9JIroHOfYkvUymtQdPQ
 2020 年最新 Elasticsearch 7.x 使用教程，帮你总结好了
 https://mp.weixin.qq.com/s/3PZEhM5ykt-g_OCEKdRaVQ
+同事：膨胀了？Elasticsearch快就不需要调优了吗？
+https://mp.weixin.qq.com/s/sXxHXSONOGKukMhwaeREsg
 
+腾讯 PB 级大规模 Elasticsearch 集群运维与调优实践
+https://mp.weixin.qq.com/s/zLEx1Q_bytsWnSBAPmk0AA
 
-从Elasticsearch来看分布式系统架构设计
-https://mp.weixin.qq.com/s/0SNTbguJRRxTDhR6zQiRRQ
+# redis
 
+阿里官方 Redis 开发规范：
+https://mp.weixin.qq.com/s/8VVDGXYoQZ4JRoD3pagZWg
+一文读懂Redis五大类型~：
+https://mp.weixin.qq.com/s/pEgYloiG7485x-m6UAIjXQ
+万字长文的Redis五种数据结构详解（理论+实战），建议收藏。
+https://mp.weixin.qq.com/s/DGI4qZVxsCDzB23MsRYhyg
+被Redis击穿的一次面试经历
+https://mp.weixin.qq.com/s/cOp9BHQhlGaHxFAJeX953w
+Redis热点Key发现及常见解决方案！
+https://mp.weixin.qq.com/s/Px7-22TelOvAhYaQLgSBxw
+不懂Redis Cluster原理，我被同事diss了！
+https://mp.weixin.qq.com/s/z1qVQWNM5ql5Y6H4huWKmw
+看完这篇Redis缓存三大问题，够你和面试官battle几回合了
+https://mp.weixin.qq.com/s/x_PzzfJfsQbZmx0IYg_tpg
+Redis缓存整理总结
+https://mp.weixin.qq.com/s/yyH62HlhjjCkXyXlNQRyvw
+面试必备：缓存穿透，缓存雪崩的四种解决方案
+https://mp.weixin.qq.com/s/FBeIrtwz3yjstaI2f9G33A
+一文把Redis主从复制、哨兵、Cluster三种模式摸透
+https://mp.weixin.qq.com/s/sZ0m1IJlth3FIp6jiup8AA
+Redis和多路复用模型
+https://mp.weixin.qq.com/s/Tbnn4Oua_NDI76pHxQr5_g
+造了一个 Redis 分布锁的轮子，没想到还学到这么多东西！！！
+https://mp.weixin.qq.com/s/GiPuNT_GjbT-j90C2v4Ydw
 
+实现一个 Redis 分布式锁：
+https://mp.weixin.qq.com/s/dcFLNK4kZi3O8abOPKsimw
 
+微服务中的分布式锁方案
+https://mp.weixin.qq.com/s/DURHYE2f1089TaOyo1SGdA
 
+记一次由Redis分布式锁造成的重大事故，避免以后踩坑
+：https://mp.weixin.qq.com/s/rvJljIZJeYpufU3Xc-iawg
 
 # Docker
 
@@ -202,6 +292,21 @@ https://mp.weixin.qq.com/s/0SNTbguJRRxTDhR6zQiRRQ
 https://mp.weixin.qq.com/s/u0LRq_NNkCtU3wkdMdYlUA
 终于有人把 Docker 讲清楚了，万字详解！
 https://mp.weixin.qq.com/s/qxnJJgewWGsYsVH8UkwPEw
+什么是Docker？看这一篇干货文章就够了！
+https://mp.weixin.qq.com/s/w1aOiD8CeSBgwgErSJAYsA
+
+
+
+## 微服务
+微服务中的分布式事务方案
+https://mp.weixin.qq.com/s/XBq0aftC_Q_yJ0VXu8fkwQ
+微服务架构和相关的组件
+https://mp.weixin.qq.com/s/LMJRbrmxRyqh66ESiwhBEw
+
+为什么在做微服务设计的时候需要DDD？
+https://mp.weixin.qq.com/s/WqquS52kaf-zjNAJE_wqUw
+漫谈何时从单体架构迁移到微服务？
+https://mp.weixin.qq.com/s/VpQvqRc8UxZLs5L3iyJoQQ
 
 ## dubbo
 
@@ -211,7 +316,8 @@ https://live.csdn.net/room/weixin_48013460/08rWiAbu
 ## SpringCloud
 Spring Cloud 20000 字总结：
 https://mp.weixin.qq.com/s/IwGoRq2io5WbXcLLcteYXw
-
+Spring Cloud干掉Dubbo的时候，我还在手动维护静态配置
+https://mp.weixin.qq.com/s/oi57BJJhDZorxIrDDe76Nw
 
 #kafka
 Kafka的Exactly-once语义与事务机制
@@ -226,32 +332,27 @@ https://mp.weixin.qq.com/s/70i4-ma9eMTKwhFcl9ieNw
 Kafka的2种日志清理策略感受一下：
 https://mp.weixin.qq.com/s/BdZzdTuisyKEUHzflWcEtg
 Kafka 基本原理（8000 字小结）：https://mp.weixin.qq.com/s/CjI_eAN_XGXmjkBP5RFJiQ
+Kafka 为什么能那么快的 6 个原因：
+https://mp.weixin.qq.com/s/fkeb75yuCiQ9TCpvtk9t6A
+大白话认识Kafka背后优秀的架构设计
+https://mp.weixin.qq.com/s/sY5SdqOEv6b_iffJ8pAyXg
+Kafka如何通过经典的内存缓冲池设计来优化JVM GC问题？
+https://mp.weixin.qq.com/s/jKy63C6HAWb8UfzVFSWgsg
+深入探秘 Netty、Kafka 中的零拷贝技术！
+https://mp.weixin.qq.com/s/ck6yO0xPPyfggdUri_w91g
 
 ## RabbitMQ
 
 提升RabbitMQ消费速度的一些实践 ：https://mp.weixin.qq.com/s/QzV2xJ78TpfhKUY38bLnGg
+《RabbitMQ》如何保证消息的可靠性
+https://mp.weixin.qq.com/s/rvl5kpqjdoj4cjV593G_FA
+《RabbitMQ》如何保证消息不被重复消费
+https://mp.weixin.qq.com/s/uK_VMc81mEwP_kHoYz_w3A
+RabbitMQ高可用介绍
+https://mp.weixin.qq.com/s/5gPJgwscGTV64O7WdZo6lQ
 
 
 
-
-
-# redis
-
-阿里官方 Redis 开发规范：
-https://mp.weixin.qq.com/s/8VVDGXYoQZ4JRoD3pagZWg
-
-不懂Redis Cluster原理，我被同事diss了！
-https://mp.weixin.qq.com/s/z1qVQWNM5ql5Y6H4huWKmw
-看完这篇Redis缓存三大问题，够你和面试官battle几回合了
-https://mp.weixin.qq.com/s/x_PzzfJfsQbZmx0IYg_tpg
-
-造了一个 Redis 分布锁的轮子，没想到还学到这么多东西！！！
-https://mp.weixin.qq.com/s/GiPuNT_GjbT-j90C2v4Ydw
-
-一文读懂Redis五大类型~：
-https://mp.weixin.qq.com/s/pEgYloiG7485x-m6UAIjXQ
-万字长文的Redis五种数据结构详解（理论+实战），建议收藏。
-https://mp.weixin.qq.com/s/DGI4qZVxsCDzB23MsRYhyg
 
 #zookeeper 
 
@@ -272,6 +373,13 @@ https://mp.weixin.qq.com/s/6DjKLsKpQD5EsihMsEJ27Q
 https://mp.weixin.qq.com/s/p1MRZpnxohnX2jIpZDczmQ
 一文总结：分布式一致性技术是如何演进的？：https://mp.weixin.qq.com/s/KSpsa1viYz9K_-DYYQkmKA
 
+分布式之分布式事务、分布式锁、分布式session
+https://mp.weixin.qq.com/s/8jXLNjklx4GHDix41ca3EQ
+
+面试官：分布式之消息队列（一）
+https://mp.weixin.qq.com/s/ZMoLa-X9D6EaRy6_u0DbrQ
+面试官：分布式之消息队列（二）
+https://mp.weixin.qq.com/s/eRqIgYzNuoNSEUrhKqdcfQ
 
 ## 分布式锁
 
@@ -296,7 +404,8 @@ https://mp.weixin.qq.com/s/xwODT_Aq8Rbq-khvefkBnQ
 
 Flink架构分析之资源分配
 https://mp.weixin.qq.com/s/u7Aq7nkmI7WmAs61yks1UA
-
+基于 Flink 和 Drools 的实时日志处理
+https://mp.weixin.qq.com/s/ao-9XNenCUYZ00kfJHHFmQ
 #spark
 
 Spark底层原理概述

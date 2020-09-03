@@ -5,9 +5,9 @@ package com.us.basics;
  */
 public class IntTest {
     public static void main(String[] args) {
-//        compareInteger();
-//        compareInt();
-        valueString();
+        compareInteger();
+        compareInt();
+//        valueString();
     }
 
     /**
@@ -19,20 +19,14 @@ public class IntTest {
     public static void compareInteger() {
         Integer a = 128;
         Integer b = 128;
-        if (a == b) {
-            System.out.println("compareInteger: a == b: true");
-        }
-        if (a.equals(b)) {
-            System.out.println("compareInteger: a.equals(b) : true");
-        }
+        System.out.println("compareInteger: a == b: " + (a == b));
+        System.out.println("compareInteger: a.equals(b) : " + (a.equals(b)));
     }
 
     public static void compareInt() {
-        int a = 2015;
-        int b = 2015;
-        if (a == b) {
-            System.out.println("compareInt: a == b: true");
-        }
+        int a = 2145456789;
+        int b = 2145456789;
+        System.out.println("compareInt int : a == b:" + (a == b));
     }
 
     public static void valueString() {

@@ -87,5 +87,9 @@ public class LRTreeApp {
         System.out.println("－－－－－－二叉树广度优先蛇形遍历－－－－－－－－");
         tree.snakeTraversal(tree.getRoot());
 
+        System.out.println("－－－－－－二叉树深度优先蛇形遍历－－－－－－－－");
+        tree.dfsSnakeTraversal(tree.getRoot());
+
+
     }
 }

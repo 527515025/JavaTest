@@ -8,6 +8,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.python.google.common.collect.Lists;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 /**
@@ -25,8 +26,9 @@ public class SetListMap {
 //        stringsLength();
 //        mapIsNullTest();
 //        splitList();
-        listIterator();
+//        listIterator();
 //        mapToUrlParam();
+        initMap();
     }
 
     private static void setTest() {
@@ -161,6 +163,19 @@ public class SetListMap {
     }
 
 
+    /**
+     * 查看hashMap的初始值
+     * n = 16
+     * sc = n - (n >>> 2);
+     * sc = 12
+     */
+    public static void initMap() {
+        ConcurrentHashMap<String, Integer> a = new ConcurrentHashMap();
+        a.put("a", 0);
+        System.out.println();
+    }
+
+
     private static void list() {
         List<String> list = new ArrayList<>();
         Person p = new Person();
@@ -267,7 +282,7 @@ public class SetListMap {
                 break;
             }
         }
-       intList.stream().forEach(x->System.out.println(x));
+        intList.stream().forEach(x -> System.out.println(x));
     }
 
 

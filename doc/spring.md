@@ -25,7 +25,6 @@ System.out.println(d3);
 
 
 
-
 ioc 控制反转 也称为 DI （dependenty injection 依赖注入）
 优点：
 spring 帮我们管理和创建对象，降低了耦合性。
@@ -36,40 +35,6 @@ spring 帮我们管理和创建对象，降低了耦合性。
 spring ioc 帮我们创建和管理了我们需要创建的对象，并像搭乐高积木一样，来管理这个对象间的关系。
 
 Spring Bean的创建是典型的工厂模式，bean 的生命周期默认是单例模式
-
-##AOP
-
-面向切面编程
-AOP（Aspect-OrientedProgramming，面向方面编程），可以说是OOP（Object-Oriented Programing，面向对象编程）的补充和完善。
-动态代理就是生成一个代理对象，对代理需要被代理的对象。 代理对象 是为了 代理被代理对象创建的对象。
-
-面线切面编程就像是横着切了一刀。 使用场景 权限、日志、事务（start ，commit）、异常处理、
-
-http://blog.csdn.net/moreevan/article/details/11977115/
-http://www.cnblogs.com/hongwz/p/5764917.html
-https://www.zhihu.com/question/24863332
-
-如果你的类没有实现接口，spring 也能给你生成动态代理，spring直接生成二进制码，用继承。 
-
-aspectj 是一个专门用来生成代理的框架
-joinpoint 切入点 ；语法 ：execution(public void com.abel.dao.impl.UserDAOImpl.save(com.abel.model.User )
-pointcut 连接点的集合 pointcut 是 joinpoint 的集合
-语法 ：execution(* com.abel.dao.impl.*.*(..)
-com.abel.dao.impl 路径下的所有类的（任何返回值）
-所有方法
-
-Aspect 就是切面类
-advice @Befor 
-target 代理对象
-weave  织入
-
-
-<aop:after> 后通知
-<aop:after-returning> 返回后通知
-<aop:after-throwing> 抛出后通知
-<aop:around> 周围通知
-<aop:aspect>定义一个切面
-<aop:before>前通知
 
 
 ##Spring如何解决循环依赖
@@ -92,7 +57,184 @@ setter循环依赖：表示通过setter注入方式构成的循环依赖。
 
     Spring先是用构造实例化Bean对象 ，此时Spring会将这个实例化结束的对象放到一个Map中，并且Spring提供了获取这个未设置属性的实例化对象引用的方法。   结合我们的实例来看，，当Spring实例化了StudentA、StudentB、StudentC后，紧接着会去设置对象的属性，此时StudentA依赖StudentB，就会去Map中取出存在里面的单例StudentB对象，以此类推，不会出来循环的问题喽、
 
+### 三级缓存
 
+在Spring的整个容器的生命周期内，有且只存在一个对象，很容易想到这个对象应该存在Cache中，Spring大量运用了Cache的手段，在循环依赖问题的解决过程中甚至使用了“三级缓存”。
+
+singletonObjects指单例对象的cache，singletonFactories指单例对象工厂的cache，earlySingletonObjects指提前曝光的单例对象的cache。以上三个cache构成了三级缓存，Spring就用这三级缓存巧妙的解决了循环依赖问题。
+
+分析getSingleton的整个过程，代码如下 
+
+```java
+    protected Object getSingleton(String beanName, boolean allowEarlyReference) {
+        Object singletonObject = this.singletonObjects.get(beanName);
+        if(singletonObject == null && this.isSingletonCurrentlyInCreation(beanName)) {
+            Map var4 = this.singletonObjects;
+            synchronized(this.singletonObjects) {
+                singletonObject = this.earlySingletonObjects.get(beanName);
+                if(singletonObject == null && allowEarlyReference) {
+                    ObjectFactory singletonFactory = (ObjectFactory)this.singletonFactories.get(beanName);
+                    if(singletonFactory != null) {
+                        singletonObject = singletonFactory.getObject();
+                        this.earlySingletonObjects.put(beanName, singletonObject);
+                        this.singletonFactories.remove(beanName);
+                    }
+                }
+            }
+        }
+
+        return singletonObject;
+    }
+```
+
+Spring首先从singletonObjects（一级缓存）中尝试获取，如果获取不到并且对象在创建中，则尝试从earlySingletonObjects(二级缓存)中获取，如果还是获取不到并且允许从singletonFactories通过getObject获取，则通过singletonFactory.getObject()(三级缓存)获取。如果获取到了则移除对应的singletonFactory,将singletonObject放入到earlySingletonObjects，其实就是将三级缓存提升到二级缓存中！
+
+```java
+addSingletonFactory(beanName, new ObjectFactory<Object>() {
+   @Override   public Object getObject() throws BeansException {
+      return getEarlyBeanReference(beanName, mbd, bean);
+   }});
+```
+
+解决循环依赖的关键，这段代码发生在**createBeanInstance(创建实例)**之后，也就是说单例对象此时已经被创建出来的。这个对象已经被生产出来了，虽然还不完美（还没有进行初始化的第二步[属性注入]和第三步[方法回调]），但是已经能被人认出来了（根据对象引用能定位到堆中的对象），所以Spring此时将这个对象提前曝光出来让大家认识，让大家使用。
+
+A-B-A
+
+A首先完成了初始化的第一步**createBeanInstance(创建实例)**，并且将自己提前曝光到**singletonFactories**中，此时进行初始化的第二步(**属性注入依赖分析**)，发现自己依赖对象B，此时就尝试去get(B)，发现B还没有被create，所以走create流程，B在初始化第一步的时候发现自己依赖了对象A，于是**尝试get(A)，尝试一级缓存singletonObjects(肯定没有，因为A还没初始化完全)，尝试二级缓存earlySingletonObjects（也没有），尝试三级缓存singletonFactories，由于A通过ObjectFactory将自己提前曝光了**，**所以B能够通过ObjectFactory.getObject拿到A对象(虽然A还没有初始化完全**，但是总比没有好呀)，B拿到A对象后顺利完成了初始化阶段1、2、3，**完全初始化之后将自己放入到一级缓存singletonObjects中**。此时返回A中，A此时能拿到B的对象顺利完成自己的初始化阶段2、3，最终A也完成了初始化，长大成人，进去了一级缓存singletonObjects中，而且更加幸运的是，由于B拿到了A的对象引用，所以B现在hold住的A对象也蜕变完美了
+
+### 详细过程
+
+* 1、先进行初始化a对象的操作，然后发现调用的是**createBean**(String beanName, RootBeanDefinition mbd, Object[] args)方法，而真正起作用的是**doCreateBean**(final String beanName, final RootBeanDefinition mbd, final Object[] args)方法。而在这个方法里面包含了三个重要的方法**createBeanInstance、populateBean、initializeBean**，这三个方法分别代表：创建实例、属性注入、方法回调。
+
+* 2、createBeanInstance和populateBean中间的一段**doCreateBean**的代码，doCreateBean中调用了 获取**getEarlyBeanReference（二级缓存）方法。同时还调用了放置addSingletonFactory方法**。
+
+* 3、addSingletonFactory方法中，会将beanName与singletonFactory形成kv关系put进singletonFactories（三级）里面。并且将earlySingletonObjects里面的key值为beanName的kv进行移除（无论其中有没有值）。
+* 4、此时a对象的早期暴露引用已经存在了singletonFactories三级缓存里面
+
+* 5、此时a对象进行populateBean方法进行属性注入，发现需要依赖b对象，紧接着就是去初始化b对象。继续重复上面的步骤到b对象进行属性注入这一步的时候（**此时singletonFactories三级缓存里已经有了a对象的提前暴露引用和b对象的提前暴露引用的工厂对象**），发现需要依赖a对象，此时去获取a对象
+
+* 6、先从singletonObjects一级缓存里取，如果没有取到，则从earlySingletonObjects二级缓存里取，如果还是没取到，则从singletonFactories三级缓存里取，取到以后进行getObject方法返回早期暴露对象引用，**同时放进earlySingletonObjects二级缓存里，并且三级缓存里进行删除该kv**。
+
+* 7、到此，**a对象的早期暴露引用已经被b对象获取到了，并且在singletonFactories三级缓存里已经没有a对象的早期暴露引用的工厂对象了，a对象的早期暴露引用存在了二级缓存earlySingletonObjects里面，当然singletonFactories三级缓存依然有b对象的早期暴露引用的工厂对象。**
+
+* 8、继续：b对象拿到了a对象的早期暴露引用，进行完属性注入以后，则返回一个b对象了同时调用方法getSingleton(String beanName, ObjectFactory<?> singletonFactory)
+
+* 9、此时singletonObjects一级缓存将要存入b对象，而二级缓存earlySingletonObjects和三级缓存singletonFactories则把相关缓存的对象移除。至此b对象则只存在一级缓存singletonObjects里面了。
+   当b对象完成了初始化以后，a对象则进行相关属性的注入引入b的对象。完成实例化的同时a对象也会调用一次addSingleton方法，那么a对象完成以后，也就只有一级缓存singletonObjects里面才有a对象。
+
+至此，属性的循环依赖问题则完美的得到解决
+
+##AOP
+
+
+
+AOP（Aspect-OrientedProgramming，面向方面编程思想），可以说是OOP（Object-Oriented Programing，面向对象编程）的补充和完善。OOP引入**封装、继承、多态**等概念来建立一种对象层次结构，用于模拟公共行为的一个集合。不过OOP允许开发者定义纵向的关系，但并不适合定义横向的关系，
+
+AOP利用一种"横切"的技术，剖解开封装的对象内部，并将那些影响了多个类的公共行为封装到一个可重用模块，并将其命名为"Aspect"，即切面。所谓"切面"，简单说就是那些与业务无关，却为业务模块所共同调用的逻辑或责任封装起来，便于减少系统的重复代码，降低模块之间的耦合度，并有利于未来的可操作性和可维护性。
+
+使用"横切"技术，AOP 把软件系统分为两个部分：**核心关注点**和**横切关注点**。**业务处理的主要流程是核心关注点**，与之关**系不大的部分是横切关注点**。横切关注点的一个特点是，他们经常发生在核心关注点的多处，而各处基本相似，比如权限认证、日志、事物。**AOP 的作用在于分离系统中的各种关注点，将核心关注点和横切关注点分离开来**
+
+我们传统的编程方式是垂直化的编程，即A–>B–>C–>D这么下去，一个逻辑完毕之后执行另外一段逻辑。但是AOP提供了另外一种思路，它的作用是在业务逻辑不知情（即业务逻辑不需要做任何的改动）的情况下对业务代码的功能进行增强，这种编程思想的使用场景有很多，例如事务提交、方法执行之前的权限检测、日志打印、方法调用事件等等
+
+面向切面编程
+（erp的参数校验）
+
+###  主要应用场景
+1. Authentication 权限
+2. Caching 缓存
+3. Context passing 内容传递
+4. Error handling 错误处理
+5. Lazy loading 懒加载
+6. Debugging 调试
+7. logging, tracing, profiling and monitoring 记录跟踪 优化 校准
+8. Performance optimization 性能优化
+9. Persistence 持久化
+10. Resource pooling 资源池
+11. Synchronization 同步
+12. Transactions 事务
+
+### 核心概念
+
+1、切面（aspect）：类是对物体特征的抽象，切面就是对横切关注点的抽象
+
+2、横切关注点：对哪些方法进行拦截，拦截后怎么处理，这些关注点称之为横切关注点。 
+
+3、连接点（joinpoint）：被拦截到的点，因为 Spring 只支持方法类型的连接点，所以在 Spring
+
+中连接点指的就是被拦截到的方法，实际上连接点还可以是字段或者构造器。 
+
+4、切入点（pointcut）：对连接点进行拦截的定义
+
+5、通知（advice）：所谓通知指的就是指拦截到连接点之后要执行的代码，通知分为前置、后置、
+
+异常、最终、环绕通知五类。 
+
+6、目标对象：代理的目标对象
+
+7、织入（weave）：将切面应用到目标对象并导致代理对象创建的过程
+
+8、引入（introduction）：在不修改代码的前提下，引入可以在运行期为类动态地添加一些方法
+
+或字段。
+
+### AOP、拦截器、过滤器、区别
+
+#### 过滤器
+**过滤器拦截的是URL**
+
+Spring中自定义过滤器（Filter）一般只有一个方法，返回值是void，当请求到达web容器时，会探测当前请求地址是否配置有过滤器，有则调用该过滤器的方法（可能会有多个过滤器），然后才调用真实的业务逻辑，至此过滤器任务完成。过滤器并没有定义业务逻辑执行前、后等，仅仅是请求到达就执行。
+
+特别注意：过滤器方法的入参有request，response，FilterChain，其中FilterChain是过滤器链，使用比较简单，而request，response则关联到请求流程，因此可以对请求参数做过滤和修改，同时FilterChain过滤链执行完，并且完成业务流程后，会返回到过滤器，此时也可以对请求的返回数据做处理。
+
+#### 拦截器
+**拦截器拦截的是URL**
+
+拦截器有三个方法，相对于过滤器更加细致，有被拦截逻辑执行前、后等。Spring中拦截器有三个方法：preHandle，postHandle，afterCompletion。分别表示如下
+
+* preHandle 表示被拦截的URL对应的方法执行前的自定义处理
+
+* postHandle 表示此时还未将modelAndView进行渲染，被拦截的URL对应的方法执行后的自定义处理，。
+
+* afterCompletion：表示此时modelAndView已被渲染，执行拦截器的自定义处理。
+
+#### AOP（面向切面）
+**面向切面拦截的是类的元数据（包、类、方法名、参数等）**
+
+相对于拦截器更加细致，而且非常灵活，拦截器只能针对URL做拦截，而AOP针对具体的代码，能够实现更加复杂的业务逻辑。具体类型参照其他博客。
+
+三者使用场景
+三者功能类似，但各有优势，从过滤器--》拦截器--》切面，拦截规则越来越细致，执行顺序依次是过滤器、拦截器、切面。一般情况下数据被过滤的时机越早对服务的性能影响越小，因此我们在编写相对比较公用的代码时，优先考虑过滤器，然后是拦截器，最后是aop。比如权限校验，一般情况下，所有的请求都需要做登陆校验，此时就应该使用过滤器在最顶层做校验；日志记录，一般日志只会针对部分逻辑做日志记录，而且牵扯到业务逻辑完成前后的日志记录，因此使用过滤器不能细致地划分模块，此时应该考虑拦截器，然而拦截器也是依据URL做规则匹配，因此相对来说不够细致，因此我们会考虑到使用AOP实现，AOP可以针对代码的方法级别做拦截，很适合日志功能。
+
+
+
+动态代理就是生成一个代理对象，对代理需要被代理的对象。 代理对象 是为了 代理被代理对象创建的对象。
+
+面线切面编程就像是横着切了一刀。 使用场景 权限、日志、事务（start ，commit）、异常处理、
+
+http://blog.csdn.net/moreevan/article/details/11977115/
+http://www.cnblogs.com/hongwz/p/5764917.html
+https://www.zhihu.com/question/24863332
+
+如果你的类没有实现接口，spring 也能给你生成动态代理，spring直接生成二进制码，用继承。 
+
+aspectj 是一个专门用来生成代理的框架
+joinpoint 切入点 ；语法 ：execution(public void com.abel.dao.impl.UserDAOImpl.save(com.abel.model.User )
+pointcut 连接点的集合 pointcut 是 joinpoint 的集合
+语法 ：execution(* com.abel.dao.impl.*.*(..)
+com.abel.dao.impl 路径下的所有类的（任何返回值）
+所有方法
+
+Aspect 就是切面类
+advice @Befor 
+target 代理对象
+weave  织入
+
+<aop:after> 后通知
+<aop:after-returning> 返回后通知
+<aop:after-throwing> 抛出后通知
+<aop:around> 周围通知
+<aop:aspect>定义一个切面
+<aop:before>前通知
 
 # 事务
 
@@ -100,13 +242,13 @@ setter循环依赖：表示通过setter注入方式构成的循环依赖。
 
 | 传播行为	      | 意义 |
 | :-----------: | ------------------------------------------------------------ |
-| REQUIRED | 表示当前方法必须在一个事务中运行。如果一个现有事务正在进行中，该方法将在那个事务中运行，否则就要开始一个新事务。 |
-| SUPPORTS      | 表示当前方法不需要事务性上下文，但是如果有一个事务已经在运行的话，它也可以在这个事务里运行。 |
-| MANDATORY     | 表示该方法必须运行在一个事务中。如果当前没有事务正在发生，将抛出一个异常 |
-| REQUIRES_NEW  | 表示当前方法必须在它自己的事务里运行。一个新的事务将被启动，而且如果有一个现有事务在运行的话，则将在这个方法运行期间被挂起。 |
-| NOT_SUPPORTED | 表示该方法不应该在一个事务中运行。如果一个现有事务正在进行中，它将在该方法的运行期间被挂起。 |
-| NEVER         | 表示当前的方法不应该在一个事务中运行。如果一个事务正在进行，则会抛出一个异常。 |
-| NESTED        | 表示如果当前正有一个事务在进行中，则该方法应当运行在一个嵌套式事务中。被嵌套的事务可以独立于封装事务进行提交或回滚。如果封装事务不存在，行为就像PROPAGATION_REQUIRES一样。他会和父事务一起commit，当它回滚时，父事务有条件的选择是否跟随回滚，或者继续执行 |
+| PROPAGATION_REQUIRED | 表示当前方法必须在一个事务中运行。如果一个现有事务正在进行中，该方法将在那个事务中运行，否则就要开始一个新事务。 |
+| PROPAGATION_SUPPORTS | 表示当前方法不需要事务性上下文，但是如果有一个事务已经在运行的话，它也可以在这个事务里运行。 |
+| PROPAGATION_MANDATORY | 表示该方法必须运行在一个事务中。如果当前没有事务正在发生，将抛出一个异常 |
+| PROPAGATION_REQUIRES_NEW | 表示当前方法必须在它自己的事务里运行。一个新的事务将被启动，而且如果有一个现有事务在运行的话，则将在这个方法运行期间被挂起。 |
+| PROPAGATION_NOT_SUPPORTED | 表示该方法不应该在一个事务中运行。如果一个现有事务正在进行中，它将在该方法的运行期间被挂起。 |
+| PROPAGATION_NEVER | 表示当前的方法不应该在一个事务中运行。如果一个事务正在进行，则会抛出一个异常。 |
+| PROPAGATION_NESTED | 表示如果当前正有一个事务在进行中，则该方法应当运行在一个嵌套式事务中。被嵌套的事务可以独立于封装事务进行提交或回滚。如果封装事务不存在，行为就像PROPAGATION_REQUIRES一样。他会和父事务一起commit，当它回滚时，父事务有条件的选择是否跟随回滚，或者继续执行 |
 
 
 
