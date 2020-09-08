@@ -166,7 +166,7 @@ https://mp.weixin.qq.com/s/r2qx9MtlHRkOuep4TKMyLg
 https://mp.weixin.qq.com/s/QivyQKCncjIM8WoNRPkprw
 
 我们已经不用AOP做操作日志了很久了！：
-https://mp.weixin.qq.com/s/7gibT_CyEW1cU3GJf9P2YQ
+https://mp.weixin.qq.com/s/7gibT_CyEW1cU3GJf9P2YQ （依赖前端的传参，不方便拓展，使用基于数据库Binlog，不依赖开发语言）
 Spring浅谈源码系列7：AOP实现原理详解
 https://mp.weixin.qq.com/s/7gr1XMN4x9uZclw-Bab9JQ
 Spring浅谈源码系列8：Spring事务概述

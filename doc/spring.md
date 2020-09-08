@@ -252,6 +252,23 @@ weave  织入
 
 
 
+
+| 数据隔离级别	      | Dirty reads（脏读） |non-repeatable reads （不可重复读）| phantom reads（幻读）|
+| :-----------: | ------------------------------------------------------------ |
+|Serializable          |           不会            |       不会                      |     不会|
+|REPEATABLE READ     |      不会          |         不会             |               会|
+|READ COMMITTED      |      不会        |            会                |             会|
+|Read Uncommitted      |      会             |        会                   |          会|
+
+最安全的，是Serializable，但是伴随而来也是高昂的性能开销。 
+另外，事务常用的两个属性：readonly和timeout
+
+* 一个是设置事务为只读以提升性能。
+* 另一个是设置事务的超时时间，一般用于防止大事务的发生。还是那句话，事务要尽可能的小！
+
+
+
+
 # xspring 注入接口
 
 当接口中有范型的时候想当于多个 接口，此时注入接口报错
