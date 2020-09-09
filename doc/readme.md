@@ -206,18 +206,18 @@ https://mp.weixin.qq.com/s/511Dcgg5ZtmpRwYIXQbnaQ
 https://developer.aliyun.com/ask/281382?utm_content=g_1000111214&from=timeline
 什么是 MySQL 索引?
 https://mp.weixin.qq.com/s/yxS4tpX_6fz9LBsh0UoHpw
-MySQL：互联网公司常用分库分表方案汇总
-https://mp.weixin.qq.com/s/OM3oNqu8jIbmkdsvEhtL4g
 
 mysql索引类型：FULLTEXT、NORMAL、SPATIAL、UNIQUE的详细介绍
 https://blog.csdn.net/guo_qiangqiang/article/details/88794971
-跟大家聊聊mysql主从复制原理
-https://mp.weixin.qq.com/s/HJYkDheKbCdANj91zRDx2g
-很用心的为你写了 9 道 MySQL 面试题
-https://mp.weixin.qq.com/s/oLnJpG8G9_VjQmaXrH7oAQ
 
 100道MySQL数据库经典面试题解析
 https://mp.weixin.qq.com/s/iW0FfhP0vsyABoEiZUqsMQ
+
+跟大家聊聊mysql主从复制原理
+https://mp.weixin.qq.com/s/HJYkDheKbCdANj91zRDx2g
+
+MySQL：互联网公司常用分库分表方案汇总
+https://mp.weixin.qq.com/s/OM3oNqu8jIbmkdsvEhtL4g
 
 MySQL 可重复读
 https://mp.weixin.qq.com/s/gPBi9_a3LWyncWiWPYWkuQ
@@ -254,8 +254,7 @@ https://mp.weixin.qq.com/s/zLEx1Q_bytsWnSBAPmk0AA
 
 阿里官方 Redis 开发规范：
 https://mp.weixin.qq.com/s/8VVDGXYoQZ4JRoD3pagZWg
-一文读懂Redis五大类型~：
-https://mp.weixin.qq.com/s/pEgYloiG7485x-m6UAIjXQ
+
 万字长文的Redis五种数据结构详解（理论+实战），建议收藏。
 https://mp.weixin.qq.com/s/DGI4qZVxsCDzB23MsRYhyg
 被Redis击穿的一次面试经历
