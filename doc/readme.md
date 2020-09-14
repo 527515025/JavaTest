@@ -41,6 +41,9 @@ https://mp.weixin.qq.com/s/CpWT4w1xN_NShq8KvG05Pg
 https://mp.weixin.qq.com/s/n85JD8Eg5WtIOS7fikJA0Q
 知乎1.3万亿条数据查询毫秒级响应，如何做到的？（MySQL Sharding 和 MHA 的缺点  10）
 https://mp.weixin.qq.com/s/U1XwI7XaI3CarOwOypbfxg
+秒杀系统后台实现详解
+https://mp.weixin.qq.com/s/dSD9Xqfupr0MrmngNRv1vQ
+
 
 ### 单点登录
 如何设计 QQ、微信等第三方账号登陆 ？还要我说出数据库表设计！
@@ -53,6 +56,46 @@ https://mp.weixin.qq.com/s/kPFyH7rsE_py--ZuLEZMtw
 https://mp.weixin.qq.com/s/WV6dhQ34wWUAeiTaipisIA
 面试官问我：如何设计 QQ、微信等第三方账号登陆 ？还要我说出数据库表设计！
 https://mp.weixin.qq.com/s/oUlUiwQ_MJytmEyEiSq0LA
+
+### 分布式
+分布式系统事务一致性
+https://mp.weixin.qq.com/s/hjCHBxGF94rlbpRfo-ud8g
+
+分布式一致性机制整理
+https://mp.weixin.qq.com/s/6DjKLsKpQD5EsihMsEJ27Q
+
+最简单的6种防止数据重复提交的方法！(干货)
+https://mp.weixin.qq.com/s/p1MRZpnxohnX2jIpZDczmQ
+一文总结：分布式一致性技术是如何演进的？：https://mp.weixin.qq.com/s/KSpsa1viYz9K_-DYYQkmKA
+
+分布式之分布式事务、分布式锁、分布式session
+https://mp.weixin.qq.com/s/8jXLNjklx4GHDix41ca3EQ
+
+面试官：分布式之消息队列（一）
+https://mp.weixin.qq.com/s/ZMoLa-X9D6EaRy6_u0DbrQ
+面试官：分布式之消息队列（二）
+https://mp.weixin.qq.com/s/eRqIgYzNuoNSEUrhKqdcfQ
+
+### 分布式锁
+
+我们的系统需要什么样的分布式锁？：https://mp.weixin.qq.com/s/UTJL98BhrQ3yLvAQrl1P8A
+
+面试问Redis锁，我脸都绿了......
+https://mp.weixin.qq.com/s/n8ITjkVg8_y_XGi8j8-vRw
+
+构建基于Redis的分布式锁
+https://mp.weixin.qq.com/s/u7D-VHkXggo7JCXwwu1UYw
+
+SpringBoot + Redis 分布式锁：模拟抢单
+https://mp.weixin.qq.com/s/U_JPYoubiAtTWHbISmLULA
+
+基于ZooKeeper的分布式锁和队列
+https://mp.weixin.qq.com/s/i5CMn9_wVJyy7ZkPimSJMw
+分布式锁的三种实现方式：
+https://mp.weixin.qq.com/s/xwODT_Aq8Rbq-khvefkBnQ
+
+
+
 #Java
 
 合辑 | 面试必备！18篇Java面试疑难点详解
@@ -69,6 +112,8 @@ https://mp.weixin.qq.com/s/Ft6mPILiY9t76-RRTEYdwg
 https://developer.aliyun.com/article/769587?utm_content=g_1000165559
 老板：再用Log4j就收拾东西回家吧！
 https://mp.weixin.qq.com/s/6cXRKMtE9CZpuBzlwlBmgQ
+死磕Synchronized底层实现
+https://mp.weixin.qq.com/s/zaazbtl3_PCwaRqK2gy_Lw
 
 ## java基础
 
@@ -100,8 +145,8 @@ Java集合框架综述，这篇让你吃透！
 https://mp.weixin.qq.com/s/A89RoKsCZx7uPUvMS_kk_Q
 Java 泛型中的通配符 T，E，K，V，
 https://mp.weixin.qq.com/s/zp_w_UQjVWJBkMObPDxmGA
-
-5分钟理解一致性哈希算法：https://mp.weixin.qq.com/s/N3EcFZ9QC-lIwGgNk2pMiw
+阿里为什么推荐使用LongAdder，而不是volatile？
+https://mp.weixin.qq.com/s/HDF73gybtdHNDD5PmPr2Yw
 
 阿里内部员工，排查Java问题常用的工具单：https://mp.weixin.qq.com/s/4e2TbYxisifYDWfaSsFu7A
 Caffeine Cache-高性能Java本地缓存之王
@@ -143,16 +188,6 @@ https://mp.weixin.qq.com/s/9gDGQhzRAL3pj35VAinZbQ
 深夜，聊聊设计模式
 https://mp.weixin.qq.com/s/SJiMuHb_C773QdN8Qt0tqA
 
-## 数据结构
-
-几张动态图捋清Java常用数据结构及其设计原理：https://mp.weixin.qq.com/s/Mxi0StZRz96SX4LXEdEeaQ
-快速入门数据结构和算法（阿里）
-https://mp.weixin.qq.com/s/Z6zISNEZDRqRJn5YpNpl_A
-
-从B+树到LSM树，及LSM树在HBase中的应用：
-https://mp.weixin.qq.com/s/m8JKMGhbnZHyHz7rFTGsEQ
-
-
 
 
 #Spring
@@ -190,14 +225,25 @@ HTTPS 原理分析
 https://mp.weixin.qq.com/s/1TL7JokwkwpycCIkWia9zw
 
 
-# 算法
+# 数据结构算法
 
+数据结构中的 “图” ，小灰为大家做一个总结！
+https://mp.weixin.qq.com/s/zBN5cBY0b59foq9UMEYchg
 拜托，别问我什么各种Tree了，干就完事！
 https://mp.weixin.qq.com/s/oG7Ba20zJ5VxnUPr59qGfg
 十大经典排序算法最强总结（含JAVA代码实现
 https://mp.weixin.qq.com/s/jRBaQSpSouFQ70x4gUtDLg
 面试官：知道时间轮算法吗？在Netty和Kafka中如何应用的？
 https://mp.weixin.qq.com/s/511Dcgg5ZtmpRwYIXQbnaQ
+
+几张动态图捋清Java常用数据结构及其设计原理：https://mp.weixin.qq.com/s/Mxi0StZRz96SX4LXEdEeaQ
+快速入门数据结构和算法（阿里）
+https://mp.weixin.qq.com/s/Z6zISNEZDRqRJn5YpNpl_A
+
+从B+树到LSM树，及LSM树在HBase中的应用：
+https://mp.weixin.qq.com/s/m8JKMGhbnZHyHz7rFTGsEQ
+
+5分钟理解一致性哈希算法：https://mp.weixin.qq.com/s/N3EcFZ9QC-lIwGgNk2pMiw
 
 
 # MYSQL
@@ -230,6 +276,8 @@ Mysql 索引使用规则和设计优化：
 https://mp.weixin.qq.com/s/y32nKY46Zi6O_5M021E2ZA
 数据库连接池终于搞对了，这次直接从100ms优化到3ms！
 https://mp.weixin.qq.com/s/Bx8OmkRb7SlSWZ_wIOl2LA
+今天跟大家聊聊分区表的底层原理
+https://mp.weixin.qq.com/s/X0Pl-OC3jldiHgUlB3DTTA
 
 ## ES
 Elasticsearch分布式一致性原理剖析之节点篇
@@ -249,6 +297,8 @@ https://mp.weixin.qq.com/s/sXxHXSONOGKukMhwaeREsg
 
 腾讯 PB 级大规模 Elasticsearch 集群运维与调优实践
 https://mp.weixin.qq.com/s/zLEx1Q_bytsWnSBAPmk0AA
+ElasticSearch 最全详细使用教程
+https://mp.weixin.qq.com/s/S5-04qcBvrAl3Q61tW1pzA
 
 # redis
 
@@ -257,20 +307,21 @@ https://mp.weixin.qq.com/s/8VVDGXYoQZ4JRoD3pagZWg
 
 万字长文的Redis五种数据结构详解（理论+实战），建议收藏。
 https://mp.weixin.qq.com/s/DGI4qZVxsCDzB23MsRYhyg
-被Redis击穿的一次面试经历
-https://mp.weixin.qq.com/s/cOp9BHQhlGaHxFAJeX953w
 Redis热点Key发现及常见解决方案！
 https://mp.weixin.qq.com/s/Px7-22TelOvAhYaQLgSBxw
 不懂Redis Cluster原理，我被同事diss了！
 https://mp.weixin.qq.com/s/z1qVQWNM5ql5Y6H4huWKmw
+
+一文把Redis主从复制、哨兵、Cluster三种模式摸透
+https://mp.weixin.qq.com/s/sZ0m1IJlth3FIp6jiup8AA
+
 看完这篇Redis缓存三大问题，够你和面试官battle几回合了
 https://mp.weixin.qq.com/s/x_PzzfJfsQbZmx0IYg_tpg
 Redis缓存整理总结
 https://mp.weixin.qq.com/s/yyH62HlhjjCkXyXlNQRyvw
 面试必备：缓存穿透，缓存雪崩的四种解决方案
 https://mp.weixin.qq.com/s/FBeIrtwz3yjstaI2f9G33A
-一文把Redis主从复制、哨兵、Cluster三种模式摸透
-https://mp.weixin.qq.com/s/sZ0m1IJlth3FIp6jiup8AA
+
 Redis和多路复用模型
 https://mp.weixin.qq.com/s/Tbnn4Oua_NDI76pHxQr5_g
 造了一个 Redis 分布锁的轮子，没想到还学到这么多东西！！！
@@ -281,6 +332,7 @@ https://mp.weixin.qq.com/s/dcFLNK4kZi3O8abOPKsimw
 
 微服务中的分布式锁方案
 https://mp.weixin.qq.com/s/DURHYE2f1089TaOyo1SGdA
+
 
 记一次由Redis分布式锁造成的重大事故，避免以后踩坑
 ：https://mp.weixin.qq.com/s/rvJljIZJeYpufU3Xc-iawg
@@ -307,6 +359,9 @@ https://mp.weixin.qq.com/s/WqquS52kaf-zjNAJE_wqUw
 漫谈何时从单体架构迁移到微服务？
 https://mp.weixin.qq.com/s/VpQvqRc8UxZLs5L3iyJoQQ
 
+微服务架构实施原理详解
+https://mp.weixin.qq.com/s/W0feJMJCkgQoBUdr9IKiqg
+
 ## dubbo
 
 通过手写Dubbo了解RPC框架原理
@@ -315,8 +370,6 @@ https://live.csdn.net/room/weixin_48013460/08rWiAbu
 ## SpringCloud
 Spring Cloud 20000 字总结：
 https://mp.weixin.qq.com/s/IwGoRq2io5WbXcLLcteYXw
-Spring Cloud干掉Dubbo的时候，我还在手动维护静态配置
-https://mp.weixin.qq.com/s/oi57BJJhDZorxIrDDe76Nw
 
 #kafka
 Kafka的Exactly-once语义与事务机制
@@ -335,10 +388,16 @@ Kafka 为什么能那么快的 6 个原因：
 https://mp.weixin.qq.com/s/fkeb75yuCiQ9TCpvtk9t6A
 大白话认识Kafka背后优秀的架构设计
 https://mp.weixin.qq.com/s/sY5SdqOEv6b_iffJ8pAyXg
+Kafka的分区数是不是越多越好？
+https://mp.weixin.qq.com/s/Fq5CA1XhoEL3eYRbru0rxA
 Kafka如何通过经典的内存缓冲池设计来优化JVM GC问题？
 https://mp.weixin.qq.com/s/jKy63C6HAWb8UfzVFSWgsg
 深入探秘 Netty、Kafka 中的零拷贝技术！
 https://mp.weixin.qq.com/s/ck6yO0xPPyfggdUri_w91g
+
+## RocketMQ
+RocketMQ消息丢失场景及解决办法
+https://mp.weixin.qq.com/s/AH9m6LQsxNVgBEo6YF6ZKQ
 
 ## RabbitMQ
 
@@ -355,48 +414,13 @@ https://mp.weixin.qq.com/s/5gPJgwscGTV64O7WdZo6lQ
 
 #zookeeper 
 
+一文了解Zookeeper
+https://mp.weixin.qq.com/s/ZPC1ja6Zv7X6XorGzy4hhg
 不懂 ZooKeeper？没关系，这一篇给你讲的明明白白
 https://mp.weixin.qq.com/s/X-10DjJQE3sIBVmoOVV77g
+干掉 "ZooKeeper"？阿里为什么不用 ZK 做服务发现？
+https://mp.weixin.qq.com/s/CbYJaPa8sMqyXZIEeN8P3w
 
-
-
-
-## 分布式
-分布式系统事务一致性
-https://mp.weixin.qq.com/s/hjCHBxGF94rlbpRfo-ud8g
-
-分布式一致性机制整理
-https://mp.weixin.qq.com/s/6DjKLsKpQD5EsihMsEJ27Q
-
-最简单的6种防止数据重复提交的方法！(干货)
-https://mp.weixin.qq.com/s/p1MRZpnxohnX2jIpZDczmQ
-一文总结：分布式一致性技术是如何演进的？：https://mp.weixin.qq.com/s/KSpsa1viYz9K_-DYYQkmKA
-
-分布式之分布式事务、分布式锁、分布式session
-https://mp.weixin.qq.com/s/8jXLNjklx4GHDix41ca3EQ
-
-面试官：分布式之消息队列（一）
-https://mp.weixin.qq.com/s/ZMoLa-X9D6EaRy6_u0DbrQ
-面试官：分布式之消息队列（二）
-https://mp.weixin.qq.com/s/eRqIgYzNuoNSEUrhKqdcfQ
-
-## 分布式锁
-
-我们的系统需要什么样的分布式锁？：https://mp.weixin.qq.com/s/UTJL98BhrQ3yLvAQrl1P8A
-
-面试问Redis锁，我脸都绿了......
-https://mp.weixin.qq.com/s/n8ITjkVg8_y_XGi8j8-vRw
-
-构建基于Redis的分布式锁
-https://mp.weixin.qq.com/s/u7D-VHkXggo7JCXwwu1UYw
-
-SpringBoot + Redis 分布式锁：模拟抢单
-https://mp.weixin.qq.com/s/U_JPYoubiAtTWHbISmLULA
-
-基于ZooKeeper的分布式锁和队列
-https://mp.weixin.qq.com/s/i5CMn9_wVJyy7ZkPimSJMw
-分布式锁的三种实现方式：
-https://mp.weixin.qq.com/s/xwODT_Aq8Rbq-khvefkBnQ
 
 ##Flink
 
