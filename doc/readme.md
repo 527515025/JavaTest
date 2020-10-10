@@ -12,8 +12,11 @@ https://developer.aliyun.com/article/769281?utm_content=g_1000164026&from=timeli
 https://developer.aliyun.com/article/770189?utm_content=g_1000170567&from=timeline
 
 #架构
+如何保证缓存与数据库的双写一致性？
+https://mp.weixin.qq.com/s/HpwqjN87F5yr2YCobO6Q1Q
 
-
+用户画像实践：神策标签生产引擎架构
+https://mp.weixin.qq.com/s/VT-DOk53VsCkQ7xIDJ3dIQ
 领域驱动设计详解：是什么、为什么、怎么做？：
 https://mp.weixin.qq.com/s/jo3jNikkxrM4ouzvjA-fFQ
 多研究些架构，少谈些框架(1)
@@ -34,6 +37,7 @@ https://mp.weixin.qq.com/s/RFkKkQ8wE5nsOFCXW2cr4g
 异地多活，不就是每个地区都搭建一个服务吗？
 https://mp.weixin.qq.com/s/ZNficcNr04Yrn5RPSnpnPg
 
+
 ### 高并发
 高并发系统三大利器之缓存
 https://mp.weixin.qq.com/s/CpWT4w1xN_NShq8KvG05Pg
@@ -43,7 +47,10 @@ https://mp.weixin.qq.com/s/n85JD8Eg5WtIOS7fikJA0Q
 https://mp.weixin.qq.com/s/U1XwI7XaI3CarOwOypbfxg
 秒杀系统后台实现详解
 https://mp.weixin.qq.com/s/dSD9Xqfupr0MrmngNRv1vQ
-
+负载均衡和反响代理
+https://mp.weixin.qq.com/s/iMzEoTpGeyTNF3Hm36Gghw
+面试官：说说你知道的几种负载均衡分类
+https://mp.weixin.qq.com/s/QeXUt9XrH_uWw_Jv7oPYUg
 
 ### 单点登录
 如何设计 QQ、微信等第三方账号登陆 ？还要我说出数据库表设计！
@@ -58,12 +65,13 @@ https://mp.weixin.qq.com/s/WV6dhQ34wWUAeiTaipisIA
 https://mp.weixin.qq.com/s/oUlUiwQ_MJytmEyEiSq0LA
 
 ### 分布式
-分布式系统事务一致性
-https://mp.weixin.qq.com/s/hjCHBxGF94rlbpRfo-ud8g
 
+如何避免重复提交？分布式服务的幂等性设计！
+https://mp.weixin.qq.com/s/umsLlV0T8JBDREEEljBktA
 分布式一致性机制整理
 https://mp.weixin.qq.com/s/6DjKLsKpQD5EsihMsEJ27Q
-
+面试官：说说分布式的CAP定理？
+https://mp.weixin.qq.com/s/d31olUMCGvpCq6_cihgd6Q
 最简单的6种防止数据重复提交的方法！(干货)
 https://mp.weixin.qq.com/s/p1MRZpnxohnX2jIpZDczmQ
 一文总结：分布式一致性技术是如何演进的？：https://mp.weixin.qq.com/s/KSpsa1viYz9K_-DYYQkmKA
@@ -89,23 +97,22 @@ https://mp.weixin.qq.com/s/u7D-VHkXggo7JCXwwu1UYw
 SpringBoot + Redis 分布式锁：模拟抢单
 https://mp.weixin.qq.com/s/U_JPYoubiAtTWHbISmLULA
 
-基于ZooKeeper的分布式锁和队列
-https://mp.weixin.qq.com/s/i5CMn9_wVJyy7ZkPimSJMw
 分布式锁的三种实现方式：
 https://mp.weixin.qq.com/s/xwODT_Aq8Rbq-khvefkBnQ
 
 
 
 #Java
-
+JAVA 线上故障排查指南！
+https://mp.weixin.qq.com/s/B7gETE9DZUHl33XHH8kAMw
 合辑 | 面试必备！18篇Java面试疑难点详解
 https://developer.aliyun.com/article/745626?utm_content=g_1000104832&from=timeline 
 Java面试总结 csdn
 https://blog.csdn.net/thinkwon/category_9731418.html
-
-面试官：Thread.sleep(0) 有什么用？我没回答上来
-https://mp.weixin.qq.com/s/44n9nI9HTiRLD1Pee6pCeg
-
+面试官：谈谈你对JVM垃圾收集器算法的了解
+https://mp.weixin.qq.com/s/f3ZxURdCiWvKECMhdZBwzg
+精美图文带你掌握 JVM 内存布局
+https://mp.weixin.qq.com/s/hOGKhhwMwL_3rIJ4egQlcg
 你还在被 Java NIO 虐？该试试 Netty 了！
 https://mp.weixin.qq.com/s/Ft6mPILiY9t76-RRTEYdwg
 超详细Netty入门，看这篇就够了！
@@ -115,6 +122,10 @@ https://mp.weixin.qq.com/s/6cXRKMtE9CZpuBzlwlBmgQ
 死磕Synchronized底层实现
 https://mp.weixin.qq.com/s/zaazbtl3_PCwaRqK2gy_Lw
 
+面试官：有了Synchronized为什么还需要Lock？谈谈你的理解
+https://mp.weixin.qq.com/s/PR1j5m0o67sc3Nhmo-fLpw
+面试官：说说双亲委派模型？
+https://mp.weixin.qq.com/s/vjr6lV095Vip_63vh-9RHQ
 ## java基础
 
 https://mp.weixin.qq.com/s/feJKRqYJTVEIxl6jvjevAg 从头到尾说一次 Java 的垃圾回收
@@ -130,9 +141,13 @@ https://mp.weixin.qq.com/s/ewqzycgyxfprTQ_H3u-d4Q
 https://zhuanlan.zhihu.com/c_1046719595074949120
 
 https://mp.weixin.qq.com/s?__biz=MjM5NjQ5MTI5OA==&mid=2651749434&idx=3&sn=5ffa63ad47fe166f2f1a9f604ed10091&chksm=bd12a5778a652c61509d9e718ab086ff27ad8768586ea9b38c3dcf9e017a8e49bcae3df9bcc8&scene=21#wechat_redirect  不可不说的Java“锁”事
+面试官：Thread.sleep(0) 有什么用？我没回答上来
+https://mp.weixin.qq.com/s/44n9nI9HTiRLD1Pee6pCeg
 
 谈谈你对 ThreadLocal 的理解
 https://mp.weixin.qq.com/s/LW_hWJOTcbUDHeSgTw3q0Q
+面试官：说说你对ThreadLocal的了解
+https://mp.weixin.qq.com/s/Gc1YPt_DPMNKbbE_I0jmSA
 
 一文讲透 “进程、线程、协程”
 https://mp.weixin.qq.com/s/BzJw4S3O7lZikTyhGa4P9A
@@ -176,7 +191,7 @@ https://mp.weixin.qq.com/s/AOzBTeVWs2a8dE9P36N7GA
 https://mp.weixin.qq.com/s/K4lOPQ6qTZDXgdnrwMpyZg
 
 
-### 设计模式
+# 设计模式
 
 9种设计模式在Spring中的运用，一定要非常熟练！
 https://mp.weixin.qq.com/s/ZqK5-2T3jZ9JTCdRA_st4w
@@ -184,11 +199,17 @@ https://mp.weixin.qq.com/s/ZqK5-2T3jZ9JTCdRA_st4w
 https://mp.weixin.qq.com/s/pjQ6xqDvHHlfANUW_o2dTQ
 设计模式在外卖营销业务中的实践
 https://mp.weixin.qq.com/s/9gDGQhzRAL3pj35VAinZbQ
-
+如何理解这6种常见设计模式？
+https://developer.aliyun.com/article/771958?utm_content=g_1000180854
 深夜，聊聊设计模式
 https://mp.weixin.qq.com/s/SJiMuHb_C773QdN8Qt0tqA
+Java设计模式（十三） 别人再问你设计模式，叫他看这篇文章
+http://www.jasongj.com/design_pattern/summary/
+漫画：什么是 “抽象工厂模式” ？
+https://mp.weixin.qq.com/s/THIxoPHgNhFgm-IIKJlxQw
 
-
+漫画：什么是 “抽象工厂模式” ？
+https://mp.weixin.qq.com/s/kdLKhBiv6NK7XfQ1hzFPqQ
 
 #Spring
 
@@ -207,6 +228,8 @@ https://mp.weixin.qq.com/s/7gr1XMN4x9uZclw-Bab9JQ
 Spring浅谈源码系列8：Spring事务概述
 https://mp.weixin.qq.com/s/64wfq7-m7TDs6MWtJYhcgw
 
+总在说SpringBoot内置了tomcat启动，那它的原理你说的清楚吗？
+https://mp.weixin.qq.com/s/g6Xdg8NqD4MHyCqYkdzWrg
 Spring Boot Actuator 模块详解:：健康检查，度量，指标收集和监控
 https://mp.weixin.qq.com/s/8y-HhMrENt3h-Di2FHUiew
 Spring Boot 最最最常用的注解梳理
@@ -224,15 +247,24 @@ https://mp.weixin.qq.com/s/jFaBFgpceE-mJzubjEH8sg
 HTTPS 原理分析
 https://mp.weixin.qq.com/s/1TL7JokwkwpycCIkWia9zw
 
-
 # 数据结构算法
+
+大厂面试爱问的「调度算法」，20 张图一举拿下
+https://mp.weixin.qq.com/s/v0sTfZJIDCBRsqycpyxYhQ
+漫画：什么是红黑树？（整合版）
+https://mp.weixin.qq.com/s/FD1Zkme8jW6X87-Hro19ow
 
 数据结构中的 “图” ，小灰为大家做一个总结！
 https://mp.weixin.qq.com/s/zBN5cBY0b59foq9UMEYchg
 拜托，别问我什么各种Tree了，干就完事！
 https://mp.weixin.qq.com/s/oG7Ba20zJ5VxnUPr59qGfg
+
 十大经典排序算法最强总结（含JAVA代码实现
 https://mp.weixin.qq.com/s/jRBaQSpSouFQ70x4gUtDLg
+万字详解|手撕 9大排序算法！
+https://mp.weixin.qq.com/s/snBEpUsQ8ZhHLLuNarwqgA
+面试官：说说归并排序？
+https://mp.weixin.qq.com/s/WYziH0n0gW3B3mhmpSB2Iw
 面试官：知道时间轮算法吗？在Netty和Kafka中如何应用的？
 https://mp.weixin.qq.com/s/511Dcgg5ZtmpRwYIXQbnaQ
 
@@ -247,6 +279,11 @@ https://mp.weixin.qq.com/s/m8JKMGhbnZHyHz7rFTGsEQ
 
 
 # MYSQL
+面试官：你说熟悉MySQL事务，那来谈谈事务的实现原理吧！
+https://mp.weixin.qq.com/s/Ko7KyhJik9ivT4ZE8qby1Q
+
+MySQL事务的实现原理
+https://mp.weixin.qq.com/s/79HhQsZRzzuskP5p5LNONA
 
 【精品问答】初级程序员必备2020最新MYSQL面试题
 https://developer.aliyun.com/ask/281382?utm_content=g_1000111214&from=timeline
@@ -278,6 +315,8 @@ https://mp.weixin.qq.com/s/y32nKY46Zi6O_5M021E2ZA
 https://mp.weixin.qq.com/s/Bx8OmkRb7SlSWZ_wIOl2LA
 今天跟大家聊聊分区表的底层原理
 https://mp.weixin.qq.com/s/X0Pl-OC3jldiHgUlB3DTTA
+总结三种 MySQL 大表优化方案
+https://mp.weixin.qq.com/s/t4PcRPOwb2zsLz8slsVdsg
 
 ## ES
 Elasticsearch分布式一致性原理剖析之节点篇
@@ -301,7 +340,8 @@ ElasticSearch 最全详细使用教程
 https://mp.weixin.qq.com/s/S5-04qcBvrAl3Q61tW1pzA
 
 # redis
-
+Redis和多路复用模型
+https://mp.weixin.qq.com/s/8CI0tjRmf4vCpbKUb9Nnng
 阿里官方 Redis 开发规范：
 https://mp.weixin.qq.com/s/8VVDGXYoQZ4JRoD3pagZWg
 
@@ -321,9 +361,6 @@ Redis缓存整理总结
 https://mp.weixin.qq.com/s/yyH62HlhjjCkXyXlNQRyvw
 面试必备：缓存穿透，缓存雪崩的四种解决方案
 https://mp.weixin.qq.com/s/FBeIrtwz3yjstaI2f9G33A
-
-Redis和多路复用模型
-https://mp.weixin.qq.com/s/Tbnn4Oua_NDI76pHxQr5_g
 造了一个 Redis 分布锁的轮子，没想到还学到这么多东西！！！
 https://mp.weixin.qq.com/s/GiPuNT_GjbT-j90C2v4Ydw
 
@@ -371,7 +408,14 @@ https://live.csdn.net/room/weixin_48013460/08rWiAbu
 Spring Cloud 20000 字总结：
 https://mp.weixin.qq.com/s/IwGoRq2io5WbXcLLcteYXw
 
+##MQ
+消息队列面试连环问：如何保证消息不丢失？处理重复消息？消息有序性？消息堆积处理？
+https://mp.weixin.qq.com/s/nHKok3sG0ueg5EgVHwWnLg
+
 #kafka
+Kafka 面试真题及答案，建议收藏
+https://mp.weixin.qq.com/s/nkwHybhD8YfjbkTFF8cnqQ
+
 Kafka的Exactly-once语义与事务机制
 https://mp.weixin.qq.com/s/7ZUmktjZpBstcwGx2icdbQ
 Kafka的存储机制以及可靠性
@@ -400,16 +444,21 @@ RocketMQ消息丢失场景及解决办法
 https://mp.weixin.qq.com/s/AH9m6LQsxNVgBEo6YF6ZKQ
 
 ## RabbitMQ
+RabbitMQ 集群高可用原理及实战部署介绍
+https://mp.weixin.qq.com/s/h49iqkPbE6DYzJ5x2Iz0pg
+深入理解：RabbitMQ的前世今生
+https://mp.weixin.qq.com/s/0rJiWW-5Al8qYaHnzF45MQ
 
-提升RabbitMQ消费速度的一些实践 ：https://mp.weixin.qq.com/s/QzV2xJ78TpfhKUY38bLnGg
+提升RabbitMQ消费速度的一些实践 ：
+https://mp.weixin.qq.com/s/QzV2xJ78TpfhKUY38bLnGg
 《RabbitMQ》如何保证消息的可靠性
 https://mp.weixin.qq.com/s/rvl5kpqjdoj4cjV593G_FA
 《RabbitMQ》如何保证消息不被重复消费
 https://mp.weixin.qq.com/s/uK_VMc81mEwP_kHoYz_w3A
 RabbitMQ高可用介绍
 https://mp.weixin.qq.com/s/5gPJgwscGTV64O7WdZo6lQ
-
-
+深入剖析 rabbitMQ
+https://mp.weixin.qq.com/s/zv29Pdx4WfLhS7IpQombYA
 
 
 #zookeeper 
@@ -420,7 +469,11 @@ https://mp.weixin.qq.com/s/ZPC1ja6Zv7X6XorGzy4hhg
 https://mp.weixin.qq.com/s/X-10DjJQE3sIBVmoOVV77g
 干掉 "ZooKeeper"？阿里为什么不用 ZK 做服务发现？
 https://mp.weixin.qq.com/s/CbYJaPa8sMqyXZIEeN8P3w
+ 基于Zookeeper的分布式锁与领导选举
+http://www.jasongj.com/zookeeper/distributedlock/
 
+基于ZooKeeper的分布式锁和队列
+https://mp.weixin.qq.com/s/i5CMn9_wVJyy7ZkPimSJMw
 
 ##Flink
 

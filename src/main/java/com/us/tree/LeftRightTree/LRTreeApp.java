@@ -6,9 +6,11 @@ package com.us.tree.LeftRightTree;
 public class LRTreeApp {
     public static void main(String[] args) {
         LRTree tree = init();
-        tree.traverse(1);
-        System.out.println("-------------"+tree.GetNodeNumKthLevel(tree.getRoot(),3));
-        System.out.println(tree.GetDepth(tree.getRoot()));
+//        tree.traverse(1);
+//        System.out.println();
+//        System.out.println("-------k层节点个数------"+tree.GetNodeNumKthLevel(tree.getRoot(),6));
+//        System.out.println(tree.GetDepth(tree.getRoot()));
+        selectTree(tree);
     }
 
     public static LRTree init() {

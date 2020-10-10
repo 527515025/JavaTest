@@ -13,7 +13,7 @@ package com.us.acm;
  */
 public class Digui {
     public static void main(String[] args) {
-        System.out.println(fib(47));
+        System.out.println(fib(3));
     }
 
 
