@@ -676,3 +676,360 @@ https://blog.csdn.net/xuefeng0707/article/details/40797085
 
 https://mp.weixin.qq.com/s?__biz=MjM5NjQ5MTI5OA==&mid=2651745258&idx=1&sn=df5ffe0fd505a290d49095b3d794ae7a&scene=21#wechat_redirect
 
+
+
+
+
+
+
+
+
+
+
+# 集合
+
+# Queue接口
+
+　　Queue用于模拟了**队列**这种数据结构，队列通常是指“先进先出”(FIFO)的容器。队列的头部保存在队列中时间最长的元素，队列的尾部保存在队列中时间最短的元素。新元素**插入(offer)**到队列的尾部，**访问元素(poll)**操作会返回队列头部的元素。通常，**队列不容许随机访问队列中的元素。**
+
+#### **常用方法**
+
+```java
+1. 入队
+
+**void add(Object o):** 指定元素加入队列尾部
+
+boolean offer(Object o)：同上，在有限容量队列中，此方法更好
+
+2. 出队
+
+**Object poll()：**获取头部元素，并从队列中删除；如果队列为空，则返回null
+
+Object remove()：获取头部元素，并从队列中删除；
+
+3. 出队不删除
+
+**Object peek()：**获取头部元素，不删除；如果队列为空，则返回null
+
+Object element()：获取头部元素，不删除；
+```
+
+**Queue有两个常用的实现类**：**LinkedList和PriorityQueue**，下面分别介绍这两个实现类。
+
+##1.  **LinkedList**（**双向链表**）
+
+#### 结构
+
+   ```java
+       /**
+        * Pointer to first node.
+        * Invariant: (first == null && last == null) ||
+        *            (first.prev == null && first.item != null)
+        */
+       transient Node<E> first;
+   
+       /**
+        * Pointer to last node.
+        * Invariant: (first == null && last == null) ||
+        *            (last.next == null && last.item != null)
+        */
+       transient Node<E> last;
+   
+       private static class Node<E> {
+           E item;
+           Node<E> next;
+           Node<E> prev;
+   
+   ```
+
+#### 常用方法
+
+```java
+      1. void addFirst(Object e);   //将指定元素插入该双向队列的开头。
+      2. void addLast(Object e);　　//将指定元素插入该双向队列的末尾。
+      3. Iterator descendingIterator(); //返回以该双向队列对应的迭代器，该迭代器将以逆向顺序来迭代队列中的元素。
+      4. Object getFirst();　　　　　　//获取、但不删除双向队列的第一个元素。
+      5. Object getLast();　　      //获取、但不删除双向队列的最后一个元素。
+      6. boolean offerFirst(Object e);//将指定元素插入该双向队列的开头
+      7. boolean offerLast(Object e);//将指定元素插入该双向队列的结尾
+      8. Object peekFirst();       //获取、但不删除双向队列的第一个元素；如果此双端队列为空，则返回null。
+      9. Object peekLast();       //获取、但不删除该双向队列的最后一个元素；如果此双端队列为空，则返回null。
+      10. Object pollFirst();       //获取、并删除双向队列的第一个元素；如果此双端队列为空，则返回null。
+      11. Object pollLast();       //获取、并删除双向队列的最后一个元素，如果此双端队列为空，则返回null。
+      12. Object pop();          //pop出该双向队列所表示的栈中第一个元素。
+      13. void push(Object e);     //将一个元素push进该双向队列所表示的栈中。
+      14. Object removeFirst();    //获取、并删除该双向队列的第一个元素。
+      15. Object removeFirstOccurrence(Object e);  //删除该双向队列的第一次的出现元素e。
+      16. removeLast();　　          //获取、并删除该双向队列的最后一个元素。
+      17. removeLastOccurrence(Object e);  //删除该双向队列的最后一次的出现元素e   
+```
+
+   LinkedList类实现是**双向链表** 是一个比较奇怪的类**，它**即是List接口的实现类**，这意味着它**是一个List集合**，可以根据索引来随机访问集合中的元素。除此之外，LinkedList**还实现了Deque接口**，Deque接口是Queue接口的子接口，它**代表一个双向队列，Deque接口里定义了一些可以双向操作队列的方法：
+
+   LinkedList不仅**可以当成双向队列**使用，也可以当成“栈”使用**，因为该类还包含了pop(出栈)和push(入栈)两个方法。除此之外，**LinkedList实现了List接口，所以还被当成List使用。LinkedList同时实现了stack、Queue、PriorityQueue的所有功能。
+
+#### 使用方式：
+
+   ```java
+   public class TestLinkedList {
+    
+         public static void main(String[] args) {
+             LinkedList<String> ll = new LinkedList<>();
+             //入队
+             ll.offer("AAA");
+             //压栈
+             ll.push("BBB");
+             //双端的另一端入队
+            ll.addFirst("NNN");
+            ll.forEach(str -> System.out.println("遍历中:" + str));
+            //获取队头
+            System.out.println(ll.peekFirst());
+            //获取队尾
+            System.out.println(ll.peekLast());
+            //弹栈
+            System.out.println(ll.pop());
+            System.out.println(ll);
+            //双端的后端出列
+            System.out.println(ll.pollLast());
+            System.out.println(ll);
+        }
+    }
+   ```
+
+#### 建议：
+
+1. 如果需要遍历List集合元素，**对于ArrayList、Vector集合，则应该使用随机访问方法(get)来遍历集合元素**，这样性能更好，对于LinkedList集合，则应该采用迭代器(Iterater)来遍历集合元素性能会和arrayList差不多，for循环则获取每个元素都会会循环查找链表的前半段。
+2. 如果需要经常执行插入（随机插入非首尾插入）、删除操作来改变List集合大小，则应该使用LinkedList集合，而不是ArrayList。使用ArrayList、Vector集合将需要**经常重新分配内存数组**的大小，其时间开销往往是使用LinkedList时时间开销的几十倍，效果很差。
+3. 如果有多条线程需要同时访问List集合中的元素，可以考虑使用Vector这个同步实现。
+4. 如果你的程序强调对元素的增、删、改、查、遍历等操作就用**LinkedList或者ArrayList;**
+   如果是强调对象进入容器和对象从容器出来时的先后关系，那就**用Stack、Queue、PriorityQueue**
+
+* ### 1.1 ArrayList
+
+ ```java
+     transient Object[] elementData; // non-private to simplify nested class access
+ 
+     /**
+      * The size of the ArrayList (the number of elements it contains).
+      *
+      * @serial
+      */
+     private int size;
+ ```
+
+ **ArrayList** 是数组 所以 add（0，e） 是在内存中**System.arrayCopy（文末有介绍）** 拷贝一个新的数组，并将后面的所有元素位置+1
+
+#### arrayList 和  LinkedList性能比较总结
+
+新增
+
+* 如果是从集合的头部新增元素，ArrayList 花费的时间应该比 LinkedList 多，因为需要对头部以后的元素进行复制。
+* 如果是从集合的中间位置新增元素，ArrayList 花费的时间搞不好要比 LinkedList 少，因为 LinkedList 需要遍历，但是ArrayList要复制后半段数组元素。
+* 如果是从集合的尾部新增元素，ArrayList 花费的时间应该比 LinkedList 少（不涉及到ArrayList扩容），因为数组是一段连续的内存空间，也不需要复制数组；而链表需要创建新的对象，前后引用也要重新排列。
+
+删除（基本和新增保持一致）
+
+- 从集合头部删除元素时，ArrayList 花费的时间比 LinkedList 多很多；
+- 从集合中间位置删除元素时，ArrayList 花费的时间比 LinkedList 少很多；
+- 从集合尾部删除元素时，ArrayList 花费的时间比 LinkedList 少一点。
+
+遍历查找：
+
+* 查找arraylist 速度优于LinkedList。for 循环遍历的时候，ArrayList 花费的时间远小于 LinkedList
+* 遍历时对于LinkedList集合，则应该采用迭代器(Iterater)来遍历集合元素性能会和arrayList差不多，for循环则获取每个元素都会会循环查找链表的前半段。
+
+性能比较可参考 ：https://zhuanlan.zhihu.com/p/260424337
+
+
+## 2. PriorityQueue实现类(优先队列)
+
+#### 结构
+
+  ```
+    transient Object[] queue; // non-private to simplify nested class access
+  
+      /**
+       * The number of elements in the priority queue.
+       */
+      private int size = 0;
+  
+      /**
+       * The comparator, or null if priority queue uses elements'
+       * natural ordering.
+       */
+      private final Comparator<? super E> comparator;
+  ```
+
+
+
+  PriorityQueue是Queue接口的实现类，但是它并不是一个FIFO的队列实现，**PriorityQueue保存队列元素的顺序并不是按加入队列的顺序，而是按队列元素的大小进行重新排序。**具体表现在：
+
+  1. 保存顺序与FIFO无关，而是按照元素大小进行重排序；因此poll出来的是按照有小到大来取。
+
+  2. 不允许保存null，排序规则有自然排序和定制排序两种，规则与TreeSet一致。
+
+  PriorityQueue增加元素底层也是 System.arraycopy 方法
+
+优先队列，PriorityQueue 线程不安全，多线程使用 PriorityBlockingQueue
+
+##3.  **Deque接口与ArrayDeque实现类 ** 实现了Queue接口（ **循环数组** ）
+
+Deque实现的是一个双端队列，因此它具有“FIFO队列”及“栈”的方法特性，其中ArrayDeque是其典型的实现类。
+
+#### 结构
+
+```java
+    transient Object[] elements; // non-private to simplify nested class access
+
+    /**
+     * The index of the element at the head of the deque (which is the
+     * element that would be removed by remove() or pop()); or an
+     * arbitrary number equal to tail if the deque is empty.
+     */
+    transient int head;
+
+    /**
+     * The index at which the next element would be added to the tail
+     * of the deque (via addLast(E), add(E), or push(E)).
+     */
+    transient int tail;
+```
+
+通过**数组**实现队列，在队列中存在两个指针，一个指向头部，一个指向尾部。队列的入队，出队通过**System.arraycopy** 方法 拷贝生成新的数组实现。有元素变化则使用 System.arraycopy 进行内存拷贝数组
+
+#### 使用
+
+```java
+1. ArrayDeque的栈实现
+
+public class ArrayDequeQueue {
+ 
+      public static void main(String[] args) {
+          ArrayDeque<String> queue = new ArrayDeque<>();
+          //入队
+          queue.offer("AAA");
+          queue.offer("BBB");
+          queue.offer("CCC");
+          System.out.println(queue);
+         //获取但不出队
+         System.out.println(queue.peek());
+         System.out.println(queue);
+         //出队
+         System.out.println(queue.poll());
+         System.out.println(queue);
+     }
+ 
+ }
+2. ArrayDeque的FIFO队列实现
+
+  public class ArrayDequeQueue {
+  
+      public static void main(String[] args) {
+          ArrayDeque<String> queue = new ArrayDeque<>();
+          //入队
+          queue.offer("AAA");
+          queue.offer("BBB");
+          queue.offer("CCC");
+          System.out.println(queue);
+         //获取但不出队
+         System.out.println(queue.peek());
+         System.out.println(queue);
+         //出队
+         System.out.println(queue.poll());
+         System.out.println(queue);
+     }
+ 
+ }
+
+```
+
+## 对比：
+
+### 接口实现 
+
+> ArrayDeque和LinkedList都实现了Serializable和Cloneable接口，支持**序列化和****克隆操作**
+>
+> PriorityQueue只实现了Serializable接口，支持**序列化操作**
+
+### 时间复杂度（以队列看）
+
+   1.ArrayDeque：
+
+> **add**时间复杂度：O(n)
+>
+> **remove**时间复杂度：O(n)
+>
+> **get**时间复杂度：O(1)
+
+  2.LinkedList：
+
+> **add**时间复杂度：O(1)
+>
+> **remove**时间复杂度：O(1)
+>
+> **get**时间复杂度：O(n)
+
+   3.PriorityQueue：
+
+> **get**时间复杂度：O(log(N))
+>
+> **add/offer**时间复杂度：O(log(N))
+>
+> **remove/poll**时间复杂度：O(log(N))
+
+### 特点
+
+> ArrayDeque：双端队列，线程不安全，性能高于LinkedList，不允许插入null元素
+>
+> LinkedList：双端队列，线程不安全，首尾元素操作效率高，低效随机访问
+>
+> PriorityQueue：线程不安全，不允许插入null元素，动态数组实现最小堆，remove方法一直返回最小元素
+
+# 扩展
+
+### **System.arraycopy**
+
+  **System.arraycopy** 是浅拷贝，System.arraycopy() 函数是 native 函数，即原生态方法，是直接对内存进行复制，减少了寻址时间，自然效率更高。  
+
+  **System.arraycopy**在复制时是值传递，但是在进行复制时，首先检查了字符串常量池中是否存在该字面量，如果存在则返回对应的内存地址，如果不存在则在内存中开辟空间保存对应的对象。
+
+ **System.arraycopy**在复制一维数组时，目标数组修改不会影响原来数据，是值传递，修改副本不会影响原有值。在复制二维数组时，（二维数组的第一维装的是一个一维数组的引用，第二维里是元素数值）对二维数进行复制后，第一维的引用被复制给新数组的地一维，也就是两个数组的第一维都指向相同的那些数组。此时改变期中任何一个元素的值，原数组和新数组的元素值都会变化。
+
+  **System.arraycopy** 是线程不安全的 ，是 **native 函数**
+
+## native 函数
+
+运行时实际运行的是 c++ 所以不会占用堆内存
+
+JVM本身也是一个动态链接库（内部有**class文件的解释器**），它加载类和解释执行的效率不如直接编译的C++高。再有就是，Java设计系统API等底层操作时可能无能为力。一些经常调用的函数，或者和操作系统交互的函数必须用其他语言来完成。
+
+Java中的JNI（Java Native Interface）就是实现native方法的途径。它通过C/C++的编程接口（头文件）来达到和C/C++交互的目的。
+
+我们先来看一下，native方法的执行过程。
+
+* 首先，在类被加载时，需要加载native方法实现的动态链接库，因此这段加载代码必须是静态加载器中的程序段。
+
+* 当JVM执行到native函数时，查找已经加载好的动态链接库，如果找到对应函数的实现，则把执行权转交操作系统，操作系统将进程调度至动态链接库，开始函数执行，Java程序则等待其返回值；如果未找到则报错（属于Error型异常，也就是JVM级别的异常，不可捕获）。
+
+```java
+public class Main {
+
+    static {
+        System.load("D:\\jni.dll");
+    }
+
+    public native static void hello(); // 必须有static，因为静态函数不能直接调用同一个类的非静态函数
+
+    public static void main(String[] args) {
+        hello();
+    }
+}
+```
+
+这个hello函数就是我们要实现的native函数，功能是输出字符串“Hello World”。在这个主类中，需要加载`D:\jni.dll`，所以把它写在static初始化器中。
+
+接下来，我们需要编译出class文件，并生成一个C++的头（.h）文件。我们单击idea的一键编译运行即可。这次运行是一定会报错的，提示无法加载动态链接库。但我们不需要运行，只需要那个class文件。
+
+找到 class 文件通过 javah -jni Main 命令生成 Main.h文件。然后打开编辑 Main.h 这个C++ 语言文件，编写函数，然后编译生成 `jni.dll`文件 放到  “D:\\jni.dll” 位置。
+
+再次运行Java程序，可见输出`Hello World!`（c++ 函数的功能为输出 hello world）字样。这样，我们的native函数就圆满成功了
