@@ -115,6 +115,53 @@ public class SumTest {
         return result;
     }
 
+    /**
+     * 根据官方方式改进后，进行去重操作。
+     * 通过 nums[i] == nums[i - 1] 判断 替换 map 去重。
+     * <p>
+     * 26 ms	43 MB
+     *
+     * @param nums
+     * @return
+     */
+    public static List<List<Integer>> threeSum2(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+        Arrays.sort(nums);
+        for (int i = 0; i < nums.length; i++) {
+            // 需要和上一次枚举的数不相同
+            if (i > 0 && nums[i] == nums[i - 1]) {
+                continue;
+            }
+            int sum = 0 - nums[i];
+            int k = nums.length - 1;
+            int j = i + 1;
+
+            while (k > j) {
+                int subSum = nums[j] + nums[k];
+                // 需要和上一次枚举的数不相同, 去除重复的循环
+                if (j > i + 1 && nums[j] == nums[j - 1]) {
+                    j++;
+                    continue;
+                }
+                if (subSum == sum) {
+                    List<Integer> list = new ArrayList<>();
+                    list.add(nums[i]);
+                    list.add(nums[j]);
+                    list.add(nums[k]);
+                    result.add(list);
+                    j++;
+                } else if (subSum > sum) {
+                    // 两数之和 > 结果，则说明两数较大，所以后指针需要前移，减小数。
+                    k--;
+                } else {
+                    // 两数之和 < 结果，则说明两数较小，所以前指针需要后移，增大数。
+                    j++;
+                }
+            }
+        }
+        return result;
+    }
+
 
     /**
      * 官方题解 双指针
