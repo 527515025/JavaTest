@@ -1033,3 +1033,24 @@ public class Main {
 找到 class 文件通过 javah -jni Main 命令生成 Main.h文件。然后打开编辑 Main.h 这个C++ 语言文件，编写函数，然后编译生成 `jni.dll`文件 放到  “D:\\jni.dll” 位置。
 
 再次运行Java程序，可见输出`Hello World!`（c++ 函数的功能为输出 hello world）字样。这样，我们的native函数就圆满成功了
+
+
+
+
+
+# Arrays.sort 解析
+
+Arrays.sort并不是单一的排序，而是插入排序，快速排序，归并排序三种排序的组合
+
+https://www.jianshu.com/p/d7ba7d919b80 分析
+
+![arraySort](/Users/yangyibo/Documents/技能点/整理知识点图/arraySort.png)
+
+元素少于47这个阀值，就用插入排序
+
+大过INSERTION_SORT_THRESHOLD（47) < 286  的，用一种快速排序的方法：
+ 1.从数列中挑出五个元素，称为 “基准”（pivot）；
+ 2.重新排序数列，所有元素比基准值小的摆放在基准前面，所有元素比基准值大的摆在基准的后面（相同的数可以到任一边）。在这个分区退出之后，该基准就处于数列的中间位置。这个称为分区（partition）操作；
+ 3.递归地（recursive）把小于基准值元素的子数列和大于基准值元素的子数列排序。
+
+大于286的，它会进入归并排序（Merge Sort）

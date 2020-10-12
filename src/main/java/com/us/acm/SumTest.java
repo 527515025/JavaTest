@@ -1,12 +1,10 @@
 package com.us.acm;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 两数之和
- *
+ * <p>
  * 给定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为目标值的那 两个 整数，并返回他们的数组下标。
  * <p>
  * 你可以假设每种输入只会对应一个答案。但是，数组中同一个元素不能使用两遍。
@@ -15,10 +13,11 @@ import java.util.Map;
  * @author yyb
  * @time 2020/6/17
  */
-public class TwoSum {
+public class SumTest {
     public static void main(String[] args) {
-        int[] result = twoSum(new int[]{3, 2, 4}, 6);
-        Arrays.stream(result).parallel().forEach(x -> System.out.println(x));
+//        int[] result = twoSum(new int[]{3, 2, 4}, 6);
+//        Arrays.stream(result).parallel().forEach(x -> System.out.println(x));
+        threeSum(new int[]{-1,0,1,2,-1,-4});
     }
 
     /**
@@ -66,4 +65,52 @@ public class TwoSum {
         }
         throw new IllegalArgumentException("No two sum solution");
     }
+
+
+    /**
+     * 三数之和
+     * <p>
+     * 给你一个包含 n 个整数的数组 nums，判断 nums 中是否存在三个元素 a，b，c ，使得 a + b + c = 0 ？请你找出所有满足条件且不重复的三元组。
+     * <p>
+     * 来源：力扣（LeetCode）
+     * 链接：https://leetcode-cn.com/problems/3sum
+     * <p>
+     * 思路：
+     * 排序+双指针法
+     *
+     * @param nums
+     * @return
+     */
+    public static List<List<Integer>> threeSum(int[] nums) {
+        //此处用set 会超出查询时间
+        Map<String, Integer> map = new HashMap<>();
+        List<List<Integer>> result = new ArrayList<>();
+        Arrays.sort(nums);
+        for (int i = 0; i < nums.length; i++) {
+            int sum = 0 - nums[i];
+            int k = nums.length - 1;
+            int j = i + 1;
+            while (k > j) {
+                int subSum = nums[j] + nums[k];
+                String keys = nums[i] + "|" + nums[j] + "|" + nums[k];
+                if (subSum == sum && map.get(keys) == null) {
+                    List<Integer> list = new ArrayList<>();
+                    list.add(nums[i]);
+                    list.add(nums[j]);
+                    list.add(nums[k]);
+                    result.add(list);
+                    map.put(keys, 1);
+                    System.out.println(keys);
+                    j++;
+                } else if (subSum > sum) {
+                    k--;
+                } else {
+                    j++;
+                }
+            }
+
+        }
+        return result;
+    }
+
 }
