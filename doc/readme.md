@@ -491,3 +491,16 @@ https://mp.weixin.qq.com/s/M-Umwa9405QSamB8EsB3Vw
 
 
 
+
+
+## need 锻炼
+面试官：哪些场景会产生OOM？怎么解决？
+https://mp.weixin.qq.com/s/c7w3dbCllrS2R5rfBlW3cg
+之MQ夺命连环11问
+https://mp.weixin.qq.com/s/LKpLLT235ZVPPGBelEPKBw
+之Redis夺命连环11问
+https://mp.weixin.qq.com/s/4LdLgDmSH84WE_cxN6SmAw
+之mysql夺命连环13问
+https://mp.weixin.qq.com/s/au2vtN4b_xSVZ1x_ADNO8w
+binlog和relay-log到底长啥样？
+https://mp.weixin.qq.com/s/UaytVkiYt2iriu4xzUxjJQ

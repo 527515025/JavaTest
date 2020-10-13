@@ -112,10 +112,18 @@ Zookeeper的数据结构与**Unix文件系统**很类似，整体上可以看作
 
 ![zookeeper-node](/Users/yangyibo/Documents/技能点/整理知识点图/技术/zookeeper-node.png)
 
-### ZNode类型
+#### ZNode特点：
+
+1. 每个子目录项如NameService都被称作为znode，这个**znode是被它所在的路径唯一标识**，如Server1这个znode的标识为/NameService/Server1。
+2. znode可以有子节点目录，并且每个znode可以存储数据，默认存**储`1MB`的数据**。注意EPHEMERAL（**临时的）类型的目录节点不能有子节点**目录。
+3. znode是有版本的（version），每个**znode中存储的数据可以有多个版本**，也就是一个访问路径中可以**存储多份数据，version号自动增加。**  
+4. znode可以被**监控**，包括这个目录节点中存储的数据的修改，子节点目录的变化等，**一旦变化可以通知设置监控的客户端**，这个是Zookeeper的核心特性，Zookeeper的很多功能都是基于这个特性实现的。
+5. ZXID：每次**对Zookeeper的状态的改变都会产生一个zxid**（ZooKeeper Transaction Id），**zxid是全局有序的**，如果zxid1小于zxid2，则zxid1在zxid2之前发生。
+
+### ZNode类型（可组合，比如Sequence-Persistent节点）
 
 - **持久化目录节点 Persistent**：客户端与Zookeeper**断开连接后，该节点依旧存在**，一旦被创建，便不会意外丢失，即使服务器全部重启也依然存在。每个 Persist 节点即可包含数据，也可包含子节点。
-- **临时目录节点 Ephemeral**：客户端与Zookeeper**断开连接后，该节点被删除**，在创建它的客户端与服务器间的 Session 结束时自动被删除。服务器重启会导致 Session 结束，因此 Ephemeral 类型的 znode 此时也会自动删除。
+- **临时目录节点 Ephemeral**：客户端与Zookeeper**断开连接后，该节点被删除**，（在创建它的客户端与服务器间的 Session 结束时自动被删除。服务器重启会导致 Session 结束，因此 Ephemeral 类型的 znode 此时也会自动删除。
 - **Sequence 顺序节点节点：** ZooKeeper还允许用户为每个节点添加一个特殊的属性,SEQUENTIAL 也被称为顺序节点，例如“**Ephemeral-Sequence** 和  **Persistent-Sequence**”，**创建出的节点名在指定的名称之后带有10位10进制数的序号**。多个客户端创建同一名称的节点时，都能创建成功，只是序号不同。
 - **Non-sequence 节点：** **多个客户**端同时创建同一 Non-sequence 节点时，**只有一个可创建成功，其它匀失败**。并且创建出的**节点名称与创建时指定的节点名完全一样**。
 
@@ -137,14 +145,6 @@ Zookeeper 的每个 ZNode 上都会存储数据，Zookeeper 都会为其维护�
 - **dataLength**：znode 的**数据长度**
 - **numChildren**：znode **子节点数量**
 
-#### ZNode特点：
-
-1. 每个子目录项如NameService都被称作为znode，这个znode是被它所在的路径唯一标识，如Server1这个znode的标识为/NameService/Server1。
-2. znode可以有子节点目录，并且每个znode可以存储数据，默认存储`1MB`的数据。注意EPHEMERAL（临时的）类型的目录节点不能有子节点目录。
-3. znode是有版本的（version），每个znode中存储的数据可以有多个版本，也就是一个访问路径中可以存储多份数据，version号自动增加。  
-4. znode可以被监控，包括这个目录节点中存储的数据的修改，子节点目录的变化等，一旦变化可以通知设置监控的客户端，这个是Zookeeper的核心特性，Zookeeper的很多功能都是基于这个特性实现的。
-5. ZXID：每次对Zookeeper的状态的改变都会产生一个zxid（ZooKeeper Transaction Id），zxid是全局有序的，如果zxid1小于zxid2，则zxid1在zxid2之前发生。
-
 #### 会话（Session）
 
 Session 指的是 ZooKeeper 服务器与客户端会话。
@@ -157,6 +157,14 @@ Session 作为会话实体，用来代表客户端会话，其包括 4 个属性
 - **TimeOut**，会话超时事件。客户端在创造 Session 实例的时候，会设置一个会话超时的时间。当由于服务器压力太大、网络故障或是客户端主动断开连接等各种原因导致客户端连接断开时，只要在 sessionTimeout 规定的时间内能够重新连接上集群中任意一台服务器，那么之前创建的会话仍然有效；
 - **TickTime**，下次会话超时时间点；
 - **isClosing**，当服务端如果检测到会话超时失效了，会通过设置这个属性将会话关闭。
+
+Client和Zookeeper集群建立连接，整个session状态变化如图所示：
+
+![zookeeper-Session](/Users/yangyibo/Documents/技能点/整理知识点图/技术/zookeeper-Session.png)
+
+如果Client因为**Timeout**和Zookeeper Server失去连接，client处在**CONNECTING**（**图节点2**）状态，会自动尝试再去连接Server，如果在session有效期内再次成功连接到某个Server，则回到CONNECTED（**图节点3**）状态。
+
+**注意：**如果因为网络状态不好，client和Server失去联系，**client会停留在当前状态，会尝试主动再次连接Zookeeper Server**。client**不能宣称自己的session expired**，**session expired是由Zookeeper Server**来决定的，**client可以选择自己主动关闭session**。
 
 #### 权限控制 ACL
 
@@ -177,13 +185,17 @@ Zookeeper 采用 ACL（Access Control Lists）策略来进行权限控制，类�
 
 有了 Watcher 机制，就可以实现分布式协调/通知了，假设有这样的场景，两个客户端同时对 B 进行写入操作，这两个客户端就会存在竞争关系，通常需要对 B 进行**加锁**操作，ZK 通过 version 版本号来控制实现**乐观锁**中的“**写入校验**”机制。
 
-ZNode 会维护一个叫作 **Stat** 的数据结构，Stat 中记录了这个 ZNode 的三个数据版本，分别是 **version**（当前ZNode的版本）、**cversion**（当前ZNode 子节点的版本）和 **aversion**（当前ZNode的ACL版本）。
+ZNode 会维护一个叫作 **Stat** 的数据结构，**Stat** 中记录了这个 **ZNode 的三个数据版本**，分别是 **version**（当前ZNode的版本）、**cversion**（当前ZNode 子节点的版本）和 **aversion**（当前ZNode的ACL版本）。
 
 ## 事件监听（Watcher）
 
+Zookeeper watch是一种监听通知机制。Zookeeper**所有的读操作**getData(), getChildren()和 exists()都可以设置监视(watch)，监视事件可以理解为**一次性**的触发器
+
+Watch的三个关键点：
+
 **One-time trigger（一次性触发）**
 
-Zookeeper 允许用户在指定节点上注册一些 **Watcher**，当 Znode 发生变化时，将**触发并删除**一个 watch。监视事件可以理解为**一次性的触发**器。当 watch 被触发时客户端会收到一个数据包，指示 znode 已经被修改。如果客户端和 ZooKeeper 服务器之间的连接中断，客户端将收到本地通知。**该机制是 Zookeeper 实现分布式协调服务的重要特性**
+Zookeeper 允许用户在指定节点上注册一些 **Watcher**，当 Znode 发生变化时，将**触发并删除**一个 watch。监视事件可以理解为**一次性的触发**器。当 watch 被触发时**客户端会收到一个数据包**，指示 znode 已经被修改。如果客户端和 ZooKeeper 服务器之间的连接中断，客户端将收到本地通知。**该机制是 Zookeeper 实现分布式协调服务的重要特性**
 
 3.6.0中的新增功能：客户端还可以在 znode 上设置永久性的递归监视，这些监视在触发时不会删除，并且会以递归方式触发已注册 znode 以及所有子 znode 的更改。
 
@@ -260,6 +272,24 @@ Zookeeper集群是一个基于主从复制的高可用集群，每个服务器�
 （4）服务器 4 启动，发起一次选举。此时服务器 1，2，3 已经**不是 LOOKING 状态，不会更改选票信息**。交换选票信息结果：服务器 3 为 3 票，服务器 4 为 1 票。此时服务器 4服从多数，**更改选票信息为服务器 3**，并更改状态为 FOLLOWING；
 
 （5）服务器 5 启动，同 4 一样当小弟。
+
+
+
+
+
+
+
+## Zookeeper 
+
+在**粗粒度分布式锁，分布式选主，主备高可用切换等，不需要高TPS** 支持的场景下有不可替代的作用，而这些需求往往多集中在大数据、离线任务等相关的业务领域，因为大数据领域，讲究分割数据集，并且大部分时间分任务多进程/线程并行处理这些数据集，但是总是有一些点上需要将这些任务和进程统一协调，这时候就是 ZooKeeper 发挥巨大作用的用武之地。
+
+但是在**交易场景交易链路**上，在主**业务数据存取**，**大规模服务发现（服务注册）**、**大规模健康监测**等方面有**天然的短板**，应该竭力避免在这些场景下引入 ZooKeeper，在阿里巴巴的生产实践中，应用对ZooKeeper申请使用的时候要进行严格的场景、容量、SLA需求的评估。
+
+因为ZooKeeper 的**写并不是可扩展**的，**不可以通过加节点解决水平扩展性**问题。一个实践中可以考虑的方法是想办法梳理业务，垂直划分业务域，将其划分到多个 ZooKeeper 注册中心。但是因自己提供的服务能力不足要业务按照技术的指挥棒配合划分治理业务，是不会被允许的。不能因为注册中心自身的原因（能力不足）破坏了服务的可连通性，妨碍业务服务的发展。
+
+而且zookeeper 的长链接也容易出现闪断，闪断后，期间的业务操作是否需要重试等机制也需要异常捕获业务控制。
+
+详情看：https://mp.weixin.qq.com/s/CbYJaPa8sMqyXZIEeN8P3w
 
 
 
