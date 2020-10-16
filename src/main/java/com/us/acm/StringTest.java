@@ -1,5 +1,7 @@
 package com.us.acm;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.*;
 
 /**
@@ -12,8 +14,8 @@ public class StringTest {
 
     public static void main(String[] args) {
 
-
-        System.out.println(maxFreq("abbabbabbceabbede", 3, 2, 4));
+        System.out.println(patternMatching("( )"));
+//        System.out.println(maxFreq("abbabbabbceabbede", 3, 2, 4));
 //        System.out.println("findRepeat: " + findRepeat(init()));
     }
 
@@ -71,10 +73,9 @@ public class StringTest {
      * 思路：暴力遍历。
      * 只关注minSize即可，因为如果长度为maxSize的字串出现了N次那么长度为minSize的字串出现次数也会是N
      * 而题目要求返回出现次数最大的任意子串。
-     *
+     * <p>
      * 2、确定了长度以后就可以维护一个固定大小的滑动窗口 (i + minsize)去统计满足条件（不同字母的数目小于等于maxLetters）的
      * 子串的出现次数了，统计次数可以借助map来做。
-     *
      *
      * @param s
      * @param maxLetters 字串中不重复的字母个数
@@ -125,5 +126,48 @@ public class StringTest {
 
         return chars.size() <= maxLetters;
     }
+
+
+    /**
+     * 模式匹配
+     * 给定一个只包括 '('，')'，'{'，'}'，'['，']' 的字符串，判断字符串是否有效。
+     * <p>
+     * 有效字符串需满足：
+     * <p>
+     * 左括号必须用相同类型的右括号闭合。
+     * 左括号必须以正确的顺序闭合。
+     * 注意空字符串可被认为是有效字符串。
+     * <p>
+     * 来源：力扣（LeetCode）
+     * 链接：https://leetcode-cn.com/problems/valid-parentheses
+     *
+     * @param s
+     * @return
+     */
+    private static boolean patternMatching(String s) {
+        int len = s.length();
+        Map<Character, Character> map = new HashMap<>(4);
+        map.put('}', '{');
+        map.put(')', '(');
+        map.put(']', '[');
+        Stack<Character> stack = new Stack<>();
+        for (int i = 0; i < len; i++) {
+            char c = s.charAt(i);
+            if (map.containsKey(c)) {
+                // 栈为空或括号不匹配, peek() 返回栈顶元素，但不在堆栈中删除它。
+                if (stack.isEmpty() || !stack.peek().equals(map.get(c))) {
+                    return false;
+                }
+                //元素匹配，则返回栈顶元素，并在进程中删除它。
+                stack.pop();
+            } else {
+                stack.push(c);
+            }
+        }
+        //栈不为空则不匹配
+        return stack.isEmpty();
+    }
+
+
 }
 
