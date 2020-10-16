@@ -114,6 +114,36 @@ Zookeeper的核心是**原子广播**，这个机制保证了各个Server之间�
 
 实现中zxid是一个**64位的数**字，它**高32位是epoch用来标识leader关系是否改变**，每次一个leader被选出来，它都会有一个**新的epoch**，标识当前属于那个leader的统治时期。低32位用于递增计数。
 
+###  写操作
+
+#### leader写
+
+通过Leader进行写操作，主要分为五步：
+
+1. 客户端向Leader发起写请求
+2. Leader将写请求以Proposal的形式发给所有Follower并等待ACK
+3. Follower收到Leader的Proposal后返回ACK
+4. Leader得到过半数的ACK（Leader对自己默认有一个ACK）后向所有的Follower和Observer发送Commmit
+5. Leader将处理结果返回给客户端
+
+这里要注意
+
+- Leader并不需要得到Observer的ACK，即Observer无投票权
+
+- Leader不需要得到所有Follower的ACK，只要收到过半的ACK即可，同时Leader本身对自己有一个ACK。上图中有4个Follower，只需其中两个返回ACK即可，因为(2+1) / (4+1) > 1/2
+
+- Observer虽然无投票权，但仍须同步Leader的数据从而在处理读请求时可以返回尽可能新的数据
+
+#### 写Follower/Observer
+
+- Follower/Observer均可接受写请求，但不能直接处理，而需要将写请求转发给Leader处理
+
+- 除了多了一步请求转发，其它流程与直接写Leader无任何区别
+
+### 读操作
+
+Leader/Follower/Observer都可直接处理读请求，从本地内存中读取数据并返回给客户端即可。由于处理读请求不需要服务器之间的交互，Follower/Observer越多，整体可处理的读请求量越大，也即读性能越好。  
+
 ## Zookeeper的节点
 
 Zookeeper的数据结构与**Unix文件系统**很类似，整体上可以看作是**一棵树**，与Unix文件系统不同的是**Zookeeper的每个节点都可以存放数据**，**每个节点称作一个ZNode**，默认存储**`1MB`的数据，每个ZNode都可以通过其路径唯一标识**。
@@ -233,101 +263,6 @@ Watcher 机制包括三个角色：客户端线程、客户端的 WatchManager �
 5. Zookeeper**监听到有数据或路径发生变化时，把这条消息发送给Listener线程**
 6. **Listener线程内部调用process()方法**
 
-## 一致性
-
-Zookeeper是一个**高效的、可扩展的**服务，read和write操作都被设计为快速的，read比write操作更快。
-
-* **顺序一致性（Sequential Consistency）：**从**一个客户端**来的更新请求会被**顺序执行**。
-
-* **原子性（Atomicity）：**更新要么成功要么失败，没有部分成功的情况。
-
-* **唯一的系统镜像（Single System Image）：**无论客户端连接到哪个Server，看到**系统镜像是一致**的。
-
-* **可靠性（Reliability）：**更新一旦有效，**持续有效**，直到被覆盖。
-
-* **时间线（Timeliness）：**保证在**一定的时间内**各个客户端看到的**系统信息是一致**的。
-
-### ZAB协议
-
-Zab协议 的全称是 **Zookeeper Atomic Broadcast** （Zookeeper原子广播）。**Zookeeper 是通过 Zab 协议来保证分布式事务的最终一致性**。实现了**主从模式**的系统架构来**保持集群中各个副本之间的数据一致性**。
-
-根据ZAB协议，所有的**写操作都必须通过Leader**完成，Leader写入**本地日志后**再复制到所有的**Follower**节点。
-
-一旦Leader节点无法工作，ZAB协议能够自动从Follower节点中重新选出一个合适的替代者，即新的Leader，该过程即为领导选举。该领导选举过程，是ZAB协议中最为重要和复杂的过程。
-
-### ZAB协议处理请求
-
-Zookeeper Server接收到一次request，如果本身是follower服务器，则会转发给leader，Leader执行请求并通过Transaction的形式广播这次执行。
-
-### 两段提交协议（a two-phase commit）决定 Transaction是否commit执行？
-
-- Leader给所有的follower发送一个PROPOSAL消息。
-- 一个follower接收到这次PROPOSAL消息，写到磁盘，发送给leader一个ACK消息，告知已经收到。
-- 当Leader收到法定人数（quorum，即半数以上）的follower的ACK时候，发送commit消息执行。
-
-### Zab协议保证：
-
-- 如果leader以T1和T2的顺序广播，那么所有的Server必须先执行T1，再执行T2。
-
-- 如果任意一个Server以T1、T2的顺序commit执行，其他所有的Server也必须以T1、T2的顺序执行。
-
-  - 在新的leader广播Transaction之前，先前Leader commit的Transaction都会先执行。
-  - 在任意时刻，都不会有2个Server同时有法定人数（quorum）的支持者。
-    这里的quorum是一半以上的Server数目，确切的说是有投票权力的Server（不包括Observer）。
-
-  
-
-“两段提交协议”最大的问题是如果Leader发送了PROPOSAL消息后crash或暂时失去连接，会导致整个集群处在一种不确定的状态（follower不知道该放弃这次提交还是执行提交）。Zookeeper这时会选出新的leader，请求处理也会移到新的leader上，不同的leader由不同的epoch标识。切换Leader时，需要解决下面两个问题：
-
-ZAB协议保证了在Leader选举的过程中，已经被Commit的数据不会丢失，未被Commit的数据对客户端不可见。
-
-### Commit过的数据不丢失
-
-Leader在保存消息后进行广播，收到超过一半follower的ack 确认，此时消息**已经被commint 客户端可见**此消息，但是仍有部分 follower 没有同步到此消息。 此时leader 宕机。则新Leader必须保证这个事务也必须commit。
-
-选举出新的 leader 之后，各个follower 会将自己最大的zxid 发送给 新的leader 。此时新的 leader 会将Follower的zxid与自身zxid之间 的所有被Commit过的消息同步给Follower。此时zxid 小于 新leader 的 follower会根据广播，写入和ack确认。此时便保证了已经被Commit的数据不会丢失。
-
-### 未Commit过的消息对客户端不可见
-
-Leader在保存消息后进行广播，收到少于一半follower的ack 确认。此时**消息没有被commint 客户端不可见**此消息。但是有部分 follower 已经同步到此消息了。 此时leader 宕机。则新Leader必须必须丢弃这个proposal。
-
-
-
-###  写操作
-
-#### leader写
-通过Leader进行写操作，主要分为五步：
-
-1. 客户端向Leader发起写请求
-2. Leader将写请求以Proposal的形式发给所有Follower并等待ACK
-3. Follower收到Leader的Proposal后返回ACK
-4. Leader得到过半数的ACK（Leader对自己默认有一个ACK）后向所有的Follower和Observer发送Commmit
-5. Leader将处理结果返回给客户端
-
-这里要注意
-
-- Leader并不需要得到Observer的ACK，即Observer无投票权
-
-- Leader不需要得到所有Follower的ACK，只要收到过半的ACK即可，同时Leader本身对自己有一个ACK。上图中有4个Follower，只需其中两个返回ACK即可，因为(2+1) / (4+1) > 1/2
-
-- Observer虽然无投票权，但仍须同步Leader的数据从而在处理读请求时可以返回尽可能新的数据
-
-#### 写Follower/Observer
-
-- Follower/Observer均可接受写请求，但不能直接处理，而需要将写请求转发给Leader处理
-
-- 除了多了一步请求转发，其它流程与直接写Leader无任何区别
-
-### 读操作
-
-Leader/Follower/Observer都可直接处理读请求，从本地内存中读取数据并返回给客户端即可。由于处理读请求不需要服务器之间的交互，Follower/Observer越多，整体可处理的读请求量越大，也即读性能越好。  
-
-### 版本控制
-
-有了 Watcher 机制，就可以实现分布式协调/通知了，假设有这样的场景，两个客户端同时对 B接点 进行写入操作，这两个客户端就会存在竞争关系，通常需要对 B 进行**加锁**操作，ZK 通过 version 版本号来控制实现**乐观锁**中的“**写入校验**”机制。
-
-ZNode 会维护一个叫作 **Stat** 的数据结构，**Stat** 中记录了这个 **ZNode 的三个数据版本**，分别是 **version**（当前ZNode的版本）、**cversion**（当前ZNode 子节点的版本）和 **aversion**（当前ZNode的ACL版本）。
-
 ## Zookeeper集群
 
 Zookeeper集群虽然没有指定Master和Slave。但是，在Zookeeper工作时，会通过**内部选举机制产生一个Leader节点，其他节点为Follower或者是Observer**。
@@ -386,13 +321,22 @@ Zookeeper集群是一个基于主从复制的高可用集群，每个服务器�
 
 ## 选举机制
 
-当leader崩溃或者leader失去大多数的follower，这时候zk进入恢复模式，恢复模式需要重新选举出一个新的leader，让所有的Server都恢复到一个正确的状态。
+当leader崩溃或者leader失去大多数的follower，这时候zk进入**崩溃恢复模式**，恢复模式需要重新选举出一个新的leader，让所有的Server都恢复到一个正确的状态。
 
-Zk的**选举算法**有两种：一种是基于**basic paxos**实现的，另外一种是基于**fast paxos**算法实现的。
+Zk的**选举算法**到3.4.10版本为止，可选项有
+
+- `0` 基于UDP的LeaderElection
+- `1` 基于UDP的FastLeaderElection
+- `2` 基于UDP和认证的FastLeaderElection
+- `3` 基于TCP的FastLeaderElection
+
+在3.4.10版本中，默认值为3，也即基于TCP的**FastLeaderElection**。另外三种算法已经被弃用，并且有计划在之后的版本中将它们彻底删除而不再支持。
+
+### FastLeaderElection
+
+FastLeaderElection选举算法是标准的Fast Paxos算法实现，可解决LeaderElection选举算法收敛速度慢的问题。
 
 Paxos是一个**共识（consensus）算法**，用于解决分布式共识问题。其目的是在一个分布式系统中如何就**某一个值（proposal）** 达成一致。
-
-系统默认的选举算法为fast paxos。
 
 ### 选票数据结构
 
@@ -483,7 +427,104 @@ fast paxos 是在选举初始时，各个server都提议自己称为leaer。basi
 
 每个Server启动后都会重复以上流程。在恢复模式下，如果是刚从崩溃状态恢复的或者刚启动的server还会从磁盘快照中恢复数据和会话信息，zk会记录事务日志并定期进行快照，方便在恢复时进行状态恢复。
 
+## 一致性（**原子广播协议**）
 
+Zookeeper是一个**高效的、可扩展的**服务，read和write操作都被设计为快速的，read比write操作更快。
+
+* **顺序一致性（Sequential Consistency）：**从**一个客户端**来的更新请求会被**顺序执行**。
+
+* **原子性（Atomicity）：**更新要么成功要么失败，没有部分成功的情况。
+
+* **唯一的系统镜像（Single System Image）：**无论客户端连接到哪个Server，看到**系统镜像是一致**的。
+
+* **可靠性（Reliability）：**更新一旦有效，**持续有效**，直到被覆盖。
+
+* **时间线（Timeliness）：**保证在**一定的时间内**各个客户端看到的**系统信息是一致**的。
+
+### ZAB协议
+
+Zab协议 的全称是 **Zookeeper Atomic Broadcast** （Zookeeper原子广播）。**Zookeeper 是通过 Zab 协议来保证分布式事务的最终一致性**。实现了**主从模式（即Leader和Follower模型）**的系统架构来**保持集群中各个副本之间的数据一致性**。
+
+根据ZAB协议，所有的**写操作都必须通过Leader**完成，Leader写入**本地日志后**再复制到所有的**Follower**节点。
+
+一旦Leader节点无法工作，ZAB协议能够自动从Follower节点中重新选出一个合适的替代者，即新的Leader，该过程即为领导选举。该领导选举过程，是ZAB协议中最为重要和复杂的过程。
+
+### ZAB协议处理请求
+
+Zookeeper 客户端会随机的链接到 zookeeper 集群中的一个节点，如果是读请求，就直接从当前节点中读取数据；如果是写请求，那么节点就会向 Leader 提交事务，Leader 接收到事务提交，会广播该事务，只要超过半数节点写入成功，该事务就会被提交。
+
+### ZAB协议消息广播步骤（两段提交协议（a two-phase commit））
+
+1）客户端发起一个写操作请求。
+
+2）Leader 服务器将客户端的请求转化为事务 Proposal 提案，同时为每个 Proposal 分配一个全局的ID，即zxid。
+
+3）Leader 服务器为每个 Follower 服务器分配一个单独的队列，然后将需要广播的 Proposal 依次放到队列中取，并且根据 FIFO 策略进行消息发送。
+
+4）Follower 接收到 Proposal 后，会首先将其以事务日志的方式写入本地磁盘中，写入成功后向 Leader 反馈一个 Ack 响应消息。
+
+5）Leader 接收到超过半数以上 Follower 的 Ack 响应消息后，即认为消息发送成功，可以发送 commit 消息。
+
+6）Leader 向所有 Follower 广播 commit 消息，同时自身也会完成事务提交。Follower 接收到 commit 消息后，会将上一条事务提交。
+
+**zookeeper 采用 Zab 协议的核心，就是只要有一台服务器提交了 Proposal，就要确保所有的服务器最终都能正确提交 Proposal。这也是 CAP/BASE 实现最终一致性的一个体现。**
+
+**Leader 服务器与每一个 Follower 服务器之间都维护了一个单独的 FIFO 消息队列进行收发消息，使用队列消息可以做到异步解耦。 Leader 和 Follower 之间只需要往队列中发消息即可。如果使用同步的方式会引起阻塞，性能要下降很多。**
+
+### Zab协议保证：
+
+- Zab 协议需要确保**已经在 Leader 服务器上提交（Commit）的事务最终被所有的服务器提交**即已经被Commit的数据不会丢失。
+- Zab 协议需要确保**丢弃那些只在 Leader 上被提出而没有被提交的事务**即未被Commit的数据对客户端不可见。
+- 如果leader以T1和T2的**顺序广播**，那么所有的Server必须**先执行T1，再执行T2**。
+- 如果任意一个Server以T1、T2的顺序commit执行，其他所有的Server也必须以T1、T2的顺序执行。
+
+  - 在新的leader广播Transaction之前，先前Leader commit的Transaction都会先执行。
+  - 在任意时刻，都不会有2个Server同时有法定人数（quorum）的支持者。
+    这里的quorum是一半以上的Server数目，确切的说是有投票权力的Server（不包括Observer）。
+
+### 两段提交协议的问题（**数据恢复**）
+
+“两段提交协议”最大的问题是如果Leader发送了PROPOSAL（提案询问） 消息后crash或暂时失去连接，会导致整个集群处在一种不确定的状态（follower不知道该放弃这次提交还是执行提交）。Zookeeper这时会选出新的leader，请求处理也会移到新的leader上，不同的leader由不同的epoch标识。切换Leader时，需要解决下面
+
+#### Commit过的数据不丢失
+
+Leader在保存消息后进行广播，收到超过一半follower的ack 确认，此时消息**已经被commint， 客户端可见**此消息，但是仍有部分 follower 没有同步到此消息。 此时leader 宕机。则新Leader必须保证这个事务也必须commit。
+
+选举出新的 leader 之后，各个follower 会将自己最大的zxid 发送给 新的leader。此时新的 leader 会将Follower的zxid与自身zxid之间 的所有被 Commit过的消息（即**超过一半的follower 都commit的**消息）同步给Follower。此时zxid 小于 新leader 的 follower会根据广播，写入和ack确认。此时便保证了已经被Commit的数据不会丢失。
+
+Leader 服务器需要确保所有的 Follower 服务器能够接收到每一条事务的 Proposal ，并且能将所有已经提交的事务 Proposal 应用到内存数据中。等到 Follower 将所有尚未同步的事务 Proposal 都从 Leader 服务器上同步过啦并且应用到内存数据中以后，Leader 才会把该 Follower 加入到真正可用的 Follower 列表中。
+
+#### 未Commit过的消息对客户端不可见
+
+Leader在保存消息后进行广播，收到少于一半follower的ack 确认。此时**消息没有被commint ，客户端不可见**此消息。但是有部分 follower 已经同步到此消息了。 此时leader 宕机。则新Leader必须必须丢弃这个 proposal（需要部分节点将已经ack 的消息删除） 。
+
+选举出新的 leader 之后，各个follower 会将自己最大的zxid 发送给 新的leader 。此时新的 leader 会将Follower的zxid与自身zxid比较，得出自身所包含的被Commit过的消息中的最小zxid（记为min_zxid）与最大zxid（记为max_zxid）。以及各个 follower 发送自身Commit过的最大消息zxid（记为max_zxid）和**未被Commit过**的所有消息（记为**zxid_set**）。新leader 根据这些信息作出如下操作
+
+- 如果Follower的max_zxid与Leader的max_zxid相等，说明该Follower与Leader完全同步，无须同步任何数据
+- 如果Follower的max_zxid在Leader的(min_zxid，max_zxid)范围内，Leader会通过TRUNC命令通知Follower将其**zxid_set**中大于Follower的max_zxid（如果有）的所有消息全部删除
+
+#### **通知Follower可对外服务**
+
+同步完数据后，新leader会向follower 发送**NEWLEADER**命令并等待大多数服务器的ACK（占集群的大多数follower），然后向所有服务器广播UPTODATE命令。收到该命令后的服务器即可对外提供服务。
+
+### 版本控制
+
+有了 Watcher 机制，就可以实现分布式协调/通知了，假设有这样的场景，两个客户端同时对 B接点 进行写入操作，这两个客户端就会存在竞争关系，通常需要对 B 进行**加锁**操作，ZK 通过 version 版本号来控制实现**乐观锁**中的“**写入校验**”机制。
+
+ZNode 会维护一个叫作 **Stat** 的数据结构，**Stat** 中记录了这个 **ZNode 的三个数据版本**，分别是 **version**（当前ZNode的版本）、**cversion**（当前ZNode 子节点的版本）和 **aversion**（当前ZNode的ACL版本）。
+
+
+
+此部分参考：http://www.jasongj.com/zookeeper/fastleaderelection/
+
+https://www.jianshu.com/p/2bceacd60b8a
+
+# 总结
+
+- 由于使用主从复制模式，所有的写操作都要由Leader主导完成，而读操作可通过任意节点完成，因此Zookeeper读性能远好于写性能，更适合读多写少的场景
+- 虽然使用主从复制模式，同一时间只有一个Leader，但是Failover机制保证了集群不存在单点失败（SPOF）的问题
+- ZAB协议保证了Failover过程中的数据一致性
+- 服务器收到数据后先写本地文件再进行处理，保证了数据的持久性
 
 
 
