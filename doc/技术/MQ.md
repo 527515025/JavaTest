@@ -623,6 +623,12 @@ Kafka 的事务有事务协调者角色，事务协调者其实就是 Broker 的
 
 3. 最后协调者会向事务日志中再记一条事务结束信息，至此 Kafka 事务就完成了
 
+
+
+## Kafka中副本机制的设计和原理
+
+https://mp.weixin.qq.com/s/yIPIABpAzaHJvGoJ6pv0kg
+
 ### **kafka用zookeeper实现的服务类型。**
 
 **1，配置管理**
