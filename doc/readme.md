@@ -208,8 +208,7 @@ http://www.jasongj.com/design_pattern/summary/
 漫画：什么是 “抽象工厂模式” ？
 https://mp.weixin.qq.com/s/THIxoPHgNhFgm-IIKJlxQw
 
-漫画：什么是 “抽象工厂模式” ？
-https://mp.weixin.qq.com/s/kdLKhBiv6NK7XfQ1hzFPqQ
+
 
 #Spring
 
