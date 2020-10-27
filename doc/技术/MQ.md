@@ -492,6 +492,51 @@ Kafka 0.8.* 的Leader Election方案解决了上述问题，它**在所有broker
 
  **策略2：**选择任何一个活过来的副本，成为leader继续工作，此follower可能不在ISR中。可靠性没有保证，任何一个副本活过来就可以继续工作，但是有可能存在数据不一致的情况。
 
+### leader Epoch 策略
+
+为了解决HW可能造成的数据丢失和数据不一致问题，Kafka引入了Leader Epoch机制，在每个副本日志目录下都有一个**leader-epoch-checkpoint**文件，用于保存Leader Epoch信息，其内容示例如下：
+
+```
+0 0
+1 300
+2 500
+```
+
+上面每一行为一个Leader Epoch，分为**两部分**，前者**Epoch**，表示**Leader版本号**，是一个单调递增的正整数，每当Leader变更时，都会加1，后者StartOffset，为每一代Leader写入的第一条消息的位移。例如第0代Leader写的第一条消息位移为0，而第1代Leader写的第一条消息位移为300，也意味着第0代Leader在写了0-299号消息后挂了，重新选出了新的Leader。下面我们看下Leader Epoch如何工作：
+
+1. **当副本成为Leader时**：
+
+   当收到生产者发来的第一条消息时，会将新的 **epoch** 和当前 **LEO** 添加到 leader-epoch-checkpoint 文件中。
+
+2. **当副本成为Follower时**：
+
+3. 1. 向Leader 发送 LeaderEpochRequest请求，请求内容中含有**Follower当前本地的最新Epoch**；
+
+   2. Leader将返回给Follower的响应中含有一个 **LastOffset**和 当前的 **Epoch**，其取值规则为：
+
+   3. 1. 若FollowerLastEpoch = LeaderLastEpoch，则取Leader LEO；
+      2. 否则，取大于FollowerLastEpoch的第一个Leader Epoch中的StartOffset。
+
+   4. Follower 在拿到返回的LastOffset后，若 LastOffset < 本地 LEO，将截断丢弃 大于 LastOffset 的日志；
+
+   5. Follower开始正常工作，发送Fetch请求；
+
+#### LeaderEpoch replicas =1 时 数据丢失
+
+A作为Leader，A已写入m0、m1两条消息，且HW为2，而B作为Follower，只有消息m0，且HW为1，A、B同时宕机。B重启，被选为Leader，将写入新的LeaderEpoch（1, 1）。B开始工作，收到消息m2时。这是A重启，将作为Follower将发送LeaderEpochRequert（FollowerLastEpoch=0），B返回大于FollowerLastEpoch的第一个LeaderEpoch的StartOffset，即1，小于当前LEO值，所以将发生日志截断，并发送Fetch请求，同步消息m2，避免了消息不一致问题。但是数据m2还是丢失了。***\*这种情况的发送的\**根本原因在于min.insync.replicas的值设置为1**，即没有任何其他副本同步的情况下，就认为m2消息为已提交状态。
+
+LeaderEpoch不能解决min.insync.replicas为1带来的数据丢失问题，但是可以解决其所带来的数据不一致问题。而我们之前所说能解决的数据丢失问题，是指**消息已经成功同步到Follower上**，但因HW未及时更新引起的数据丢失问题。
+
+####  LeaderEpoch 解决宕机导致数据不一致问题
+
+epoch 策略是为了保证 follower 宕机期间 进行了一次或多次 leader 选举情况的下的数据一致性，
+
+A作为Leader，A已写入m0、m1两条消息，且HW为2，而B作为Follower，只有消息m0，且HW为1，A、B同时宕机。B重启，被选为Leader，将写入新的LeaderEpoch（1, 1）。B开始工作，收到消息m2时。这是A重启，将作为Follower将发送LeaderEpochRequert（FollowerLastEpoch=0），B返回大于FollowerLastEpoch的第一个LeaderEpoch的StartOffset，即1，小于当前LEO值，所以将发生日志截断，并发送Fetch请求，同步消息m2，避免了消息不一致问题。
+
+
+
+详情：https://mp.weixin.qq.com/s/yIPIABpAzaHJvGoJ6pv0kg
+
 参考：https://mp.weixin.qq.com/s/qpDAMtxRmRytusRlN1vCXw 
 
 参考：http://www.jasongj.com/2015/04/24/KafkaColumn2/
