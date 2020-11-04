@@ -499,7 +499,12 @@ https://mp.weixin.qq.com/s/c7w3dbCllrS2R5rfBlW3cg
 https://mp.weixin.qq.com/s/LKpLLT235ZVPPGBelEPKBw
 之Redis夺命连环11问
 https://mp.weixin.qq.com/s/4LdLgDmSH84WE_cxN6SmAw
+
+https://blog.csdn.net/qq_41699100/article/details/86102235
+
 之mysql夺命连环13问
 https://mp.weixin.qq.com/s/au2vtN4b_xSVZ1x_ADNO8w
 binlog和relay-log到底长啥样？
 https://mp.weixin.qq.com/s/UaytVkiYt2iriu4xzUxjJQ
+Dubbo普普通通9问
+https://mp.weixin.qq.com/s/TOcBA5AFDsMNCCosI5tZZA
