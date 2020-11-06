@@ -8,15 +8,18 @@ import java.util.Arrays;
  */
 public class StockProfitTest {
     public static void main(String[] args) {
-        System.out.println(maxProfit(init()));
-        System.out.println(maxProfit2(init()));
+//        System.out.println(maxProfit(init()));
+//        System.out.println(maxProfit2(init()));
         System.out.println(maxProfit3(init()));
+        System.out.println(maxProfit4(2, init()));
+        System.out.println(maxProfit5(2, init()));
+
 
     }
 
     private static int[] init() {
 //        int[] arrayToSort = {2, 68, 34, 98, 7, 37, 5, 8, 3, 10, 1, 33, 76, 23, 94, 31, 67, 97, 35, 38};
-        int[] arrayToSort = {9, 4, 3, 5, 6, 8, 5, 10};
+        int[] arrayToSort = {3,2,6,5,0,3};
         return arrayToSort;
     }
 
@@ -119,4 +122,91 @@ public class StockProfitTest {
         }
         return secSell;
     }
+
+
+    /**
+     * 给定一个整数数组 prices ，它的第 i 个元素 prices[i] 是一支给定的股票在第 i 天的价格。
+     * <p>
+     * 设计一个算法来计算你所能获取的最大利润。你最多可以完成 k 笔交易。
+     * <p>
+     * 注意: 你不能同时参与多笔交易（你必须在再次购买前出售掉之前的股票）。
+     * <p>
+     * 来源：力扣（LeetCode）
+     * 链接：https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-iv
+     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     * <p>
+     * 动态规划+空间优化
+     *
+     * 自己逻辑正序
+     *
+     * @param prices
+     * @return
+     */
+    public static int maxProfit4(int k, int[] prices) {
+        if (prices == null || prices.length == 0) {
+            return 0;
+        }
+        int n = prices.length;
+        //当k非常大时转为无限次交易
+        if (k >= n / 2) {
+            int dp0 = 0, dp1 = -prices[0];
+            for (int p : prices) {
+                dp0 = Math.max(dp0, dp1 + p);
+                dp1 = Math.max(dp1, dp0 - p);
+            }
+            return Math.max(dp0, dp1);
+        }
+
+        int[][] dp = new int[k+1][2];
+        //先把每次买卖的初始值顶一下
+        for (int i = 0; i <= k; ++i) {
+            dp[i][0] = -prices[0];
+            dp[i][1] = 0;
+        }
+        for (int p : prices) {
+            for (int j = 1; j <= k; j++) {
+                dp[j][0] = Math.max(dp[j][0], dp[j-1][1] - p);
+                dp[j][1] = Math.max(dp[j][1], dp[j][0] + p);
+            }
+        }
+        return dp[k][1];
+    }
+
+    /**
+     * 官方答案倒叙
+     * @param k
+     * @param prices
+     * @return
+     */
+    public static int maxProfit5(int k, int[] prices) {
+        if (prices == null || prices.length == 0) {
+            return 0;
+        }
+        int n = prices.length;
+        //当k非常大时转为无限次交易
+        if (k >= n / 2) {
+            int dp0 = 0, dp1 = -prices[0];
+            for (int p : prices) {
+                dp0 = Math.max(dp0, dp1 + p);
+                dp1 = Math.max(dp1, dp0 - p);
+            }
+            return Math.max(dp0, dp1);
+        }
+        //定义二维数组，交易了多少次、当前的买卖状态
+        int[][] dp = new int[k + 1][2];
+        for (int i = 0; i <= k; ++i) {
+            dp[i][0] = 0;
+            dp[i][1] = -prices[0];
+        }
+        for (int i = 1; i < n; ++i) {
+            for (int j = k; j > 0; --j) {
+                //处理第k次买入
+                dp[j - 1][1] = Math.max(dp[j - 1][1], dp[j - 1][0] - prices[i]);
+                //处理第k次卖出
+                dp[j][0] = Math.max(dp[j][0], dp[j - 1][1] + prices[i]);
+            }
+        }
+        return dp[k][0];
+    }
+
 }

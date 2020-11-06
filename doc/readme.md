@@ -504,6 +504,8 @@ https://blog.csdn.net/qq_41699100/article/details/86102235
 
 之mysql夺命连环13问
 https://mp.weixin.qq.com/s/au2vtN4b_xSVZ1x_ADNO8w
+听说你想进大厂？当心这13个MySQL送命题：
+https://mp.weixin.qq.com/s/mNA9CCidcBAZoXREZIxphg
 binlog和relay-log到底长啥样？
 https://mp.weixin.qq.com/s/UaytVkiYt2iriu4xzUxjJQ
 Dubbo普普通通9问
