@@ -183,6 +183,8 @@ public class StringTest {
      * 链接：https://leetcode-cn.com/problems/reverse-string
      * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
      *
+     * 思想指针交换
+     *
      * @param s
      */
     public static void reverseString(char[] s) {
