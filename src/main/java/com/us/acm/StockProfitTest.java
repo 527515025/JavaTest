@@ -19,7 +19,7 @@ public class StockProfitTest {
 
     private static int[] init() {
 //        int[] arrayToSort = {2, 68, 34, 98, 7, 37, 5, 8, 3, 10, 1, 33, 76, 23, 94, 31, 67, 97, 35, 38};
-        int[] arrayToSort = {3,2,6,5,0,3};
+        int[] arrayToSort = {3, 2, 6, 5, 0, 3};
         return arrayToSort;
     }
 
@@ -136,7 +136,7 @@ public class StockProfitTest {
      * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
      * <p>
      * 动态规划+空间优化
-     *
+     * <p>
      * 自己逻辑正序
      *
      * @param prices
@@ -147,7 +147,7 @@ public class StockProfitTest {
             return 0;
         }
         int n = prices.length;
-        //当k非常大时转为无限次交易
+        //当k非常大时转为无限次交易，其实就是每两天交易一次。
         if (k >= n / 2) {
             int dp0 = 0, dp1 = -prices[0];
             for (int p : prices) {
@@ -157,7 +157,7 @@ public class StockProfitTest {
             return Math.max(dp0, dp1);
         }
 
-        int[][] dp = new int[k+1][2];
+        int[][] dp = new int[k + 1][2];
         //先把每次买卖的初始值顶一下
         for (int i = 0; i <= k; ++i) {
             dp[i][0] = -prices[0];
@@ -165,7 +165,7 @@ public class StockProfitTest {
         }
         for (int p : prices) {
             for (int j = 1; j <= k; j++) {
-                dp[j][0] = Math.max(dp[j][0], dp[j-1][1] - p);
+                dp[j][0] = Math.max(dp[j][0], dp[j - 1][1] - p);
                 dp[j][1] = Math.max(dp[j][1], dp[j][0] + p);
             }
         }
@@ -174,6 +174,7 @@ public class StockProfitTest {
 
     /**
      * 官方答案倒叙
+     *
      * @param k
      * @param prices
      * @return
