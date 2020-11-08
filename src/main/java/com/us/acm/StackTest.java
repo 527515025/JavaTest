@@ -1,5 +1,6 @@
 package com.us.acm;
 
+import java.util.ArrayDeque;
 import java.util.Queue;
 import java.util.Stack;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -23,7 +24,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class StackTest {
 
     public static void main(String[] args) {
-        MyStack myStack = new MyStack();
+        MyStack2 myStack = new MyStack2();
         myStack.push(1);
         myStack.push(3);
         myStack.push(4);
@@ -171,6 +172,50 @@ public class StackTest {
             return queue1.isEmpty();
         }
 
+    }
+
+
+    /**
+     * 使用双端队列实现栈
+     */
+    static class MyStack2 {
+        ArrayDeque<Integer> deque;
+
+        /**
+         * Initialize your data structure here.
+         */
+        public MyStack2() {
+            deque = new ArrayDeque<>();
+
+        }
+
+        /**
+         * Push element x onto stack.
+         */
+        public void push(int x) {
+            deque.addFirst(x);
+        }
+
+        /**
+         * Removes the element on top of the stack and returns that element.
+         */
+        public int pop() {
+            return deque.pop();
+        }
+
+        /**
+         * Get the top element.
+         */
+        public int top() {
+            return deque.peek();
+        }
+
+        /**
+         * Returns whether the stack is empty.
+         */
+        public boolean empty() {
+            return deque.isEmpty();
+        }
     }
 
 }
