@@ -399,6 +399,12 @@ Follower重启，或者发生网络分区（脑裂）后找不到Leader，会进
 
 ### 8.5  **basic paxos** 算法
 
+所有分布式自协商一致性算法都是paxos算法的简化或者变种。paxos的算法的流程(**2阶段提交**)
+
+分布式一致性算法Paxos介绍：https://segmentfault.com/a/1190000005717258#articleHeader7
+
+Paxos算法细节详解(一)--通过现实世界描述算:https://www.cnblogs.com/endsock/p/3480093.html
+
 1. 选举线程由当前Server发起选举的线程担任，其主要功能是对投票结果进行统计，并选出推荐的Server；
 
 2. 选举线程首先向所有Server发起一次询问（包括自己）；
