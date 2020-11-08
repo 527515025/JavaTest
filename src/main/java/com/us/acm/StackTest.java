@@ -1,6 +1,8 @@
 package com.us.acm;
 
+import java.util.Queue;
 import java.util.Stack;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * 用两个栈实现队列
@@ -19,6 +21,16 @@ import java.util.Stack;
  * @time 2020/10/27
  */
 public class StackTest {
+
+    public static void main(String[] args) {
+        MyStack myStack = new MyStack();
+        myStack.push(1);
+        myStack.push(3);
+        myStack.push(4);
+        myStack.push(5);
+        System.out.println("000");
+    }
+
 
     Stack<Integer> input;
     Stack<Integer> output;
@@ -59,7 +71,7 @@ public class StackTest {
      * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
      * <p>
      * <p>
-     * 	6 ms 39.8 MB
+     * 6 ms 39.8 MB
      */
     class MinStack {
         Stack<Integer> stack;
@@ -99,4 +111,66 @@ public class StackTest {
             return min;
         }
     }
+
+    /**
+     * 用队列实现栈
+     * <p>
+     * 使用队列实现栈的下列操作：
+     * <p>
+     * push(x) -- 元素 x 入栈
+     * pop() -- 移除栈顶元素
+     * top() -- 获取栈顶元素
+     * empty() -- 返回栈是否为空
+     * 注意:
+     * <p>
+     * 你只能使用队列的基本操作-- 也就是 push to back, peek/pop from front, size, 和 is empty 这些操作是合法的。
+     * 你所使用的语言也许不支持队列。 你可以使用 list 或者 deque（双端队列）来模拟一个队列 , 只要是标准的队列操作即可。
+     * 你可以假设所有操作都是有效的（例如, 对一个空的栈不会调用 pop 或者 top 操作）。
+     * <p>
+     * 来源：力扣（LeetCode）
+     * 链接：https://leetcode-cn.com/problems/implement-stack-using-queues
+     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     */
+    static class MyStack {
+        Queue<Integer> queue1;
+
+        public MyStack() {
+            queue1 = new LinkedBlockingQueue();
+        }
+
+        /**
+         * Push element x onto stack.
+         * 入栈
+         */
+        public void push(int x) {
+            int count = queue1.size();
+            queue1.offer(x);
+            for (int i = 0; i < count; i++) {
+                queue1.offer(queue1.poll());
+            }
+        }
+
+        /**
+         * Removes the element on top of the stack and returns that element.
+         */
+        public int pop() {
+            return queue1.poll();
+        }
+
+        /**
+         * Get the top element.
+         */
+        public int top() {
+            return queue1.peek();
+        }
+
+        /**
+         * Returns whether the stack is empty.
+         */
+        public boolean empty() {
+            return queue1.isEmpty();
+        }
+
+    }
+
 }
