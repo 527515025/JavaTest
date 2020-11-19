@@ -151,6 +151,11 @@ https://mp.weixin.qq.com/s/Gc1YPt_DPMNKbbE_I0jmSA
 
 一文讲透 “进程、线程、协程”
 https://mp.weixin.qq.com/s/BzJw4S3O7lZikTyhGa4P9A
+【干货】连肝7个晚上，总结了关于Java基础的16个问题！
+https://mp.weixin.qq.com/s/d3x7anAT1AN8GKBOE6KO-A
+
+
+
 为什么阿里巴巴要禁用 Executors 创建线程池？
 https://mp.weixin.qq.com/s/YYDxYh2rucM7Uvr3oLX7Qw
 
@@ -235,6 +240,9 @@ Spring Boot 最最最常用的注解梳理
 https://mp.weixin.qq.com/s/iDg61eFmtDz0nsN5HHWNVw
 # HTTP
 
+图解|为什么HTTP3.0使用UDP协议
+https://mp.weixin.qq.com/s/byO7t6D7NEGJfkP1RRZ4mw
+
 HTTPS 原理看了很多，这个是最清晰的！
 https://mp.weixin.qq.com/s/uP_AR3i9sysJQ0MhXWau_w
 
@@ -250,6 +258,18 @@ https://mp.weixin.qq.com/s/1TL7JokwkwpycCIkWia9zw
 
 大厂面试爱问的「调度算法」，20 张图一举拿下
 https://mp.weixin.qq.com/s/v0sTfZJIDCBRsqycpyxYhQ
+图解！24张图彻底弄懂九大常见数据结构！
+https://mp.weixin.qq.com/s/lnMvB3zgWZTmCfCvnNwTbA
+
+快速入门数据结构和算法（阿里）
+https://mp.weixin.qq.com/s/Z6zISNEZDRqRJn5YpNpl_A
+
+5分钟理解一致性哈希算法：https://mp.weixin.qq.com/s/N3EcFZ9QC-lIwGgNk2pMiw
+图解什么是一致性哈希算法
+https://mp.weixin.qq.com/s/9XwiEPjCD6vxrpr-rp3a6A
+
+几张动态图捋清Java常用数据结构及其设计原理：https://mp.weixin.qq.com/s/Mxi0StZRz96SX4LXEdEeaQ
+
 漫画：什么是红黑树？（整合版）
 https://mp.weixin.qq.com/s/FD1Zkme8jW6X87-Hro19ow
 
@@ -267,14 +287,12 @@ https://mp.weixin.qq.com/s/WYziH0n0gW3B3mhmpSB2Iw
 面试官：知道时间轮算法吗？在Netty和Kafka中如何应用的？
 https://mp.weixin.qq.com/s/511Dcgg5ZtmpRwYIXQbnaQ
 
-几张动态图捋清Java常用数据结构及其设计原理：https://mp.weixin.qq.com/s/Mxi0StZRz96SX4LXEdEeaQ
-快速入门数据结构和算法（阿里）
-https://mp.weixin.qq.com/s/Z6zISNEZDRqRJn5YpNpl_A
+
 
 从B+树到LSM树，及LSM树在HBase中的应用：
 https://mp.weixin.qq.com/s/m8JKMGhbnZHyHz7rFTGsEQ
 
-5分钟理解一致性哈希算法：https://mp.weixin.qq.com/s/N3EcFZ9QC-lIwGgNk2pMiw
+
 
 
 # MYSQL
@@ -356,6 +374,9 @@ https://mp.weixin.qq.com/s/sZ0m1IJlth3FIp6jiup8AA
 
 看完这篇Redis缓存三大问题，够你和面试官battle几回合了
 https://mp.weixin.qq.com/s/x_PzzfJfsQbZmx0IYg_tpg
+图解|什么是缓存系统三座大山
+https://mp.weixin.qq.com/s/yFLSgn2KToqob2oi0BQ0Rg
+
 Redis缓存整理总结
 https://mp.weixin.qq.com/s/yyH62HlhjjCkXyXlNQRyvw
 面试必备：缓存穿透，缓存雪崩的四种解决方案
