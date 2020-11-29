@@ -15,6 +15,8 @@ import java.util.stream.Collectors;
  * Created by yangyibo on 17/6/13.
  */
 public class SetListMap {
+    private static ConcurrentHashMap<String, List<Integer>> concurrentHashMap = new ConcurrentHashMap(128);
+
     public static void main(String[] args) {
 //        list();
 //        setTest();
@@ -28,7 +30,10 @@ public class SetListMap {
 //        splitList();
 //        listIterator();
 //        mapToUrlParam();
-        initMap();
+//        initMap();
+        concurrentHashMapTest();
+        concurrentHashMapTest2();
+        System.out.println();
     }
 
     private static void setTest() {
@@ -341,5 +346,25 @@ public class SetListMap {
         System.out.println(sb.toString());
     }
 
+
+    private static void concurrentHashMapTest() {
+        List<Integer> integers = new ArrayList<>();
+        integers.add(1);
+        integers.add(2);
+        integers.add(3);
+        integers.add(4);
+        concurrentHashMap.put("1",integers);
+        integers.addAll(integers);
+    }
+
+    private static void concurrentHashMapTest2() {
+        List<Integer> integers2 = new ArrayList<>();
+        integers2.add(5);
+        integers2.add(6);
+        integers2.add(7);
+        integers2.add(8);
+        concurrentHashMap.get("1").addAll(integers2);
+        integers2.addAll(integers2);
+    }
 }
 
