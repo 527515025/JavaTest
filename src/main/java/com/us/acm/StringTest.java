@@ -14,7 +14,7 @@ public class StringTest {
 
     public static void main(String[] args) {
 
-//        System.out.println(patternMatching("( )"));
+        System.out.println(patternMatching("({[(0809809)]})"));
 //        System.out.println(maxFreq("abbabbabbceabbede", 3, 2, 4));
 //        System.out.println("findRepeat: " + findRepeat(init()));
         reverseString(new char[]{});
@@ -69,6 +69,8 @@ public class StringTest {
      * 来源：力扣（LeetCode）
      * 链接：https://leetcode-cn.com/problems/maximum-number-of-occurrences-of-a-substring
      * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     * <p>
+     * <p>
      * <p>
      * <p>
      * <p>
@@ -162,7 +164,7 @@ public class StringTest {
                 }
                 //元素匹配，则返回栈顶元素，并在进程中删除它。
                 stack.pop();
-            } else {
+            } else if (map.containsValue(c)) {
                 stack.push(c);
             }
         }
@@ -182,7 +184,7 @@ public class StringTest {
      * 来源：力扣（LeetCode）
      * 链接：https://leetcode-cn.com/problems/reverse-string
      * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     *
+     * <p>
      * 思想指针交换
      *
      * @param s
