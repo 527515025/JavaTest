@@ -17,7 +17,7 @@ public class SumTest {
     public static void main(String[] args) {
 //        int[] result = twoSum(new int[]{3, 2, 4}, 6);
 //        Arrays.stream(result).parallel().forEach(x -> System.out.println(x));
-        threeSum(new int[]{-1, 0, 1, 2, -1, -4});
+        threeSum2(new int[]{-1, 0, 1, 2, -1, -4});
     }
 
     /**
@@ -70,7 +70,7 @@ public class SumTest {
     /**
      * 三数之和
      * <p>
-     * 给你一个包含 n 个整数的数组 nums，判断 nums 中是否存在三个元素 a，b，c ，使得 a + b + c = 0 ？请你找出所有满足条件且不重复的三元组。
+     * 给你一个包含 n 个整数的数组 nums，判断 nums 中是否存在三个元素 a，b，c ，使得 a + b + c = 0 ？请你找出 所有 满足条件且不重复的三元组。
      * <p>
      * 来源：力扣（LeetCode）
      * 链接：https://leetcode-cn.com/problems/3sum
@@ -117,7 +117,7 @@ public class SumTest {
 
     /**
      * 三数之和
-     *
+     * <p>
      * 根据官方方式改进后，进行去重操作。
      * 通过 nums[i] == nums[i - 1] 判断 替换 map 去重。
      * <p>
@@ -158,7 +158,7 @@ public class SumTest {
 
             while (k > j) {
                 int subSum = nums[j] + nums[k];
-                // 需要和上一次枚举的数不相同, 去除重复的循环
+                //j > i + 1 是为了使用 i i+1 两个位置的数相同连续两个相同的数， nums[j] == nums[j - 1] 是需要和上一次枚举的数不相同, 去除重复的循环
                 if (j > i + 1 && nums[j] == nums[j - 1]) {
                     j++;
                     continue;
