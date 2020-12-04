@@ -17,7 +17,9 @@ public class ThreadTest {
 //        main1(1, p);
 //        main2("abel",0);
 //        main2("yiyi",1);
-        managePrintName();
+//        managePrintName();
+        testJoin();
+
     }
 
 
@@ -102,14 +104,13 @@ public class ThreadTest {
     }
 
 
-
 /*****************************************************************************************************************************/
 
 
     /**
      * 同一个线程操作同一个对象，catch改变值
      */
-    private static void managePrintName(){
+    private static void managePrintName() {
         Person person = new Person();
         person.setName("abc");
 
@@ -131,7 +132,6 @@ public class ThreadTest {
     }
 
 
-
     private static void printName1(Person person) throws Exception {
         System.out.println(person.getName());
         printName2(person);
@@ -141,6 +141,54 @@ public class ThreadTest {
     private static void printName2(Person person) throws Exception {
         person.setName("yang");
         System.out.println(person.getName());
+    }
+
+
+    /*****************************************************************************************************************************/
+
+
+    /**
+     * Join方法实现是通过wait（小提示：Object 提供的方法）。
+     * 锁的是线程对象
+     * 当我们调用某个线程的这个方法时，这个方法会挂起 调用线程，直到 被调用 线程结束执行，调用线程才会继续执行。
+     */
+    private static void testJoin() {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    System.out.println("thread begin");
+                    Thread.sleep(1000);
+                    System.out.println("thread end");
+                } catch (InterruptedException e) {
+                    System.out.println("thread error");
+                }
+            }
+        });
+
+        Thread thread2 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    System.out.println("thread2 begin");
+                    Thread.sleep(3000);
+                    System.out.println("thread2 end");
+                } catch (InterruptedException e) {
+                    System.out.println("thread2 error");
+                }
+            }
+        });
+
+        try {
+            System.out.println("main begin");
+            thread.start();
+            thread2.start();
+            thread.join();
+            thread2.join();
+            System.out.println("main end");
+        } catch (InterruptedException e) {
+            System.out.println("main error");
+        }
     }
 
 }
