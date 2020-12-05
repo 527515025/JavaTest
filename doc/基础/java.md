@@ -224,12 +224,6 @@ static是不允许用来修饰局部变量。不要问为什么，这是Java语�
 
 https://blog.csdn.net/kuangay/article/details/81485324
 
-## ThreadLocal
-
-threadlocal 对象存在 静态内部类 threadlocalMap 中。threadlocalMap 内部是一个 Entry（k, v）  数组，以threadlocal 对象的hashcode 为 key，使用线性搜索（步长为1）方法解决 hash 冲突。因为entry 的 key 是弱引用。所以 threadlocal对象为null时，会被垃圾回收。但是 value 不会回收。所以会内存泄漏。不过 threadlocalMap 的 set 和 get 方法在出现 hash冲突的时候，会回收 key 为null 的值。但最好还是在使用 threadlocal 之后调用remove方法，清除。
-
-
-
 #final
 
 final可以修饰类、变量、方法，

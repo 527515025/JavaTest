@@ -83,7 +83,7 @@ Redis 集群通过分区来提供一定程度的可用性,在实际环境中当�
 
 ###Redis 集群的数据分片
 
-Redis 集群没有使用一致性hash, 而是引入了 哈希槽的概念.
+Redis 集群没有使用一致性hash, 使用的是hash取模策略。引入了 哈希槽的概念.
 
 Redis 集群有16384个哈希槽,每个key通过CRC16校验后对16384取模来决定放置哪个槽.集群的每个节点负责一部分hash槽,举个例子,比如当前集群有3个节点,那么:
 
@@ -91,6 +91,17 @@ Redis 集群有16384个哈希槽,每个key通过CRC16校验后对16384取模来�
 节点 B 包含5501 到 11000 号哈希槽.
 节点 C 包含11001 到 16384号哈希槽.
 这种结构很容易添加或者删除节点. 比如如果我想新添加个节点D, 我需要从节点 A, B, C中得部分槽到D上. 如果我像移除节点A,需要将A中得槽移到B和C节点上,然后将没有任何槽的A节点从集群中移除即可. 由于从一个节点将哈希槽移动到另一个节点并不会停止服务,所以无论添加删除或者改变某个节点的哈希槽的数量都不会造成集群不可用的状态.
+
+## 一致性哈希算法
+
+**判定哈希算法好坏四个定义**
+
+
+
+
+
+
+
 
 ###Redis 集群的主从复制模型
 
@@ -283,7 +294,88 @@ redis 需要处理多个 IO 请求，同时把每个请求的结果返回给客�
 
 单线程的问题：对于每个命令的执行时间是有要求的。如果某个命令执行过长，会造成其他命令的阻塞，所以 redis 适用于那些需要快速执行的场景。
 
+### 分布式锁
 
+如果服务没有宕机，只是业务代码执行耗费的时间比较长，那么守护线程会每3s续一次命，保证锁不会失效。
+如果服务宕机了，那么10S后锁失效，其他服务可以竞争到锁，解决了3.0版本存在的问题。
+
+```java
+@Component
+public class RedisLock {
+	@Autowired
+	private RedisTemplate<String, Object> redisTemplate;
+	private ConcurrentMap<String, String> keyMap = new ConcurrentHashMap<>(16);
+	private ConcurrentMap<String, ContinueThread> threadMap = new ConcurrentHashMap<>(16);
+
+	//加锁成功的同时，会得到一个锁签名，根据keySign来释放锁
+	public String lock(String key){
+		ValueOperations<String, Object> forValue = redisTemplate.opsForValue();
+		String keySign = UUID.randomUUID().toString(true);
+		//锁超时10s 10s后未释放锁，其他线程可以竞争
+		while (!forValue.setIfAbsent(key, keySign, 10, TimeUnit.SECONDS)) {
+			//竞争锁失败，暂时让出CPU资源
+			Thread.yield();
+		}
+		//竞争锁成功
+		keyMap.put(key, keySign);
+
+		//守护线程续命
+		ContinueThread continueThread = new ContinueThread(key, keySign);
+		continueThread.setDaemon(true);
+		threadMap.put(key, continueThread);
+		continueThread.start();
+		return keySign;
+	}
+
+	//释放锁
+	public void unlock(String key, String keySign) {
+		String s = keyMap.get(key);
+		if (!keySign.equals(s)) {
+			//不是我加的锁，不能释放
+			return;
+		}
+		//是我加的锁，可以释放
+		redisTemplate.delete(key);
+		//续命线程停止
+		ContinueThread thread = threadMap.get(key);
+		if (thread != null) {
+			thread.stopThread();
+		}
+	}
+
+	//续命线程内部类
+	private class ContinueThread extends Thread {
+		private boolean stop = false;
+		private String key;
+		private String keySign;
+
+		public ContinueThread(String key,String keySign) {
+			super("Thread-"+UUID.randomUUID().toString(true));
+			this.key = key;
+			this.keySign = keySign;
+		}
+
+		public void stopThread(){
+			this.stop = true;
+		}
+
+		@Override
+		public void run() {
+			while (!stop) {
+				System.err.println(!isInterrupted());
+				try {
+					//3s续一次命
+					Thread.sleep(10000/3);
+				} catch (InterruptedException e) {}
+				System.err.println("续命...");
+				redisTemplate.opsForValue().set(key, keySign, 10, TimeUnit.SECONDS);
+			}
+		}
+	}
+}
+```
+
+https://blog.csdn.net/qq_32099833/article/details/103881721
 
 # 操作
 
