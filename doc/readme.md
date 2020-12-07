@@ -76,6 +76,8 @@ https://mp.weixin.qq.com/s/d31olUMCGvpCq6_cihgd6Q
 https://mp.weixin.qq.com/s/p1MRZpnxohnX2jIpZDczmQ
 一文总结：分布式一致性技术是如何演进的？：https://mp.weixin.qq.com/s/KSpsa1viYz9K_-DYYQkmKA
 
+
+
 分布式之分布式事务、分布式锁、分布式session
 https://mp.weixin.qq.com/s/8jXLNjklx4GHDix41ca3EQ
 
@@ -83,6 +85,8 @@ https://mp.weixin.qq.com/s/8jXLNjklx4GHDix41ca3EQ
 https://mp.weixin.qq.com/s/ZMoLa-X9D6EaRy6_u0DbrQ
 面试官：分布式之消息队列（二）
 https://mp.weixin.qq.com/s/eRqIgYzNuoNSEUrhKqdcfQ
+听说你想进大厂？先接下关于MQ的夺命连环11问！
+https://mp.weixin.qq.com/s/mPmOJg08hNA568WMFCpR7g
 
 ### 分布式锁
 
@@ -113,10 +117,7 @@ https://blog.csdn.net/thinkwon/category_9731418.html
 https://mp.weixin.qq.com/s/f3ZxURdCiWvKECMhdZBwzg
 精美图文带你掌握 JVM 内存布局
 https://mp.weixin.qq.com/s/hOGKhhwMwL_3rIJ4egQlcg
-你还在被 Java NIO 虐？该试试 Netty 了！
-https://mp.weixin.qq.com/s/Ft6mPILiY9t76-RRTEYdwg
-超详细Netty入门，看这篇就够了！
-https://developer.aliyun.com/article/769587?utm_content=g_1000165559
+
 老板：再用Log4j就收拾东西回家吧！
 https://mp.weixin.qq.com/s/6cXRKMtE9CZpuBzlwlBmgQ
 死磕Synchronized底层实现
@@ -126,6 +127,10 @@ https://mp.weixin.qq.com/s/zaazbtl3_PCwaRqK2gy_Lw
 https://mp.weixin.qq.com/s/PR1j5m0o67sc3Nhmo-fLpw
 面试官：说说双亲委派模型？
 https://mp.weixin.qq.com/s/vjr6lV095Vip_63vh-9RHQ
+
+26张图带你彻底搞懂volatile关键字
+https://mp.weixin.qq.com/s/7LFKx392SbeQLauxsF8rNQ
+
 ## java基础
 
 https://mp.weixin.qq.com/s/feJKRqYJTVEIxl6jvjevAg 从头到尾说一次 Java 的垃圾回收
@@ -141,6 +146,7 @@ https://mp.weixin.qq.com/s/ewqzycgyxfprTQ_H3u-d4Q
 https://zhuanlan.zhihu.com/c_1046719595074949120
 
 https://mp.weixin.qq.com/s?__biz=MjM5NjQ5MTI5OA==&mid=2651749434&idx=3&sn=5ffa63ad47fe166f2f1a9f604ed10091&chksm=bd12a5778a652c61509d9e718ab086ff27ad8768586ea9b38c3dcf9e017a8e49bcae3df9bcc8&scene=21#wechat_redirect  不可不说的Java“锁”事
+
 面试官：Thread.sleep(0) 有什么用？我没回答上来
 https://mp.weixin.qq.com/s/44n9nI9HTiRLD1Pee6pCeg
 
@@ -196,6 +202,21 @@ https://mp.weixin.qq.com/s/AOzBTeVWs2a8dE9P36N7GA
 https://mp.weixin.qq.com/s/K4lOPQ6qTZDXgdnrwMpyZg
 
 
+
+# netty
+
+45 张图深度解析 Netty 架构与原理
+https://mp.weixin.qq.com/s/7em_lpLRmunqH8FIH4Kjbg
+
+深入探秘 Netty、Kafka 中的零拷贝技术！
+https://mp.weixin.qq.com/s/ck6yO0xPPyfggdUri_w91g
+你还在被 Java NIO 虐？该试试 Netty 了！
+https://mp.weixin.qq.com/s/Ft6mPILiY9t76-RRTEYdwg
+超详细Netty入门，看这篇就够了！
+https://developer.aliyun.com/article/769587?utm_content=g_1000165559
+面试官：知道时间轮算法吗？在Netty和Kafka中如何应用的？
+https://mp.weixin.qq.com/s/511Dcgg5ZtmpRwYIXQbnaQ
+
 # 设计模式
 
 9种设计模式在Spring中的运用，一定要非常熟练！
@@ -222,9 +243,6 @@ https://mp.weixin.qq.com/s/vOsNtW72nBSQW_Lp9rTLQA
 Spring IoC是如何进行依赖注入的
 https://mp.weixin.qq.com/s/r2qx9MtlHRkOuep4TKMyLg
 
-面试官：说说 Spring AOP 原理？拜托这已经被问烂了！：
-https://mp.weixin.qq.com/s/QivyQKCncjIM8WoNRPkprw
-
 我们已经不用AOP做操作日志了很久了！：
 https://mp.weixin.qq.com/s/7gibT_CyEW1cU3GJf9P2YQ （依赖前端的传参，不方便拓展，使用基于数据库Binlog，不依赖开发语言）
 Spring浅谈源码系列7：AOP实现原理详解
@@ -232,13 +250,22 @@ https://mp.weixin.qq.com/s/7gr1XMN4x9uZclw-Bab9JQ
 Spring浅谈源码系列8：Spring事务概述
 https://mp.weixin.qq.com/s/64wfq7-m7TDs6MWtJYhcgw
 
+## SpringBoot
+
 总在说SpringBoot内置了tomcat启动，那它的原理你说的清楚吗？
 https://mp.weixin.qq.com/s/g6Xdg8NqD4MHyCqYkdzWrg
 Spring Boot Actuator 模块详解:：健康检查，度量，指标收集和监控
 https://mp.weixin.qq.com/s/8y-HhMrENt3h-Di2FHUiew
 Spring Boot 最最最常用的注解梳理
 https://mp.weixin.qq.com/s/iDg61eFmtDz0nsN5HHWNVw
+3W 字的 Spring Boot 超详细总结
+https://mp.weixin.qq.com/s/MngbT2yVbf4bvDw1rL4eRw
+
 # HTTP
+
+
+为什么HTTPS是安全的
+https://mp.weixin.qq.com/s/8PhSOkeaR5kbz9b-meTxfw
 
 图解|为什么HTTP3.0使用UDP协议
 https://mp.weixin.qq.com/s/byO7t6D7NEGJfkP1RRZ4mw
@@ -264,11 +291,12 @@ https://mp.weixin.qq.com/s/lnMvB3zgWZTmCfCvnNwTbA
 快速入门数据结构和算法（阿里）
 https://mp.weixin.qq.com/s/Z6zISNEZDRqRJn5YpNpl_A
 
+几张动态图捋清Java常用数据结构及其设计原理：https://mp.weixin.qq.com/s/Mxi0StZRz96SX4LXEdEeaQ
+
 5分钟理解一致性哈希算法：https://mp.weixin.qq.com/s/N3EcFZ9QC-lIwGgNk2pMiw
 图解什么是一致性哈希算法
 https://mp.weixin.qq.com/s/9XwiEPjCD6vxrpr-rp3a6A
 
-几张动态图捋清Java常用数据结构及其设计原理：https://mp.weixin.qq.com/s/Mxi0StZRz96SX4LXEdEeaQ
 
 漫画：什么是红黑树？（整合版）
 https://mp.weixin.qq.com/s/FD1Zkme8jW6X87-Hro19ow
@@ -278,14 +306,13 @@ https://mp.weixin.qq.com/s/zBN5cBY0b59foq9UMEYchg
 拜托，别问我什么各种Tree了，干就完事！
 https://mp.weixin.qq.com/s/oG7Ba20zJ5VxnUPr59qGfg
 
+
 十大经典排序算法最强总结（含JAVA代码实现
 https://mp.weixin.qq.com/s/jRBaQSpSouFQ70x4gUtDLg
 万字详解|手撕 9大排序算法！
 https://mp.weixin.qq.com/s/snBEpUsQ8ZhHLLuNarwqgA
 面试官：说说归并排序？
 https://mp.weixin.qq.com/s/WYziH0n0gW3B3mhmpSB2Iw
-面试官：知道时间轮算法吗？在Netty和Kafka中如何应用的？
-https://mp.weixin.qq.com/s/511Dcgg5ZtmpRwYIXQbnaQ
 
 
 
@@ -296,8 +323,8 @@ https://mp.weixin.qq.com/s/m8JKMGhbnZHyHz7rFTGsEQ
 
 
 # MYSQL
-面试官：你说熟悉MySQL事务，那来谈谈事务的实现原理吧！
-https://mp.weixin.qq.com/s/Ko7KyhJik9ivT4ZE8qby1Q
+面试官：你说熟悉MySQL事务，那来谈谈事务的实现原理吧！ 
+https://mp.weixin.qq.com/s/Ko7KyhJik9ivT4ZE8qby1Q （两段式提交）
 
 MySQL事务的实现原理
 https://mp.weixin.qq.com/s/79HhQsZRzzuskP5p5LNONA
@@ -432,6 +459,9 @@ https://mp.weixin.qq.com/s/IwGoRq2io5WbXcLLcteYXw
 消息队列面试连环问：如何保证消息不丢失？处理重复消息？消息有序性？消息堆积处理？
 https://mp.weixin.qq.com/s/nHKok3sG0ueg5EgVHwWnLg
 
+3W字！带你玩转「消息队列」
+https://mp.weixin.qq.com/s/qQyV4M7SOcoJr8t05YsBrg
+
 #kafka
 Kafka 面试真题及答案，建议收藏
 https://mp.weixin.qq.com/s/nkwHybhD8YfjbkTFF8cnqQ
@@ -456,8 +486,6 @@ Kafka的分区数是不是越多越好？
 https://mp.weixin.qq.com/s/Fq5CA1XhoEL3eYRbru0rxA
 Kafka如何通过经典的内存缓冲池设计来优化JVM GC问题？
 https://mp.weixin.qq.com/s/jKy63C6HAWb8UfzVFSWgsg
-深入探秘 Netty、Kafka 中的零拷贝技术！
-https://mp.weixin.qq.com/s/ck6yO0xPPyfggdUri_w91g
 
 ## RocketMQ
 RocketMQ消息丢失场景及解决办法
@@ -531,3 +559,12 @@ binlog和relay-log到底长啥样？
 https://mp.weixin.qq.com/s/UaytVkiYt2iriu4xzUxjJQ
 Dubbo普普通通9问
 https://mp.weixin.qq.com/s/TOcBA5AFDsMNCCosI5tZZA
+
+万字长文，理解Elasticsearch和面试总结
+https://mp.weixin.qq.com/s/G6cM4w-xikGBONa2zMWAeQ
+
+面试官：为什么HTTPS是安全的
+https://mp.weixin.qq.com/s/8PhSOkeaR5kbz9b-meTxfw
+
+1.4 w字，25 张图让你彻底掌握分布式事务原理
+https://mp.weixin.qq.com/s/2-1599_JRLtzCmHxlib1JA
