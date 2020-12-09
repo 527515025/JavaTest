@@ -27,6 +27,9 @@ import java.util.concurrent.TimeUnit;
 public class SemaphoreTest {
     private static int num = 3;
     private static int initNum = 0;
+    /**
+     * 初始化为0个信号量
+     */
     private static Semaphore semaphore = new Semaphore(initNum);
     private static ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(num, num,
             0L, TimeUnit.MILLISECONDS,
@@ -37,6 +40,7 @@ public class SemaphoreTest {
             System.out.println("A在上厕所");
             try {
                 Thread.sleep(4000);
+                //释放一个许可 给信号量
                 semaphore.release();
                 System.out.println("A上完了");
             } catch (Exception e) {
@@ -49,6 +53,7 @@ public class SemaphoreTest {
             System.out.println("B在上厕所");
             try {
                 Thread.sleep(2000);
+                //释放一个许可 给信号量
                 semaphore.release();
                 System.out.println("B上完了");
             } catch (Exception e) {
@@ -61,6 +66,7 @@ public class SemaphoreTest {
             System.out.println("C在上厕所");
             try {
                 Thread.sleep(3000);
+                //释放一个许可 给信号量
                 semaphore.release();
                 System.out.println("C上完了");
             } catch (Exception e) {
@@ -71,6 +77,7 @@ public class SemaphoreTest {
         });
 
         System.out.println("等待所有人从厕所回来开会...");
+        //判断信号量的许可是不是等于设置的3，如果是则继续运行，否则阻塞，
         semaphore.acquire(num);
         System.out.println("所有人都好了，开始开会...");
 

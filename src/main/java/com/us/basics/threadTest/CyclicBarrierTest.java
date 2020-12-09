@@ -83,6 +83,7 @@ public class CyclicBarrierTest {
 
             }
         });
+        //退出线程池
         threadPoolExecutor.shutdown();
         System.out.println("人都走完了，物业关灯。");
     }
