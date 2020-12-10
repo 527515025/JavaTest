@@ -34,10 +34,6 @@ SELECT document FROM products WHERE price = 20;
 
 
 
-
-
-
-
 match  匹配查询接受文本/数字/日期类型，分析它们，并构造查询。
 1）匹配查询的类型为boolean。 这意味着分析所提供的文本，并且分析过程从提供的文本构造一个布尔查询，
 可以将运算符标志设置为或以控制布尔子句（默认为或）；
@@ -60,4 +56,10 @@ match  匹配查询接受文本/数字/日期类型，分析它们，并构造�
 4. 根据上一步结果，Node 2 知道需要获取哪些文档，并向相关的分片发送多个GET请求。
 5. 每个分片loads documents然后将他们返回给Node 2
 6. Node 2将搜索结果交付给客户端
+
+
+
+
+
+[万字长文，理解Elasticsearch和面试总结](https://mp.weixin.qq.com/s/G6cM4w-xikGBONa2zMWAeQ)
 
