@@ -11,30 +11,28 @@ public class Test1 {
         System.out.println(count);
     }
 
-    public synchronized void subtract() {
+    public synchronized void objectLock() {
         this.count = count - 1;
-        System.out.println(Thread.currentThread().getName() + "- subtract1 :" + count);
+        System.out.println(Thread.currentThread().getName() + "- objectLock 1:");
         try {
             Thread.sleep(4000);
         } catch (Exception e) {
             System.out.println(e);
         }
-        System.out.println(Thread.currentThread().getName() + "- subtract2 :" + count);
+        System.out.println(Thread.currentThread().getName() + "- objectLock 2:");
     }
 
     /**
      * 类锁
      */
-    public synchronized static void subtract2() {
-        int sum = 0;
-        sum++;
-        System.out.println(Thread.currentThread().getName() + "- subtract2 1 :" + sum);
+    public static synchronized void classLock() {
+        System.out.println(Thread.currentThread().getName() + "- classLock  1:");
         try {
             Thread.sleep(4000);
         } catch (Exception e) {
             System.out.println(e);
         }
-        System.out.println(Thread.currentThread().getName() + "- subtract2 2 :" + sum);
+        System.out.println(Thread.currentThread().getName() + "- classLock  2:");
     }
 
 
@@ -42,9 +40,9 @@ public class Test1 {
      * 测试可重入
      */
     public synchronized void reentrantTest() {
-        System.out.println(Thread.currentThread().getName() + "- begin subtract1 :" + count);
-        subtract2();
-        System.out.println(Thread.currentThread().getName() + "- end subtract1 :" + count);
+        System.out.println(Thread.currentThread().getName() + "- begin reentrantTest :" + count);
+        classLock();
+        System.out.println(Thread.currentThread().getName() + "- end reentrantTest :" + count);
 
 
     }

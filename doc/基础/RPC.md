@@ -212,3 +212,6 @@ RPC框架的好处就显示出来了，首先就是长链接，不必每次通�
 
 RPC服务和HTTP服务还是存在很多的不同点的，一般来说，RPC服务主要是针对大型企业的，而HTTP服务主要是针对小企业的，因为RPC效率更高，而HTTP服务开发迭代会更快。
 
+
+
+[https://blog.csdn.net/xlgen157387/article/details/88746098]: 
