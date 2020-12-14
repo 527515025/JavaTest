@@ -1,6 +1,8 @@
 package com.us.acm;
 
 
+import java.util.Arrays;
+
 /**
  * 排序算法
  * Created by yangyibo on 8/22/17.
@@ -24,8 +26,8 @@ public class SortTest {
 //        print(heapSort(init()));
 //        print(bubbleSort(init()));
 //        print(bubbleSort2(init()));
-        print(quickSort(init(), 0, init().length - 1));
-//        print(mergeSort(init(), 0, init().length - 1));
+//        print(quickSort(init(), 0, init().length - 1));
+        print(MergeSort(init()));
     }
 
     private static void print(int[] arrays) {
@@ -340,18 +342,31 @@ public class SortTest {
 
     /**
      * 归并排序
+     * 稳定的排序算法，时间复杂度为 O(nlogn) 该空间复杂度为 O(n)。
+     * <p>
+     * 归并排序的性能不受输入数据的影响，但表现比选择排序好的多，因为始终都是 O(n log n）的时间复杂度
+     * <p>
+     * 归并排序是建立在归并操作上的一种有效的排序算法。该算法是采用分治法（Divide and Conquer）的一个非常典型的应用。
+     * 归并排序是一种 稳定 的排序方法。将已有序的子序列合并，得到完全有序的序列；
+     * 即先使每个子序列有序，再使子序列段间有序。若将两个有序表合并成一个有序表，称为2-路归并。
+     * <p>
+     * 分治思想：这个思想就是分治的思想，就是先将大问题分解成小的子问题来解决，子问题解决之后，大问题也就解决了
      *
      * @param numbers
      * @param left    0
      * @param right   数组最后一位下标
      */
     public static int[] mergeSort(int[] numbers, int left, int right) {
-        int t = 1;// 每组元素个数
+        // 每组元素个数
+        int t = 1;
         int size = right - left + 1;
         while (t < size) {
-            int s = t;// 本次循环每组元素个数
-            t = 2 * s; // 合并后组的元素个数
-            int i = left; //本组排序的起始下标
+            // 本次循环每组元素个数
+            int s = t;
+            // 合并后组的元素个数
+            t = 2 * s;
+            //本组排序的起始下标
+            int i = left;
             while (i + (t - 1) < size) {
                 merge(numbers, i, i + (s - 1), i + (t - 1));
                 i += t;
@@ -384,6 +399,38 @@ public class SortTest {
         for (int i = p; i <= r; i++)
             data[i] = B[i];
         print(data);
+    }
+
+
+    public static int[] MergeSort(int[] array) {
+        if (array.length < 2) return array;
+        int mid = array.length / 2;
+        int[] left = Arrays.copyOfRange(array, 0, mid);
+        int[] right = Arrays.copyOfRange(array, mid, array.length);
+        return merge(MergeSort(left), MergeSort(right));
+    }
+
+    /**
+     * 归并排序——将两段排序好的数组结合成一个排序数组
+     *
+     * @param left
+     * @param right
+     * @return
+     */
+    public static int[] merge(int[] left, int[] right) {
+        int[] result = new int[left.length + right.length];
+        for (int index = 0, i = 0, j = 0; index < result.length; index++) {
+            if (i >= left.length) {
+                result[index] = right[j++];
+            } else if (j >= right.length) {
+                result[index] = left[i++];
+            } else if (left[i] > right[j]) {
+                result[index] = right[j++];
+            } else {
+                result[index] = left[i++];
+            }
+        }
+        return result;
     }
 
 

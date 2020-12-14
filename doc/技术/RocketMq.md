@@ -47,7 +47,7 @@ Producer 会通过重试和延迟机制提升消息发送的高可用。
 
 ## Broker 的存储
 
-RocketMQ 存储用的是本地文件存储系统，效率高也可靠。
+RocketMQ 存储用的是**本地文件存储系统**，效率高也可靠。
 
 主要涉及到三种类型的文件，分别是 CommitLog、ConsumeQueue、IndexFile。
 

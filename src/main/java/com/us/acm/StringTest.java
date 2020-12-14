@@ -14,11 +14,11 @@ public class StringTest {
 
     public static void main(String[] args) {
 
-        System.out.println(patternMatching("({[(0809809)]})"));
+//        System.out.println(patternMatching("({[(0809809)]})"));
 //        System.out.println(maxFreq("abbabbabbceabbede", 3, 2, 4));
 //        System.out.println("findRepeat: " + findRepeat(init()));
-        reverseString(new char[]{});
-
+//        reverseString(new char[]{});
+        statisticsString("aZZsdfA34534jh3 34534534 3 4534534");
     }
 
 
@@ -199,6 +199,38 @@ public class StringTest {
             s[i] = s[l - i];
             s[l - i] = tmp;
         }
+    }
+
+
+    /**
+     * 实现一个简单的字符操作功能模块。
+     * 功能如下:输入一行字符，分别统计出其中英文字母、空格、数字的个数
+     *
+     * @param s
+     */
+    public static void statisticsString(String s) {
+        Integer numberCount = 0;
+        Integer charCount = 0;
+        Integer emptyCount = 0;
+
+        for (int i = 0; i < s.length(); i++) {
+            Character c = s.charAt(i);
+            if (Character.isLetter(c)) {
+                System.out.println();
+                charCount++;
+                continue;
+            }
+            if (Character.isDigit(c)) {
+                numberCount++;
+                continue;
+            }
+            if (Character.isSpaceChar(c)) {
+                emptyCount++;
+                continue;
+            }
+        }
+
+        System.out.println("numberCount:" + numberCount + " charCount:" + charCount + " emptyCount:" + emptyCount);
     }
 
 }
