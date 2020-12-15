@@ -262,17 +262,17 @@ Netty 主要用于开发基于 TCP 协议的网络 IO 程序（TCP/IP 是网络�
 
 ## NIO的主要问题
 
-- NIO的类库和API繁杂，学习成本高，你需要熟练掌握Selector、ServerSocketChannel、SocketChannel、ByteBuffer等。
-- 需要熟悉Java多线程编程。这是因为NIO编程涉及到Reactor模式，你必须对多线程和网络编程非常熟悉，才能写出高质量的NIO程序。
+- **NIO的类库和API繁杂，学习成本高**，你需要熟练掌握Selector、ServerSocketChannel、SocketChannel、ByteBuffer等。
+- 需要熟悉Java多线程编程。这是因为**NIO编程涉及到Reactor模式，你必须对多线程和网络编程非常熟悉**，才能写出高质量的NIO程序。
 - 臭名昭著的epoll bug。它会导致Selector空轮询，最终导致CPU 100%。直到JDK1.7版本依然没得到根本性的解决。
 
 ## Netty的优点有很多：
 
-- API使用简单，学习成本低。
-- 功能强大，内置了多种解码编码器，支持多种协议。
-- 性能高，对比其他主流的NIO框架，Netty的性能最优。
-- 社区活跃，发现BUG会及时修复，迭代版本周期短，不断加入新的功能。
-- Dubbo、Elasticsearch都采用了Netty，质量得到验证。
+- **设计优雅，API使用简单，学习成本低。**提供阻塞和非阻塞的 Socket；提供灵活可拓展的事件模型；提供高度可定制的线程模型。
+- **功能强大**， 支持多种主流协议；预置多种编解码功能，支持用户开发私有协议。
+- **性能高**，具备更高的性能和更大的吞吐量，使用零拷贝技术最小化不必要的内存复制，减少资源的消耗。
+- **社区活跃**，发现BUG会及时修复，迭代版本周期短，不断加入新的功能。
+- **提供安全传输特性**。 Dubbo、Elasticsearch都采用了Netty，质量得到验证。
 
 ## NETTY**的应用场景**
 
@@ -282,5 +282,71 @@ Netty 主要用于开发基于 TCP 协议的网络 IO 程序（TCP/IP 是网络�
 
 在游戏行业，Netty 被用于构建高性能的游戏交互服务器，Netty 提供了 TCP/UDP、HTTP 协议栈，方便开发者基于 Netty 进行私有协议的开发。
 
-Netty 作为成熟的高性能异步通信框架，无论是应用在互联网分布式应用开发中，还是在大数据基础设施构建中，亦或是用于实现应用层基于公私协议的服务器等等，都有出色的表现，是一个极好的轮子。
+Netty 作为成熟的高性能异步通信框架，无论是应用在互联网分布式应用开发
 
+中，还是在大数据基础设施构建中，亦或是用于实现应用层基于公私协议的服务器等等，都有出色的表现，是一个极好的轮子。
+
+### 主从 Reactor 多线程模式
+
+针对单 Reactor 多线程模型中，Reactor 在单个线程中运行，面对高并发的场景易成为性能瓶颈的缺陷，主从 Reactor 多线程模式让 Reactor 在多个线程中运行（分成 MainReactor 线程与 SubReactor 线程）。这种模式的基本工作流程为：
+
+![image-20201214184029270](/Users/yangyibo/Library/Application Support/typora-user-images/image-20201214184029270.png)
+
+1）Reactor 主线程 MainReactor 对象通过 select 监听客户端连接事件，收到事件后，通过 Acceptor 处理客户端连接事件。
+
+2）当 Acceptor 处理完客户端连接事件之后（与客户端建立好 Socket 连接），**MainReactor 将连接分配给 SubReactor**。（即：MainReactor 只负责监听客户端连接请求，和客户端建立连接之后将连接交由 SubReactor 监听后面的 IO 事件。）
+
+3）SubReactor 将连接加入到自己的连接队列进行监听，并创建 Handler 对各种事件进行处理。
+
+4）当连接上有新事件发生的时候，SubReactor 就会调用对应的 Handler 处理。
+
+5）Handler 通过 read 从连接上读取请求数据，将请求数据分发给 Worker 线程池进行业务处理。
+
+6）Worker 线程池会分配独立线程来完成真正的业务处理，并将处理结果返回给 Handler。Handler 通过 send 向客户端发送响应数据。
+
+7）**一个 MainReactor 可以对应多个 SubReactor**，即一个 MainReactor 线程可以对应多个 SubReactor 线程。
+
+这种模式的优点是：
+
+1）MainReactor 线程与 SubReactor 线程的数据交互简单职责明确，**MainReactor 线程只需要接收新连接，SubReactor 线程完成后续的业务处理。**
+
+2）MainReactor 线程与 SubReactor 线程的数据交互简单， MainReactor 线程只需要把新连接传给 SubReactor 线程，SubReactor 线程无需返回数据。
+
+3）多个 SubReactor 线程能够应对更高的并发请求。
+
+这种模式的缺点是**编程复杂度较高**。但是由于其优点明显，在许多项目中被广泛使用，包括 Nginx、Memcached、Netty 等。
+
+这种模式也被叫做服务器的 1+M+N 线程模式，即使用该模式开发的服务器包含一个（或多个，1 只是表示相对较少）连接建立线程+M 个 IO 线程+N 个业务处理线程。这是业界成熟的服务器程序设计模式。
+
+## Netty 的模样
+
+Netty 的设计主要基于**主从 Reactor 多线程模式**，并做了一定的改进。
+
+![image-20201214184435891](/Users/yangyibo/Library/Application Support/typora-user-images/image-20201214184435891.png)
+
+1）Netty 抽象出**两组线程池**：BossGroup 和 WorkerGroup，也可以叫做 BossNioEventLoopGroup 和 WorkerNioEventLoopGroup。每个线程池中都有 NioEventLoop 线程。**BossGroup 中的线程专门负责和客户端建立连接，WorkerGroup 中的线程专门负责处理连接上的读写**。BossGroup 和 WorkerGroup 的类型都是 NioEventLoopGroup。
+
+2）NioEventLoopGroup 相当于一个事件循环组，这个组中含有多个事件循环，每个事件循环就是一个 NioEventLoop。
+
+3）**NioEventLoop 表示一个不断循环的执行事件处理的线程**，每个 NioEventLoop 都包含一个 Selector，用于监听注册在其上的 Socket 网络连接（Channel）。
+
+4）NioEventLoopGroup 可以含有多个线程，即可以含有多个 NioEventLoop。
+
+5）每个 BossNioEventLoop 中循环执行以下三个步骤：
+
+* 5.1）**select**：轮训注册在其上的 ServerSocketChannel 的 accept 事件（OP_ACCEPT 事件）
+* 5.2）**processSelectedKeys**：处理 accept 事件，与客户端建立连接，生成一个 NioSocketChannel，并将其注册到某个 WorkerNioEventLoop 上的 Selector 上
+* 5.3）**runAllTasks**：再去以此循环处理任务队列中的其他任务
+
+6）每个 WorkerNioEventLoop 中循环执行以下三个步骤：
+
+* 6.1）**select**：轮训注册在其上的 NioSocketChannel 的 read/write 事件（OP_READ/OP_WRITE 事件）
+* 6.2）**processSelectedKeys**：在对应的 NioSocketChannel 上处理 read/write 事件
+
+
+
+
+
+* 6.3）**runAllTasks**：再去以此循环处理任务队列中的其他任务
+
+7）在以上两个**processSelectedKeys**步骤中，会使用 Pipeline（管道），Pipeline 中引用了 Channel，即通过 Pipeline 可以获取到对应的 Channel，Pipeline 中维护了很多的处理器（拦截处理器、过滤处理器、自定义处理器等）。这里暂时不详细展开讲解 Pipeline。

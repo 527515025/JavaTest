@@ -18,7 +18,7 @@ public class StringTest {
 //        System.out.println(maxFreq("abbabbabbceabbede", 3, 2, 4));
 //        System.out.println("findRepeat: " + findRepeat(init()));
 //        reverseString(new char[]{});
-        statisticsString("aZZsdfA34534jh3 34534534 3 4534534");
+        countString("aZZsdfA34534jh3 34534534 3 4534534");
     }
 
 
@@ -208,7 +208,7 @@ public class StringTest {
      *
      * @param s
      */
-    public static void statisticsString(String s) {
+    public static void countString(String s) {
         Integer numberCount = 0;
         Integer charCount = 0;
         Integer emptyCount = 0;
