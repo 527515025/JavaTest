@@ -20,6 +20,7 @@ public class LambdaTest {
     public static void main(String[] args) {
 //        groupBy();
 //        map();
+        flatMap();
 //        forEachT();
 //        threadT();
 //        sortT();
@@ -31,7 +32,7 @@ public class LambdaTest {
 //        supplierTest();
 //        consumerTest();
 //        predicateTest();
-        FunctionTest();
+//        FunctionTest();
 
     }
 
@@ -42,6 +43,19 @@ public class LambdaTest {
         result.put("address", "shanghai");
         result.put("ager", "23");
         System.out.println(result.entrySet().stream().map(e -> e.getKey() + "=\"" + e.getValue() + "\"").collect(Collectors.joining(";")));
+    }
+
+
+    public static void flatMap() {
+        List<String> result = new ArrayList<>();
+        result.add("abel");
+        result.add("shanghai");
+        result.add("23");
+        //map：map方法返回的是一个object，map将流中的当前元素替换为此返回值； map 操作是将流中的元素进行再次加工形成一个新流
+        List<String> y = result.stream().map(x -> x.toUpperCase()).collect(Collectors.toList());
+        // flatMap：flatMap方法返回的是一个stream，flatMap将流中的当前元素替换为此返回流拆解的流元素；
+        List<String> q = result.stream().map(x -> x.split("")).flatMap(str -> Arrays.stream(str)).collect(Collectors.toList());
+        System.out.println();
     }
 
 
@@ -380,7 +394,7 @@ public class LambdaTest {
 
 
     /**
-     *  函数有返回
+     * 函数有返回
      */
     public static void FunctionTest() {
         //示例1：定义一个 funciton ,实现将String转换为Integer

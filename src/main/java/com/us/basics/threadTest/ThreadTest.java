@@ -191,4 +191,44 @@ public class ThreadTest {
         }
     }
 
+
+
+    private static void lockSupport() {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    System.out.println("thread begin");
+                    Thread.sleep(1000);
+                    System.out.println("thread end");
+                } catch (InterruptedException e) {
+                    System.out.println("thread error");
+                }
+            }
+        });
+
+        Thread thread2 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    System.out.println("thread2 begin");
+                    Thread.sleep(3000);
+                    System.out.println("thread2 end");
+                } catch (InterruptedException e) {
+                    System.out.println("thread2 error");
+                }
+            }
+        });
+
+        try {
+            System.out.println("main begin");
+            thread.start();
+            thread2.start();
+            thread.join();
+            thread2.join();
+            System.out.println("main end");
+        } catch (InterruptedException e) {
+            System.out.println("main error");
+        }
+    }
 }
