@@ -8,21 +8,21 @@ import java.util.concurrent.locks.ReentrantLock;
  * @time 2020/12/17
  */
 public class ABC_Lock {
-    private static Lock lock = new ReentrantLock();// 通过JDK5中的Lock锁来保证线程的访问的互斥
-    private static int state = 0;//通过state的值来确定是否打印
+    private static Lock lock = new ReentrantLock();
+    private static int state = 0;
     static class ThreadA extends Thread {
         @Override
         public void run() {
             for (int i = 0; i < 10;) {
                 try {
                     lock.lock();
-                    while (state % 3 == 0) {// 多线程并发，不能用if，必须用循环测试等待条件，避免虚假唤醒
+                    while (state % 3 == 0) {
                         System.out.print("A");
                         state++;
                         i++;
                     }
                 } finally {
-                    lock.unlock();// unlock()操作必须放在finally块中
+                    lock.unlock();
                 }
             }
         }
@@ -39,7 +39,7 @@ public class ABC_Lock {
                         i++;
                     }
                 } finally {
-                    lock.unlock();// unlock()操作必须放在finally块中
+                    lock.unlock();
                 }
             }
         }
@@ -56,7 +56,7 @@ public class ABC_Lock {
                         i++;
                     }
                 } finally {
-                    lock.unlock();// unlock()操作必须放在finally块中
+                    lock.unlock();
                 }
             }
         }
