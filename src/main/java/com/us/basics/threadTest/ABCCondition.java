@@ -14,14 +14,16 @@ public class ABCCondition {
     private static Condition B = lock.newCondition();
     private static Condition C = lock.newCondition();
     private static int count = 0;
+
     static class ThreadA extends Thread {
         @Override
         public void run() {
             try {
                 lock.lock();
                 for (int i = 0; i < 10; i++) {
-                    while (count % 3 != 0)
+                    if (count % 3 != 0) {
                         A.await();
+                    }
                     System.out.print("A");
                     count++;
                     B.signal();
@@ -33,14 +35,16 @@ public class ABCCondition {
             }
         }
     }
+
     static class ThreadB extends Thread {
         @Override
         public void run() {
             try {
                 lock.lock();
                 for (int i = 0; i < 10; i++) {
-                    while (count % 3 != 1)
+                    if (count % 3 != 1) {
                         B.await();
+                    }
                     System.out.print("B");
                     count++;
                     C.signal();
@@ -52,14 +56,16 @@ public class ABCCondition {
             }
         }
     }
+
     static class ThreadC extends Thread {
         @Override
         public void run() {
             try {
                 lock.lock();
                 for (int i = 0; i < 10; i++) {
-                    while (count % 3 != 2)
+                    if (count % 3 != 2) {
                         C.await();
+                    }
                     System.out.print("C");
                     count++;
                     A.signal();
@@ -71,6 +77,7 @@ public class ABCCondition {
             }
         }
     }
+
     public static void main(String[] args) throws InterruptedException {
         new ThreadA().start();
         new ThreadB().start();
