@@ -200,6 +200,8 @@ Java中的大部分同步类（**Lock、Semaphore、ReentrantLock等**）都是�
 
 AQS核心思想是，如果被请求的共享资源空闲，那么就将当前请求资源的线程设置为有效的工作线程，将共享资源设置为锁定状态；如果共享资源被占用，就需要一定的**阻塞等待唤醒机制来保证锁分配**。这个机制主要用的是**CLH队列的变体**实现的，将暂时获取不到锁的线程加入到队列中。
 
+简单说来，**AbstractQueuedSynchronizer会把所有的请求线程构成一个CLH队列**，当一个线程执行完毕（lock.unlock()）时会激活自己的后继节点，但正在执行的线程并不在队列中，而那些等待执行的线程全部处于阻塞状态，经过调查线程的显式阻塞是通过调用LockSupport.park()完成，而LockSupport.park()则调用sun.misc.Unsafe.park()本地方法，再进一步，HotSpot在Linux中中通过调用pthread_mutex_lock函数把线程交给系统内核进行阻塞。
+
 AQS 的主要代码结构如下：
 
 ```java
@@ -246,7 +248,7 @@ abstract class AbstractQueuedSynchronizer
 
  CLH(Craig, Landin, and Hagersten locks): 队列，是单向链表，**Java中 AQS的队列是CLH变体的虚拟 双向 队列**（FIFO）注意：（双向链表中，**第一个节点为虚节点，其实并不存储任何信息，只是占位**。真正的第一个有数据的节点，是在第二个节点开始的）。AQS是通过将**每条请求共享资源的线程封装成一个节点**来实现锁的分配。
 
-AQS使用一个Volatile的int类型的成员变量**state**来表示同步状态，通过内置的FIFO队列来完成资源获取的排队工作，通过**Unsafe的 CAS**完成对State值的修改。
+AQS使用一个**Volatile的int类型**的成员变量**state**来表示同步状态，通过内置的FIFO队列来完成资源获取的排队工作，通过**Unsafe的 CAS**完成对State值的修改。
 
 AbstractQueuedSynchronizer会把所有的**请求线程构成一个CLH队列**，**当一个线程执行完毕（lock.unlock()）时会激活自己的后继节点**，但**正在执行的线程并不在队列中**，而那些等待执行的线程全 部处于阻塞状态，
 

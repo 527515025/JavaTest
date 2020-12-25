@@ -568,3 +568,5 @@ https://mp.weixin.qq.com/s/8PhSOkeaR5kbz9b-meTxfw
 
 1.4 w字，25 张图让你彻底掌握分布式事务原理
 https://mp.weixin.qq.com/s/2-1599_JRLtzCmHxlib1JA
+
+[MQ初窥门径【面试必看的Kafka和RocketMQ存储区别】][https://mp.weixin.qq.com/s?__biz=MzIwNTI2ODY5OA==&mid=2649938550&idx=1&sn=d8f0f2f4cc43cbc3664ae813f3784219&chksm=8f3509c3b84280d51e6af1baa2f30a184e1ea16d28bda7e942cc02a1c4b03ba780f5af8f13df&scene=21#wechat_redirect]

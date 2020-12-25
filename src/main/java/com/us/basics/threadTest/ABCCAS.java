@@ -14,8 +14,9 @@ public class ABCCAS {
         @Override
         public void run() {
             for (int i = 0; i < 10; i++) {
-                while (flag.get() % 3 != 0)
+                if (flag.get() % 3 != 0) {
                     Thread.yield();
+                }
                 System.out.print("A");
                 flag.incrementAndGet();
             }
@@ -26,8 +27,9 @@ public class ABCCAS {
         @Override
         public void run() {
             for (int i = 0; i < 10; i++) {
-                while (flag.get() % 3 != 1)
+                if (flag.get() % 3 != 1) {
                     Thread.yield();
+                }
                 System.out.print("B");
                 flag.incrementAndGet();
             }
@@ -38,8 +40,9 @@ public class ABCCAS {
         @Override
         public void run() {
             for (int i = 0; i < 10; i++) {
-                while (flag.get() % 3 != 2)
+                if (flag.get() % 3 != 2) {
                     Thread.yield();
+                }
                 System.out.print("C");
                 flag.incrementAndGet();
             }

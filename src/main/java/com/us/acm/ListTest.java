@@ -10,7 +10,8 @@ public class ListTest {
 
     public static void main(String[] args) {
         ListNode pre = init("1,2,3,4,5");
-        ListNode listNode = removeNthFromEnd(pre, 3);
+//        ListNode listNode = removeNthFromEnd(pre, 3);
+        ListNode listNode2 =reverseList(pre);
         System.out.println();
     }
 
@@ -88,6 +89,9 @@ public class ListTest {
     }
 
 
+    /**
+     * 链表结构
+     */
     public static class ListNode {
         int val;
         ListNode next;
@@ -122,4 +126,25 @@ public class ListTest {
     }
 
 
+    /**
+     * 反转链表
+     *
+     * @param head
+     * @return
+     */
+    private static ListNode reverseList(ListNode head) {
+        ListNode cur = head;
+        ListNode pre = null;
+        while (cur != null) {
+            // 暂存后继节点 cur.next
+            ListNode tmp = cur.next;
+            //头节点指向空，当作尾节点
+            cur.next = pre;
+            //尾节点前移，为当前已经反转的节点
+            pre = cur;
+            //移动到下一个节点。
+            cur = tmp;
+        }
+        return pre;
+    }
 }
