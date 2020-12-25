@@ -11,7 +11,8 @@ public class ListTest {
     public static void main(String[] args) {
         ListNode pre = init("1,2,3,4,5");
 //        ListNode listNode = removeNthFromEnd(pre, 3);
-        ListNode listNode2 =reverseList(pre);
+//        ListNode listNode2 = reverseList(pre);
+        ListNode listNode3 = reverseRecurList(pre);
         System.out.println();
     }
 
@@ -147,4 +148,24 @@ public class ListTest {
         }
         return pre;
     }
+
+    /**
+     * 反转单链表递归
+     *
+     * @param head
+     * @return
+     */
+    private static ListNode reverseRecurList(ListNode head) {
+        return recur(head, null);
+    }
+
+    private static ListNode recur(ListNode cur, ListNode pre) {
+        if (cur == null) {
+            return pre;
+        }
+        ListNode res = recur(cur.next, cur);
+        cur.next = pre;
+        return res;
+    }
+
 }
