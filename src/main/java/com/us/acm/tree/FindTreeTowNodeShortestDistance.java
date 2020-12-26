@@ -45,7 +45,7 @@ public class FindTreeTowNodeShortestDistance {
      */
     public static int getTwoTreeNodeDistance(TreeNode root, TreeNode nodeOne, TreeNode nodeTwo) {
         TreeNode fatherNode = findCommonFatherNode(root, nodeOne, nodeTwo);
-        int one = distance(root, nodeOne);
+        int one = distanceDfs(root, nodeOne);
         int two = distance(root, nodeTwo);
         int fa = distance(root, fatherNode);
         int x = one + two - 2 * fa;
@@ -67,6 +67,7 @@ public class FindTreeTowNodeShortestDistance {
         while (queue.size() > 0) {
             int size = queue.size();
             level++;
+            //分层广度遍历，每次遍历一层
             for (int i = 0; i < size; i++) {
                 TreeNode tempNode = queue.removeFirst();
                 if (tempNode == node) {
@@ -83,6 +84,39 @@ public class FindTreeTowNodeShortestDistance {
         return -1;
     }
 
+
+    /**
+     * 深度遍历
+     * 找到节点则 返回深度，未找到节点则返回深度为0
+     *
+     * @param root
+     * @param node
+     * @return
+     */
+    private static int distanceDfs(TreeNode root, TreeNode node) {
+        return getLevel(root, node, 0);
+    }
+
+    private static int getLevel(TreeNode root, TreeNode node, int level) {
+        if (root == null) {
+            return 0;
+        }
+        if (root == node) {
+            //找到指定节点则返回深度
+            return level;
+        }
+        int left = getLevel(root.left, node, level + 1);
+        if (left > 0) {
+            return left;
+        }
+        int right = getLevel(root.right, node, level + 1);
+        if (right > 0) {
+            return right;
+        }
+        return 0;
+    }
+
+
     /**
      * 寻找两个节点的父节点
      * 左右子树中找到该节点后，最终会汇合到一个父节点，返回父节点
@@ -92,6 +126,7 @@ public class FindTreeTowNodeShortestDistance {
      * @param nodeTwo
      * @return
      */
+
     private static TreeNode findCommonFatherNode(TreeNode root, TreeNode nodeOne, TreeNode nodeTwo) {
         // 递归寻找公共父节点
         if (root == null || root == nodeOne || root == nodeTwo) {
@@ -128,6 +163,8 @@ public class FindTreeTowNodeShortestDistance {
         root.right.left = new TreeNode(6);
         root.right.right = new TreeNode(7);
         root.right.left.right = new TreeNode(8);
+
+        System.out.println("2 Dist(6,7) = " + getTwoTreeNodeDistance(root, root.right.left, root.right.right));
 
         System.out.println("3 Dist(8,7) = " + getTwoTreeNodeDistance(root, root.right.left.right, root.right.right));
 
