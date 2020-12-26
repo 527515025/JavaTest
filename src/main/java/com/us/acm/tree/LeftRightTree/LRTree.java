@@ -516,8 +516,17 @@ public class LRTree {
 
     /**
      * 翻转二叉树
+     * 递归，交换左右子树
      */
-    public void invertTree(Node currentNode) {
-        
+    public Node invertTree(Node currentNode) {
+        if (currentNode == null) {
+            return null;
+        }
+        Node left = invertTree(currentNode.leftChild);
+        Node right = invertTree(currentNode.rightChild);
+        currentNode.leftChild = right;
+        currentNode.rightChild = left;
+        return currentNode;
+
     }
 }
