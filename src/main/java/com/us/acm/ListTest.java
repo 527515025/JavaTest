@@ -1,6 +1,8 @@
 package com.us.acm;
 
 
+import java.util.List;
+
 /**
  * @author yyb
  * @time 2020/10/19
@@ -37,6 +39,7 @@ public class ListTest {
         }
         return pre;
     }
+
 
     public static ListNode addListNode(ListNode pre, int val) {
         ListNode next = new ListNode(val, null);
@@ -168,4 +171,88 @@ public class ListTest {
         return res;
     }
 
+    /**
+     * 判断链表成环
+     * <p>
+     * 快慢指针
+     *
+     * @param head
+     * @return
+     */
+    private static boolean ringList(ListNode head) {
+
+
+        return true;
+    }
+
+
+    /**
+     * 判断链表交叉
+     * <p>
+     * 双指针。
+     * <p>
+     * <p>
+     * 两个指针 node1，node2 分别指向两个链表 headA，headB 的头结点，然后同时分别逐结点遍历，
+     * 当 node1 到达链表 headA 的末尾时，重新定位到链表 headB 的头结点；
+     * 当 node2 到达链表 headB 的末尾时，重新定位到链表 headA 的头结点。
+     *
+     * <p>
+     * 这样，当它们相遇时，所指向的结点就是第一个公共结点。
+     *
+     * @param
+     * @return
+     */
+    private static ListNode crossList(ListNode headA, ListNode headB) {
+        ListNode tmpA = headA;
+        ListNode tmpB = headB;
+        while (tmpA != tmpB) {
+            tmpA = tmpA == null ? headB : tmpA.next;
+            tmpB = tmpB == null ? headA : tmpB.next;
+        }
+        return tmpA;
+    }
+
+
+    /**
+     * 判断链表交叉
+     * <p>
+     * 两个链表的第一个公共节点
+     * <p>
+     * 前后指针,
+     * 先统计两个链表的长度，如果两个链表的长度不一样，就让链表长的先走，直到两个链表长度一样，
+     * 这个时候两个链表再同时每次往后移一步，看节点是否一样，
+     * 如果有相等的，说明这个相等的节点就是两链表的交点，
+     * 否则如果走完了还没有找到相等的节点，说明他们没有交点
+     *
+     * @param
+     * @return
+     */
+    private static ListNode crossList2(ListNode headA, ListNode headB) {
+        int lenA = length(headA);
+        int lenB = length(headB);
+        while (lenA != lenB) {
+            if (lenA > lenB) {
+                lenA--;
+                headA = headA.next;
+            } else {
+                lenB--;
+                headB = headB.next;
+            }
+        }
+
+        while (headA != headB) {
+            headA = headA.next;
+            headB = headB.next;
+        }
+        return headA;
+    }
+
+    private static int length(ListNode head) {
+        int len = 0;
+        while (head != null) {
+            head = head.next;
+            len++;
+        }
+        return len;
+    }
 }
