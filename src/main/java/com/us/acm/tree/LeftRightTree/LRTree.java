@@ -1,4 +1,4 @@
-package com.us.tree.LeftRightTree;
+package com.us.acm.tree.LeftRightTree;
 
 import java.util.*;
 
@@ -420,10 +420,11 @@ public class LRTree {
      * <p>
      * 时间复杂度：O(N)
      * 空间复杂度：O(N)
-     *
-     *
+     * <p>
+     * <p>
      * ArrayList 是数组 所以 add（0，e） 是在内存中System.arrayCopy 拷贝一个新的数组，并将后面的所有元素位置+1
      * LinkedList 是链表
+     *
      * @param root
      */
     public List<List<Long>> snakeTraversal(Node root) {
@@ -474,7 +475,7 @@ public class LRTree {
      * <p>
      * <p>
      * 结点的层次：从根结点开始，假设根结点为第1层，根结点的子节点为第2层，依此类推，如果某一个结点位于第L层，则其子节点位于第L+1层 [5]
-     *
+     * <p>
      * 递归遍历每层节点，然后将节点和节点的层级信息存储起来，获取每层的节点信息。根据奇数层反转，偶数层不反转即可
      * <p>
      * <p>
@@ -511,5 +512,12 @@ public class LRTree {
         }
         dfsLevelTraversRecursion(currentNode.leftChild, level + 1);
         dfsLevelTraversRecursion(currentNode.rightChild, level + 1);
+    }
+
+    /**
+     * 翻转二叉树
+     */
+    public void invertTree(Node currentNode) {
+        
     }
 }

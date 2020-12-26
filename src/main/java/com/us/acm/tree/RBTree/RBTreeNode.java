@@ -1,4 +1,4 @@
-package com.us.tree.RBTree;
+package com.us.acm.tree.RBTree;
 
 /**
  * 红黑树数据对象

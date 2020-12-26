@@ -1,4 +1,4 @@
-package com.us.tree.LeftRightTree;
+package com.us.acm.tree.LeftRightTree;
 
 /**
  * Created by yangyibo on 17/7/18.
