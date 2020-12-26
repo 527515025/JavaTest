@@ -16,6 +16,7 @@ public class ListTest {
 //        ListNode listNode2 = reverseList(pre);
         ListNode listNode3 = reverseRecurList(pre);
         System.out.println();
+
     }
 
     /**
@@ -173,29 +174,45 @@ public class ListTest {
 
     /**
      * 判断链表成环
+     *
      * <p>
-     * 快慢指针
+     * 方法一，，存储链表节点，存储前判断，看是否重复
+     * 方法二，快慢指针
      *
      * @param head
      * @return
      */
     private static boolean ringList(ListNode head) {
-
-
+        if (head == null || head.next == null) {
+            return false;
+        }
+        ListNode tmpA = head;
+        //B 为快指针
+        ListNode tmpB = head.next;
+        while (tmpA != tmpB) {
+            // 无环则 B指针可以遍历完链表，否则B指针会一直周旋,
+            if (tmpB == null || tmpB.next == null) {
+                return false;
+            }
+            tmpA = tmpA.next;
+            //快慢指针步长不能一致，否则会追不上
+            tmpB = tmpB.next.next;
+        }
         return true;
     }
 
-
     /**
      * 判断链表交叉
+     * https://leetcode-cn.com/problems/liang-ge-lian-biao-de-di-yi-ge-gong-gong-jie-dian-lcof/
      * <p>
-     * 双指针。
+     * 方法一，存储链表节点，存储前判断，看是否重复
+     * 方法二，双指针。
      * <p>
      * <p>
      * 两个指针 node1，node2 分别指向两个链表 headA，headB 的头结点，然后同时分别逐结点遍历，
      * 当 node1 到达链表 headA 的末尾时，重新定位到链表 headB 的头结点；
      * 当 node2 到达链表 headB 的末尾时，重新定位到链表 headA 的头结点。
-     *
+     * <p>
      * <p>
      * 这样，当它们相遇时，所指向的结点就是第一个公共结点。
      *
@@ -206,6 +223,7 @@ public class ListTest {
         ListNode tmpA = headA;
         ListNode tmpB = headB;
         while (tmpA != tmpB) {
+            //重新定位到另外一个链表的首位则 可以通过两次遍历即可弥补差值，如果是仍遍历本身数组则相交点为最小公倍数
             tmpA = tmpA == null ? headB : tmpA.next;
             tmpB = tmpB == null ? headA : tmpB.next;
         }
@@ -216,9 +234,13 @@ public class ListTest {
     /**
      * 判断链表交叉
      * <p>
+     * 方法一，存储两链表节点，存储前判断是否存在节点，存在则说明相交。
+     * 方法二 前后指针,
+     * 方法三 消减链表长度差值，同时起步，找相交
+     *
      * 两个链表的第一个公共节点
      * <p>
-     * 前后指针,
+     *
      * 先统计两个链表的长度，如果两个链表的长度不一样，就让链表长的先走，直到两个链表长度一样，
      * 这个时候两个链表再同时每次往后移一步，看节点是否一样，
      * 如果有相等的，说明这个相等的节点就是两链表的交点，
@@ -230,6 +252,7 @@ public class ListTest {
     private static ListNode crossList2(ListNode headA, ListNode headB) {
         int lenA = length(headA);
         int lenB = length(headB);
+        //移动相差位置
         while (lenA != lenB) {
             if (lenA > lenB) {
                 lenA--;
@@ -239,7 +262,7 @@ public class ListTest {
                 headB = headB.next;
             }
         }
-
+        //同时起步判断是否相交
         while (headA != headB) {
             headA = headA.next;
             headB = headB.next;
