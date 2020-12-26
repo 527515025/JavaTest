@@ -1,7 +1,7 @@
-package com.us.acm;
+package com.us.acm.tree;
 
-import com.us.tree.LeftRightTree.LRTree;
-import com.us.tree.LeftRightTree.LRTreeApp;
+import com.us.acm.tree.LeftRightTree.LRTree;
+import com.us.acm.tree.LeftRightTree.LRTreeApp;
 
 /**
  * 力扣
