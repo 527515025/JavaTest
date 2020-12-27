@@ -7,9 +7,15 @@ package com.us.acm;
  */
 public class ArrayTest {
     public static void main(String[] args) {
-        int[] x = new int[]{1, 2, 3, 4, 5, 6};
-        int i = removeElement(x, 5);
+
+        int i = removeElement(init(), 5);
+        int z = search(init(), 4);
         System.out.println(i);
+    }
+
+
+    private static int[] init() {
+        return new int[]{1, 2, 3, 4, 4, 4, 5, 6};
     }
 
 
@@ -33,7 +39,7 @@ public class ArrayTest {
      * <p>
      * 你不需要考虑数组中超出新长度后面的元素。
      * <p>
-     *
+     * <p>
      * 思想：双指针
      * i 记录有效长度，j遍历数组，并移动数组位置
      *
@@ -51,4 +57,45 @@ public class ArrayTest {
         }
         return i;
     }
+
+
+    /**
+     * 统计一个数字在排序数组中出现的次数。
+     * 剑指 Offer 53 - I. 在排序数组中查找数字 I
+     * https://leetcode-cn.com/problems/zai-pai-xu-shu-zu-zhong-cha-zhao-shu-zi-lcof/
+     * <p>
+     * 输入: nums = [5,7,7,8,8,10], target = 8
+     * 输出: 2
+     * <p>
+     * 二分法
+     *
+     * @param nums
+     * @param target
+     * @return
+     */
+    public static int search(int[] nums, int target) {
+        return helper(nums, target) - helper(nums, target - 1);
+    }
+
+    /**
+     * 寻找边界
+     *
+     * @param nums
+     * @param tar
+     * @return
+     */
+    static int helper(int[] nums, int tar) {
+        int i = 0, j = nums.length - 1;
+        while (i <= j) {
+            int m = (i + j) / 2;
+            if (nums[m] <= tar) {
+                i = m + 1;
+            } else {
+                j = m - 1;
+            }
+        }
+        return i;
+    }
+
+
 }
