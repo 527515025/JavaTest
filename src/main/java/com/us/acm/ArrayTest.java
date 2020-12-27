@@ -8,9 +8,10 @@ package com.us.acm;
 public class ArrayTest {
     public static void main(String[] args) {
 
-        int i = removeElement(init(), 5);
-        int z = search(init(), 4);
-        System.out.println(i);
+//        int i = removeElement(init(), 5);
+//        int z = search(init(), 4);
+        int max = searchMax(new int[]{1, 4, 5, 7, 8, 11, 7, 6, 5, 3, 0});
+        System.out.println();
     }
 
 
@@ -95,6 +96,26 @@ public class ArrayTest {
             }
         }
         return i;
+    }
+
+    /**
+     * 查找 先升后降数组中最大的值
+     * 例如 14578976530  返回9
+     *
+     * @param nums
+     * @return
+     */
+    public static int searchMax(int[] nums) {
+        int i = 0, j = nums.length - 1;
+        while (i <= j) {
+            int m = (i + j) / 2;
+            if (nums[m] < nums[m + 1]) {
+                i = m + 1;
+            } else {
+                j = m - 1;
+            }
+        }
+        return nums[i];
     }
 
 
